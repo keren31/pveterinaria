@@ -1,0 +1,15 @@
+/* En tu archivo de estilos CSS, por ejemplo, App.css */
+.breadcrumbs {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .breadcrumbs a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .breadcrumbs span {
+    color: #555;
+  }
+  

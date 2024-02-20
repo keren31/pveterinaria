@@ -1,0 +1,288 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fira+Sans+Condensed:ital,wght@0,100;1,400;1,500&family=Kanit:ital,wght@0,100;1,300&family=Lato:wght@100&family=Noto+Sans:ital,wght@0,100;1,200&family=Open+Sans:ital,wght@1,300&family=Oswald:wght@500&family=Roboto:ital,wght@1,100&family=Rubik+Doodle+Shadow&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fira+Sans+Condensed:ital,wght@0,100;1,400;1,500&family=Kanit:ital,wght@0,100;1,300&family=Lato:wght@100&family=Noto+Sans:ital,wght@0,100;1,200&family=Open+Sans:ital,wght@1,300&family=Oswald:wght@500&family=Roboto:ital,wght@1,100&family=Rubik+Doodle+Shadow&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+ 
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fira+Sans+Condensed:ital,wght@0,100;1,400;1,500&family=Kanit:ital,wght@0,100;1,300&family=Lato:wght@100&family=Noto+Sans:ital,wght@0,100;1,200&family=Open+Sans:ital,wght@1,300&family=Oswald:wght@500&family=Roboto+Condensed:wght@100&family=Roboto:ital,wght@1,100&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fira+Sans+Condensed:ital,wght@0,100;1,400;1,500&family=Kanit:ital,wght@0,100;1,300&family=Lato:wght@100&family=Noto+Sans:ital,wght@0,100;1,200&family=Open+Sans:ital,wght@1,300&family=Oswald:wght@500&family=Roboto+Condensed:ital,wght@0,100;1,500&family=Roboto:ital,wght@1,100&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+
+header{
+  padding: 10px;
+  background-color: #ffffff; 
+}
+
+header ul li{
+  display: inline-block;
+  margin-left: 15px;
+}
+header ul li a{
+  font-weight: 500;
+  transition: 0.5s;
+}
+header ul li a:hover{
+  color: #38d16a;
+  font-weight: 800;
+}
+
+.nav-links   li.active {
+  color: blue;
+  color:#38d16a;
+}
+.cd{
+  margin-right: 80px;
+}
+.HeaderIcon{
+  margin-left: 50px;
+  transition: 0.5s;
+}
+.navbar-items-icon{
+  color: black; 
+  display: none;
+}
+.logo img{
+  width: 140px;
+  height: 65px;
+ 
+  margin-left: -120px;
+}
+
+header.active{
+  position: sticky;
+  top:0;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 28px 0 rgba(0 0 0 /6%);
+  width: 100%;
+  z-index: 10;
+}
+*{padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Roboto', sans-serif;
+
+}
+.container{
+  max-width: 80%;
+  margin: auto;
+}
+.flex{
+  display: flex;
+  justify-content: space-between;
+}
+ul{
+  list-style: none;
+}
+a{
+  text-decoration: none;
+  color: black;
+  
+}
+.perfil{
+display:flex ;
+margin-right: -130px;
+text-align: center;
+padding: auto;
+
+}
+header .loginl{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.imagen{
+ 
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.nombre{
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.btn{
+  padding: 2px;
+}
+/*///////////////////////*/
+/* Estilos generales */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.bienvenida-container {
+  
+}
+
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+h2 {
+  color: #333;
+}
+
+/* Estilos para el contenido */
+.contenido {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Estilos para la imagen */
+.imagen-estilo {
+  width: 35%;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  float: left; /* Añadido para alinear a la izquierda */
+  margin-right: 20px; /* Espaciado a la derecha para separar la imagen del texto */
+}
+
+/* Estilos para el párrafo */
+.contenido p {
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Enlace estilizado */
+.contenido a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contenido a:hover {
+  text-decoration: underline;
+}
+/* Estilos generales del footer */
+.Footer {
+  background-color: #7b7e81;
+  color: #ecf0f1;
+  padding: 40px 20px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+/* Estilos para las secciones dentro del footer */
+.footer-section {
+  width: 25%;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+/* Estilos para el título de cada sección */
+.footer-section h3 {
+  color: #3498db;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+/* Estilos para los enlaces de las redes sociales */
+.social-media a {
+  text-decoration: none;
+  color: #ecf0f1;
+  font-size: 20px;
+  transition: color 0.3s ease-in-out;
+}
+
+.social-media a:hover {
+  color: #3498db; /* Cambia el color al pasar el ratón sobre los enlaces */
+}
+
+/* Estilos para los enlaces */
+.quick-links a {
+  text-decoration: none;
+  color: #ecf0f1;
+  font-size: 18px;
+  transition: color 0.3s ease-in-out;
+}
+
+.quick-links a:hover {
+  color: #3498db; /* Cambia el color al pasar el ratón sobre los enlaces */
+}
+
+/* Estilos para los párrafos dentro de las secciones */
+.contact-info p,
+.business-hours p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+/* Agrega un borde superior para separar el footer del contenido principal */
+body {
+  margin-bottom: 60px;
+}
+
+/* Estilos para el pie de página en dispositivos móviles */
+@media only screen and (max-width: 600px) {
+  .Footer {
+      padding: 20px;
+  }
+  
+  .footer-section {
+      width: 100%;
+  }
+  .imagenS1{
+    left: 50 px;
+  }
+}
+/* Estilos para la tarjeta de servicio */
+.imagenS1 {
+  width: 100%;
+  height: 140px;
+  object-fit: cover; /* Ajusta el tamaño de la imagen sin distorsionarla */
+  border-radius: 8px 8px 0 0; /* Bordes redondeados solo en la parte superior */
+}
+
+.servicio-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.precio {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.descripcion {
+  flex-grow: 1;
+}
+
+.button-container {
+  margin-top: 16px;
+  text-align: center;
+}
+.nivel{
+  display: grid;
+  grid-template-columns: repeat(2,1fr)
+}
+.password-strength{
+  margin-top: 5px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
