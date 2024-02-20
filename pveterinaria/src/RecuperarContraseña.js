@@ -29,7 +29,7 @@ export default function RecuperarContra() {
 
     if (validateEmail(email)) {
       fetch(
-        'http://lacasadelmariscoapi.somee.com/' +
+        'https://lacasadelmariscoapi.somee.com/' +
           'api/CasaDelMarisco/ActualizarTokenEstetica?Correo=' +
           email,
         {

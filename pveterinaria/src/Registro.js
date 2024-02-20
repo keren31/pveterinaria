@@ -65,7 +65,7 @@ const Registro = () => {
         data.append("FechaNacimiento", fechaNac);
 
         fetch(
-          "http://lacasadelmariscoapi.somee.com/api/CasaDelMarisco/VerificarCorreo?Correo=" + email,
+          "https://lacasadelmariscoapi.somee.com/api/CasaDelMarisco/VerificarCorreo?Correo=" + email,
           {
             method: "POST",
             body: data,
@@ -77,7 +77,7 @@ const Registro = () => {
               setEmailError('Este correo ya existe');
             } else {
               fetch(
-                "http://lacasadelmariscoapi.somee.com/api/CasaDelMarisco/AgregarUsuarios?Nombre=" +
+                "https://lacasadelmariscoapi.somee.com/api/CasaDelMarisco/AgregarUsuarios?Nombre=" +
                 nombre +
                 "&ApellidoPaterno=" +
                 ApellidoP +

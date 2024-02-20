@@ -17,7 +17,7 @@ export default function Token() {
     data.append('Token', token);
 
     fetch(
-      'http://lacasadelmariscoapi.somee.com/' +
+      'https://lacasadelmariscoapi.somee.com/' +
         'api/CasaDelMarisco/VerificarToken?Correo=' +
         correo + '&Token=' + token,
       {
