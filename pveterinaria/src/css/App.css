@@ -1,0 +1,427 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fira+Sans+Condensed:ital,wght@0,100;1,400;1,500&family=Kanit:ital,wght@0,100;1,300&family=Lato:wght@100&family=Noto+Sans:ital,wght@0,100;1,200&family=Open+Sans:ital,wght@1,300&family=Oswald:wght@500&family=Roboto:ital,wght@1,100&family=Rubik+Doodle+Shadow&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fira+Sans+Condensed:ital,wght@0,100;1,400;1,500&family=Kanit:ital,wght@0,100;1,300&family=Lato:wght@100&family=Noto+Sans:ital,wght@0,100;1,200&family=Open+Sans:ital,wght@1,300&family=Oswald:wght@500&family=Roboto:ital,wght@1,100&family=Rubik+Doodle+Shadow&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+ 
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fira+Sans+Condensed:ital,wght@0,100;1,400;1,500&family=Kanit:ital,wght@0,100;1,300&family=Lato:wght@100&family=Noto+Sans:ital,wght@0,100;1,200&family=Open+Sans:ital,wght@1,300&family=Oswald:wght@500&family=Roboto+Condensed:wght@100&family=Roboto:ital,wght@1,100&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fira+Sans+Condensed:ital,wght@0,100;1,400;1,500&family=Kanit:ital,wght@0,100;1,300&family=Lato:wght@100&family=Noto+Sans:ital,wght@0,100;1,200&family=Open+Sans:ital,wght@1,300&family=Oswald:wght@500&family=Roboto+Condensed:ital,wght@0,100;1,500&family=Roboto:ital,wght@1,100&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+/* App.css */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App.css */
+.inicio-container {
+  position: relative;
+}
+
+.fondo-imagen {
+  position: relative;
+  width: 100%;
+}
+
+.fondo-imagen img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+.titulo {
+  font-size: 3rem;
+  color: white;
+  text-align: center; /* Alinea el texto a la derecha */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: 'Arial', sans-serif;
+  letter-spacing: 2px;
+  padding: 2%;
+  text-transform: uppercase;
+  font-weight: bold;
+
+  /* Agrega una transición suave al cambio de color y sombra */
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+
+  /* Posicionamiento absoluto para colocar el texto */
+  position: absolute;
+  top: 100px; /* Ajusta la posición superior según sea necesario */
+  right: 900px; /* Ajusta la posición derecha según sea necesario */
+  z-index: 1; /* Asegura que el texto esté encima de la imagen de fondo */
+
+  /* Animación */
+  animation: moveText 2s ease infinite alternate; /* Nombre de la animación, duración, función de temporización, iteración */
+}
+
+/* Definición de la animación */
+@keyframes moveText {
+  0% {
+    transform: translateY(0); /* Sin desplazamiento vertical al inicio */
+  }
+  100% {
+    transform: translateY(-10px); /* Desplazamiento hacia arriba */
+  }
+}
+
+
+
+
+
+.Imagen-inicio {
+  width: 100%;
+  height: auto;
+  max-height: 900px;
+  display: block;
+  margin: 0 auto;
+  transition: filter 0.5s, box-shadow 0.5s; /* Agrega una transición suave al cambio de filtro y sombra */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra que da profundidad */
+}
+
+.Imagen-inicio:hover {
+  filter: blur(0); /* Cuando el mouse está sobre la imagen, elimina el desenfoque */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Aumenta la sombra al pasar el mouse para mayor profundidad */
+}
+
+
+.division {
+  height: 300px; /* Ajusta la altura de la división según sea necesario */
+  background-color: #004d91;
+  margin: 0px; /* Márgenes superior e inferior */
+  z-index: 1; /* Asegura que la división esté por debajo de la imagen */
+  padding: 20px; /* Espaciado interno */
+
+  /* Estilos para el contenido dentro del div */
+  color: white; /* Color del texto */
+  font-family: 'Arial', sans-serif; /* Familia de fuentes */
+}
+.division2 {
+  height: 100px; /* Ajusta la altura de la división según sea necesario */
+  background-color: #004d91;
+  margin: 0px; /* Márgenes superior e inferior */
+  z-index: 1; /* Asegura que la división esté por debajo de la imagen */
+  padding: 20px; /* Espaciado interno */
+
+  /* Estilos para el contenido dentro del div */
+  color: white; /* Color del texto */
+  font-family: 'Arial', sans-serif; /* Familia de fuentes */
+}
+
+.division h2 {
+  font-size: 2rem; /* Tamaño de fuente para el título */
+  margin-bottom: 10px; /* Margen inferior */
+}
+
+.division p {
+  font-size: 1.2rem; /* Tamaño de fuente para los párrafos */
+  line-height: 1.5; /* Altura de línea */
+  margin-bottom: 15px; /* Margen inferior */
+}
+
+
+
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////////*/
+/* Estilo para el contenido dentro de bienvenida-container */
+
+
+/* Estilo para el contenido dentro de bienvenida-container */
+
+
+.bienvenida-container a {
+  text-decoration: none; /* Quita el subrayado de los enlaces */
+}
+
+.imagen-estilo {
+  width: 100%; /* Ajusta el ancho de la imagen al 100% */
+  max-width: 400px; /* Establece un ancho máximo para la imagen */
+  border-radius: 8px; /* Añade bordes redondeados a la imagen */
+  margin-bottom: 20px; /* Espacio entre la imagen y los párrafos */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra suave a la imagen */
+}
+
+.bienvenida-container p {
+  color: #555; /* Color del texto */
+  line-height: 1.6; /* Espaciado entre líneas */
+  margin-bottom: 20px; /* Espacio entre párrafos */
+  font-size: 16px; /* Tamaño de fuente */
+  font-weight: 300; /* Peso de la fuente */
+}
+
+.bienvenida-container p:last-child {
+  margin-bottom: 0; /* Elimina el margen inferior del último párrafo */
+}
+
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////////*/
+header{
+  padding: 10px;
+  background-color: #ffffff; 
+}
+
+header ul li{
+  display: inline-block;
+  margin-left: 15px;
+}
+header ul li a{
+  font-weight: 500;
+  transition: 0.5s;
+}
+header ul li a:hover{
+  color: #38d16a;
+  font-weight: 800;
+}
+
+.nav-links   li.active {
+  color: blue;
+  color:#38d16a;
+}
+.cd{
+  margin-right: 80px;
+}
+.HeaderIcon{
+  margin-left: 50px;
+  transition: 0.5s;
+}
+.navbar-items-icon{
+  color: black; 
+  display: none;
+}
+.logo img{
+  width: 140px;
+  height: 65px;
+ 
+  margin-left: -120px;
+}
+
+header.active{
+  position: sticky;
+  top:0;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 28px 0 rgba(0 0 0 /6%);
+  width: 100%;
+  z-index: 10;
+}
+*{padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Roboto', sans-serif;
+
+}
+.container{
+  max-width: 80%;
+  margin: auto;
+}
+.flex{
+  display: flex;
+  justify-content: space-between;
+}
+ul{
+  list-style: none;
+}
+a{
+  text-decoration: none;
+  color: black;
+  
+}
+.perfil{
+display:flex ;
+margin-right: -130px;
+text-align: center;
+padding: auto;
+
+}
+header .loginl{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/*///////////////////////*/
+/* Estilos generales */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fffefe;
+  margin: 0;
+  padding: 0;
+}
+
+
+.contenedor {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-top: 50px;
+}
+
+/* Estilos para el título */
+.contenedor h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+
+  
+}
+main{
+  padding-top: 80px;
+}
+
+
+
+
+.contenido a:hover {
+  text-decoration: underline;
+}
+
+/*estilos del footer*/
+.Footer {
+  background-color: #333;
+  color: #fff;
+  padding: 50px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  font-family: Arial, sans-serif;
+}
+
+.contact-info,
+.business-hours,
+.quick-links,
+.whatsapp-link {
+  flex: 1 1 20%;
+  margin-bottom: 30px;
+}
+
+.contact-info h2,
+.business-hours h2,
+.quick-links h2,
+.whatsapp-link h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.contact-info p,
+.business-hours p,
+.quick-links ul,
+.whatsapp-link p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.quick-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.quick-links ul li {
+  margin-bottom: 10px;
+}
+
+.quick-links button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.rotate-arrow {
+  transition: transform 0.3s ease;
+}
+
+.faq {
+  background-color: #444;
+  color: #fff;
+  padding: 30px;
+  margin-top: 30px;
+  flex-basis: 100%;
+}
+
+.faq h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.faq-item h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.faq-item p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+
+/* Estilos para el botón de Preguntas Frecuentes */
+
+/* Agrega un borde superior para separar el footer del contenido principal */
+body {
+  margin-bottom: 60px;
+}
+
+/* Estilos para el pie de página en dispositivos móviles */
+@media only screen and (max-width: 600px) {
+  .Footer {
+      padding: 20px;
+  }
+  
+  .footer-section {
+      width: 100%;
+  }
+  .imagenS1{
+    left: 50 px;
+  }
+}
+/* Estilos para la tarjeta de servicio */
+.imagenS1 {
+  width: 100%;
+  height: 140px;
+  object-fit: cover; /* Ajusta el tamaño de la imagen sin distorsionarla */
+  border-radius: 8px 8px 0 0; /* Bordes redondeados solo en la parte superior */
+}
+
+.servicio-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.precio {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.descripcion {
+  flex-grow: 1;
+}
+
+.button-container {
+  margin-top: 16px;
+  text-align: center;
+}
+.nivel{
+  display: grid;
+  grid-template-columns: repeat(2,1fr)
+}
+.password-strength{
+  margin-top: 5px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+

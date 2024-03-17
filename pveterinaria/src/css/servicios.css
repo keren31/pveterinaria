@@ -1,0 +1,48 @@
+/* Estilos para los componentes de Material-UI */
+
+/* Estilo para el contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Estilo para las tarjetas */
+  .card {
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo para el área de acción de la tarjeta */
+  .card-action-area {
+    cursor: pointer;
+  }
+  
+  /* Estilo para el contenido de la tarjeta */
+  .card-content {
+    padding: 20px;
+  }
+  
+  /* Estilo para la imagen de la tarjeta */
+  .card-media {
+    height: 200px; /* Ajusta la altura según tus necesidades */
+  }
+  
+  /* Estilo para el texto dentro de la tarjeta */
+  .card-text {
+    font-size: 16px;
+  }
+  
+  /* Estilo para los botones */
+  .button {
+    background-color: #ff0000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #b30000;
+  }
+  

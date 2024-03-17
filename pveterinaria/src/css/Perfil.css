@@ -1,0 +1,80 @@
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .profile-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-info img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .profile-details {
+    flex: 1;
+  }
+  
+  .profile-details h4 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .profile-details h4.subtitle {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .options {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .options ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .options ul li {
+    margin-bottom: 10px;
+  }
+  
+  .options ul li button {
+    background-color: #ff8c00;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .options ul li button:hover {
+    background-color: #e67300;
+  }
+  
+  .edit-profile-button {
+    margin-top: 20px;
+  }
+  
+  .logout-button {
+    margin-top: 20px;
+  }
+.subtitle{
+    color: black;
+}  

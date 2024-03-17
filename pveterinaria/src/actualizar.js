@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import imagen from './img/logotipo jas.jpeg';
 
 export default function Actualizar() {
+  const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   const navigate = useNavigate();
   const location = useLocation();
   const correo = new URLSearchParams(location.search).get('correo');
@@ -18,7 +19,7 @@ export default function Actualizar() {
       data.append('Contrasena', password);
 
       fetch(
-        'http://lacasadelmariscoapi.somee.com/api/CasaDelMarisco/RecuperarContrasena?Correo=' +
+        apiurll+'api/CasaDelMarisco/RecuperarContrasena?Correo=' +
           correo +
           '&Contrasena=' +
           password,

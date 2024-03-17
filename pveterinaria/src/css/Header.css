@@ -1,0 +1,135 @@
+/* Header.css */
+
+
+
+.user-icon {
+    color: blue; /* Cambiar color del icono */
+    font-size: 24px; /* Cambiar tamaño del icono */
+    margin-right: 5px; /* Agregar margen derecho al icono */
+}
+/* Header.css */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color:#ffffff;
+    color: #0b0a0a;
+    padding: 0px 0;
+    box-shadow: 0 4px 6px rgba(17, 0, 251, 0.1);
+    transition: background-color 0.3s, padding 0.3s, box-shadow 0.3s; /* Añadimos transiciones */
+}
+
+.header.scrolled {
+    background-color: rgba(255, 255, 255, 0.8); /* Cambia el fondo a transparente con opacidad */
+    padding: 10px 0; /* Ajusta el relleno para una apariencia más delgada */
+    box-shadow: none; /* Elimina la sombra al hacer scroll */
+}
+
+.header.active {
+    background-color: hsl(225, 93%, 49%); /* Cambia el color de fondo cuando el encabezado está activo */
+}
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo img {
+    width: 450px;
+    height: 85px;
+    margin-left: -140px;
+
+}
+
+.nav-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #060606;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #0871db;
+}
+
+.user-icon-container {
+    position: relative;
+}
+
+.user-info-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: none;
+}
+
+.user-icon-container:hover .user-info-menu {
+    display: block;
+}
+
+.user-info-menu p {
+    margin: 5px 0;
+    color: #333333;
+}
+
+.header2 {
+    display: flex;
+    justify-content: flex-end; /* Alinea los elementos a la derecha */
+    align-items: center;
+    background-color: #004d91;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.breadcrumbs {
+    margin-left: 20px; /* Ajusta el margen izquierdo para separar los breadcrumbs del borde derecho */
+}
+
+.header2 ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header2 li {
+    margin-left: 10px;
+}
+
+.header2 .username {
+    font-weight: bold;
+    color: #333;
+}
+
+.header2 li a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.header2 li a:hover {
+    color: #555;
+}
+
+.header2 li.active {
+    font-weight: bold;
+}

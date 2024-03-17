@@ -1,5 +1,5 @@
 import React from 'react';
-import './YourCssFile.css'; // Importa tu archivo de estilos CSS aquí
+import './css/PaguinaError.css'; // Importa tu archivo de estilos CSS aquí
 
 const Error404 = () => {
     return (

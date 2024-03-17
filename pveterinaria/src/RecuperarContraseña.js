@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import imagen from './img/logotipo jas.jpeg';
+import imagen from './img/imagen1.jpg';
 
 export default function RecuperarContra() {
+  const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -29,8 +30,7 @@ export default function RecuperarContra() {
 
     if (validateEmail(email)) {
       fetch(
-        'https://lacasadelmariscoapi.somee.com/' +
-          'api/CasaDelMarisco/ActualizarTokenEstetica?Correo=' +
+        apiurll+'api/CasaDelMarisco/ActualizarTokenEstetica?Correo=' +
           email,
         {
           method: 'POST',
