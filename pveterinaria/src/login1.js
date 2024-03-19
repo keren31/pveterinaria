@@ -39,6 +39,7 @@ export default function Login() {
           method: 'GET',
         }
       );
+      
   
       if (response.ok) {
         const userData = await response.json();
