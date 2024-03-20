@@ -53,7 +53,7 @@ function Inicio() {
       <div className="fondo-imagen">
         <img src={imagen1} alt="Registro" className="Imagen-inicio" />
         <div className="division">
-          <h2>SE BIENVENIDO</h2>
+          <h2>Se Bienvenido</h2>
           <p>
             ¡Te damos una cálida bienvenida a Estetica Canina Platon, donde la pasión por el cuidado y la estética de tus queridas mascotas se convierte en una experiencia extraordinaria!
           </p>
@@ -82,7 +82,7 @@ function Inicio() {
 function QuienesSomos() {
   return <div class="contenedor"> 
   <div class="contenido">
-  <h2>QUIENES SOMOS NOSOTROS</h2>
+  <h2>Quienes Somos</h2>
   
      <h2>Nuestra Misión</h2>
   <p>

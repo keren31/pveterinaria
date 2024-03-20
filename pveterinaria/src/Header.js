@@ -42,14 +42,14 @@ const Header = () => {
                   {user ? (
                     <div style={{display: "flex"}}>
                       <li style={{listStyle:'none'}} className='username'>{user.Nombre}</li>
-                      <li style={{listStyle:'none'}}><Link to='/Perfil'>PERFIL</Link></li>
+                      <li style={{listStyle:'none'}}><Link to='/Perfil'>Perfil</Link></li>
                     </div>
                   ) : (
                     <div style={{display: "flex"}}>
                       <li style={{listStyle:'none'}} className={location.pathname === '/login' ? 'active' : ''}>
-                        <Link to='/login1'>LOGIN</Link>
+                        <Link to='/login1'>Login</Link>
                       </li>
-                      <li style={{listStyle:'none'}}><Link to='/registro'>REGISTRARSE</Link></li>
+                      <li style={{listStyle:'none'}}><Link to='/registro'>Registrarse</Link></li>
                     </div>
                   )}
                 </div>
@@ -62,11 +62,11 @@ const Header = () => {
                     </div>
                     <div className='nav'>
                         <ul className={sidebar ? "nav-links-sidebar" : "nav-links"} onClick={() => setSidebar(false)}>
-                            <li><Link to='/'>INICIO</Link></li>
-                            <li><Link to='/Quienes-Somos'>QUIENES SOMOS</Link></li>
-                            <li><Link to='/servicio'>SERVICIOS</Link></li>
-                            <li><Link to='/Productos'>TIENDA</Link></li>
-                            <li><Link to='/Citas'>CITAS</Link></li>
+                            <li><Link to='/'>Inicio</Link></li>
+                            <li><Link to='/Quienes-Somos'>Quienes Somos</Link></li>
+                            <li><Link to='/servicio'>Servicios</Link></li>
+                            <li><Link to='/Productos'>Tienda</Link></li>
+                            <li><Link to='/Citas'>Citas</Link></li>
                             
                             {/* Aquí puedes agregar tu lógica de autenticación personalizada si es necesario */}
                         </ul>
