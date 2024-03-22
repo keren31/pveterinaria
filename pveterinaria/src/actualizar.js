@@ -11,6 +11,7 @@ export default function Actualizar() {
   const [passwordError, setPasswordError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validatePassword(password)) {
