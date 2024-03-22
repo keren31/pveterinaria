@@ -33,11 +33,11 @@
 .titulo {
   font-size: 3rem;
   color: white;
-  text-align: center; /* Alinea el texto a la derecha */
+  text-align: right; /* Alinea el texto a la derecha */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   font-family: 'Arial', sans-serif;
   letter-spacing: 2px;
-  padding: 2%;
+  text-transform: uppercase;
   font-weight: bold;
 
   /* Agrega una transición suave al cambio de color y sombra */
@@ -118,9 +118,6 @@
 }
 
 
-
-
-/*//////////////////////////////////////////////////////////////////////////////////////////////////*/
 /* Estilo para el contenido dentro de bienvenida-container */
 
 
@@ -151,8 +148,6 @@
   margin-bottom: 0; /* Elimina el margen inferior del último párrafo */
 }
 
-
-/*//////////////////////////////////////////////////////////////////////////////////////////////////*/
 header{
   padding: 10px;
   background-color: #ffffff; 
@@ -239,7 +234,6 @@ header .loginl{
   grid-template-columns: 1fr 1fr;
 }
 
-/*///////////////////////*/
 /* Estilos generales */
 body {
   font-family: 'Arial', sans-serif;
@@ -259,6 +253,27 @@ body {
   margin-top: 50px;
 }
 
+.Avisop{
+  margin: 30px;
+
+}
+.Avisop *{
+  margin-top: 10px;
+}
+
+.contenido h2 {
+  color: #333;
+}
+
+.contenido p {
+  color: #555;
+}
+
+.contenido p:last-child {
+  font-weight: bold;
+}
+
+
 /* Estilos para el título */
 .contenedor h2 {
   color: #333;
@@ -268,6 +283,13 @@ body {
 
   
 }
+
+.contenido {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
 main{
   padding-top: 80px;
 }

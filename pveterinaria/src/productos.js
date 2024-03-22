@@ -9,7 +9,8 @@ import {
   Container,
   Button,
   TextField,
-  
+  Badge,
+  Modal
 } from '@mui/material';
 
 import producto1 from './imagenes2/Producto1.jpg';
@@ -44,20 +45,21 @@ const productos = [
   {
     id: 4,
     nombre: 'Botella de agua',
-    descripcion: 'Descripción del producto 3. Detalles adicionales sobre el producto.',
+    descripcion: 'Descripción del producto 4. Detalles adicionales sobre el producto.',
     precio: '$39.99',
     imagen: producto4,
   },
   {
     id: 5,
-    nombre: 'cama',
-    descripcion: 'Descripción del producto 3. Detalles adicionales sobre el producto.',
+    nombre: 'Cama',
+    descripcion: 'Descripción del producto 5. Detalles adicionales sobre el producto.',
     precio: '$39.99',
     imagen: producto5,
-  },{
+  },
+  {
     id: 6,
-    nombre: 'cama',
-    descripcion: 'Descripción del producto 3. Detalles adicionales sobre el producto.',
+    nombre: 'Cama',
+    descripcion: 'Descripción del producto 6. Detalles adicionales sobre el producto.',
     precio: '$39.99',
     imagen: producto6,
   },
@@ -67,6 +69,8 @@ const Productos2 = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [filteredProductos, setFilteredProductos] = useState([]);
+  const [carrito, setCarrito] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
@@ -90,6 +94,22 @@ const Productos2 = () => {
     setSearchQuery('');
     setMaxPrice('');
     setFilteredProductos([]);
+  };
+
+  const addToCart = (producto) => {
+    setCarrito([...carrito, producto]);
+  };
+
+  const removeItemFromCart = (id) => {
+    setCarrito(carrito.filter(item => item.id !== id));
+  };
+
+  const openCartModal = () => {
+    setIsCartOpen(true);
+  };
+
+  const closeCartModal = () => {
+    setIsCartOpen(false);
   };
 
   return (
@@ -116,6 +136,7 @@ const Productos2 = () => {
         <Button variant="outlined" onClick={resetFilters}>
           Restablecer filtros
         </Button>
+        <Button variant="outlined" onClick={openCartModal}>Ver carrito</Button>
       </div>
       <Grid container spacing={3}>
         {(filteredProductos.length > 0 ? filteredProductos : productos).map((producto) => (
@@ -125,13 +146,12 @@ const Productos2 = () => {
                 style={{ display: 'flex', flexDirection: 'column', background: 'transparent' }}
               >
                 <CardMedia
-                        component="img"
-                        alt={producto.nombre}                     
-                        image={producto.imagen}
-                        style={{ transition: 'transform 0.3s' ,height: '200px',}}
-                        onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.3)')}
-                        onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                        
+                  component="img"
+                  alt={producto.nombre}                     
+                  image={producto.imagen}
+                  style={{ transition: 'transform 0.3s' ,height: '200px',}}
+                  onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.3)')}
+                  onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
                 />
                 <CardContent style={{ flex: '1' }}>
                   <Typography variant="h6" component="div">
@@ -139,9 +159,13 @@ const Productos2 = () => {
                     <Button
                       size="small"
                       style={{ marginLeft: '37%', margin: '10px', backgroundColor: 'orange', color: 'white' }}
+                      onClick={() => addToCart(producto)}
                     >
                       Carrito
                     </Button>
+                    <Badge badgeContent={carrito.filter(item => item.id === producto.id).length} color="primary">
+                      {/* Mostrar cantidad de elementos en el carrito */}
+                    </Badge>
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     {producto.descripcion}
@@ -155,6 +179,27 @@ const Productos2 = () => {
           </Grid>
         ))}
       </Grid>
+
+      {/* Modal del carrito */}
+      <Modal
+        open={isCartOpen}
+        onClose={closeCartModal}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <Container maxWidth="sm" style={{ marginTop: '60px', marginBottom: '20px', backgroundColor: 'white', padding: '20px' }}>
+          <Typography variant="h4" component="div" gutterBottom>
+            Carrito de compras
+          </Typography>
+          {carrito.map(item => (
+            <div key={item.id}>
+              <p>{item.nombre} - {item.precio}</p>
+              <Button onClick={() => removeItemFromCart(item.id)}>Eliminar</Button>
+            </div>
+          ))}
+          <p>Total: ${carrito.reduce((total, item) => total + parseFloat(item.precio.substr(1)), 0)}</p>
+        </Container>
+      </Modal>
     </Container>
   );
 };

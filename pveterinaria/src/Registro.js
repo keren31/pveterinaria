@@ -439,7 +439,7 @@ const Registro = () => {
 
           <label to="/terminos" className="recuerdame">
             <input type="checkbox" className="cuadro" />
-            <Link to="/terminos"> Acepta los términos y condiciones</Link>
+            <Link to="/politicas-de-privacidad"> Acepta los términos y condiciones</Link>
           </label>
 
           <button className="btn btn-warning text2" type="submit">

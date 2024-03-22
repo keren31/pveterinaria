@@ -15,7 +15,7 @@ const CategoriasServicio = ({ categorias, volverASeleccionServicio }) => {
   };
 
   return (
-    <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f9f9f9' }}>
+    <div style={{ marginTop: '90px', padding: '20px', backgroundColor: '#f9f9f9' }}>
       <Typography variant="h3" component="h1" style={{ marginBottom: '20px' }}>
         Categorías del Servicio
       </Typography>
