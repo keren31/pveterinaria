@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardActionArea, CardContent, CardMedia, Typography, Grid, Container, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Servicio1 from './imgServicios/servicio1.jpg';
@@ -8,9 +8,9 @@ import servicio4 from './imgServicios/servicio4.jpg';
 import servicio5 from './imgServicios/servicio5.jpg';
 import servicio6 from './imgServicios/Servicio6.webp';
 
-import CategoriasServicio from './CategoriasServicio';
 
-// Definir imágenes de categorías
+// Importa las imágenes restantes aquí
+import CategoriasServicio from './CategoriasServicio';
 import imagenCategoriaChico from './img/categoriaimg/perropeque.webp';
 import imagenCategoriaMediano from './img/categoriaimg/perromediano.jpg';
 import imagenCategoriaGrande from './img/categoriaimg/perrogrande.jpg';
@@ -100,26 +100,15 @@ const productos = [
 ];
 
 const ServicioCard = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [selectedService, setSelectedService] = useState(null);
+ 
   const navigate = useNavigate();
 
-  const handleServiceClick = (service) => {
-    setSelectedService(service);
+  const handleServiceClick = (selectedService) => {
+    // Guardar el servicio seleccionado en localStorage
+    localStorage.setItem('selectedService', JSON.stringify(selectedService));
+    // Navegar al siguiente componente
+    navigate('/CategoriasServi');
   };
-
-  const volverASeleccionServicio = () => {
-    setSelectedService(null);
-  };
-
-  if (selectedService) {
-    return (
-      <CategoriasServicio
-        categorias={selectedService.categorias}
-        volverASeleccionServicio={volverASeleccionServicio}
-      />
-    );
-  }
 
   return (
     <Container className="servicio-container">
@@ -131,7 +120,6 @@ const ServicioCard = () => {
       <Grid container spacing={3}>
         {productos.map((producto, index) => (
           <Grid item key={producto.id} xs={12} sm={6} md={4}>
-
             <Card>
               <CardActionArea
                 className="card-action-area"

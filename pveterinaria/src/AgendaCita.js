@@ -12,10 +12,12 @@ const AgendarCita = () => {
   const [fechaCita, setFechaCita] = useState('');
   const [horaCita, setHoraCita] = useState('');
   const [servicio, setServicio] = useState('');
+  const [categoria, setCategoria] = useState(''); // Agregamos estado para la categoría
   const [fechaCitaError, setFechaCitaError] = useState('');
   const [horaCitaError, setHoraCitaError] = useState('');
   const [servicioError, setServicioError] = useState('');
-  
+  const [horariosDisponibles, setHorariosDisponibles] = useState([]); // Agregamos la definición de estado para los horarios disponibles
+
   
   const { user,logoutUser } = useUser();
 
@@ -131,6 +133,20 @@ const AgendarCita = () => {
     }
   };
 
+  useEffect(() => {
+    if (fechaCita !== '') {
+      obtenerHorariosDisponibles(fechaCita);
+    }
+  }, [fechaCita]);
+
+  const obtenerHorariosDisponibles = async (fechaCita) => {
+    // Aquí puedes hacer una llamada a la API para obtener los horarios disponibles para la fecha seleccionada
+    // Por ahora, solo generamos algunos horarios de ejemplo para demostración
+    const horarios = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'];
+    setHorariosDisponibles(horarios);
+  };
+
+
   return (
     <div className="registro-form-containerRegistro">
       <div className="registro-image-containerRegistro">
@@ -206,39 +222,47 @@ const AgendarCita = () => {
           </div>
           <div>
             <label htmlFor="horaCita" className='RegistroLabel'>Hora de Cita* :</label>
-            <input
-              type="time"
+            <select
               id="horaCita"
               name="horaCita"
               value={horaCita}
               onChange={(e) => setHoraCita(e.target.value)}
               onBlur={() => validateHoraCita(horaCita)}
-              min="09:00"
-              max="15:00"
               className={horaCitaError ? 'input-error' : ''}
               required
-            />
+            >
+              <option value="">Seleccionar horario</option>
+              {horariosDisponibles.map((horario, index) => (
+                <option key={index} value={horario}>{horario}</option>
+              ))}
+            </select>
             {horaCitaError && <p className="error-message">{horaCitaError}</p>}
           </div>
+
           <div>
             <label htmlFor="servicio" className='RegistroLabel'>Servicio* :</label>
-            <select
+            <input
+              type="text"
               id="servicio"
               name="servicio"
               value={servicio}
-              onChange={(e) => setServicio(e.target.value)}
-              onBlur={() => validateServicio(servicio)}
-              className={servicioError ? 'input-error' : ''}
-              required
-            >
-              <option value="">Seleccionar</option>
-              <option value="1">Corte de pelo</option>
-              <option value="2">Baño y secado</option>
-              <option value="3">Corte de uñas</option>
-              <option value="4">Limpieza dental</option>
-            </select>
-            {servicioError && <p className="error-message">{servicioError}</p>}
+              readOnly
+            />
           </div>
+
+          <div>
+            <label htmlFor="categoria" className='RegistroLabel'>Categoría:</label>
+            <input
+              type="text"
+              id="categoria"
+              name="categoria"
+              value={categoria}
+              readOnly
+            />
+          </div>
+
+
+
           <button className='btn btn-warning text2' type="submit">Agendar Cita</button>
         </form>
       </div>

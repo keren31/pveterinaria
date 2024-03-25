@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, Link, useLocation } from 'react-router-dom';
 import './css/App.css'; // Importa tu archivo CSS
 import Header from "./Header";
+import CategoriasServicio from './CategoriasServicio';
 import Registro from './Registro'
 import TrandingSlider from './TrandingSlider'
 
@@ -432,7 +433,8 @@ function App() {
             
             
              
-             <Route path="/Categoria/:nombre/:duracion/:nombreServicio" element={<DetalleCategoria/>} />
+             <Route path="/Detallecat" element={<DetalleCategoria/>} />
+             <Route path="/CategoriasServi" element={<CategoriasServicio/>} />
              
              <Route element={<ProtectorRutas/>}>
              <Route path='/Perfil' element={<Perfil/>}/>
