@@ -14,6 +14,7 @@ import CategoriasServicio from './CategoriasServicio';
 import imagenCategoriaChico from './img/categoriaimg/perropeque.webp';
 import imagenCategoriaMediano from './img/categoriaimg/perromediano.jpg';
 import imagenCategoriaGrande from './img/categoriaimg/perrogrande.jpg';
+import Layout from './Layout';
 
 const productos = [
   {
@@ -111,7 +112,8 @@ const ServicioCard = () => {
   };
 
   return (
-    <Container className="servicio-container">
+    <Layout>
+      <Container className="servicio-container">
       <div className="titulo-container">
         <Typography variant="h3" component="h1" padding={'50px'} justifyContent={'center'} gutterBottom>
           Servicios de la Estetica Canina Platon
@@ -154,6 +156,7 @@ const ServicioCard = () => {
         ))}
       </Grid>
     </Container>
+    </Layout>
   );
 };
 

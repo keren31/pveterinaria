@@ -6,6 +6,7 @@ import imagen from './img/imagen1.jpg';
 import ReCAPTCHA from "react-google-recaptcha";
 import {useUser} from './UserContext'
 import Swal from 'sweetalert2';
+import Layout from './Layout';
 
 export default function Login() {
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
@@ -145,6 +146,7 @@ export default function Login() {
   };
 
   return (
+    <Layout>
     <div className="registro-form-containerLogin">
       <div className="registro-image-containerLogin">
         <img src={imagen} alt="Registro" className="registro-imageLogin" />
@@ -211,5 +213,6 @@ export default function Login() {
         </form>
       </div>
     </div>
+    </Layout>
   );
 }

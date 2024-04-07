@@ -25,6 +25,9 @@ import imagen1 from './slider/imagen fondo1.jpg';
 import { FaWhatsapp } from 'react-icons/fa';
 import Perfil from './Perfil';
 import DetalleCategoria from './DetalleCategoria';
+import HomeAdmin from './admin/HomeAdmin';
+import Layout from './Layout';
+import AdminUsuario from './admin/AdminUsuario';
 
 
 
@@ -49,7 +52,8 @@ const WhatsAppLink = ({ phoneNumber, message }) => {
 function Inicio() {
   
   return (
-    <div className="inicio-container">
+    <Layout>
+      <div className="inicio-container">
       <div className="fondo-imagen">
         <img src={imagen1} alt="Registro" className="Imagen-inicio" />
         <div className="division">
@@ -70,6 +74,7 @@ function Inicio() {
       <TrandingSlider/>
       
     </div>
+    </Layout>
   );
 }
 
@@ -81,6 +86,7 @@ function Inicio() {
 
 function QuienesSomos() {
   return (
+    <Layout>
     <div className="contenedor">
       <div className="contenido">
         <h2>Quiénes Somos</h2>
@@ -93,12 +99,14 @@ function QuienesSomos() {
         <p>¡Gracias por confiar en nosotros para el cuidado de tu mejor amigo!</p>
       </div>
     </div>
+    </Layout>
   );
 }
 
 
 function PoliticasDePrivacidad() {
   return(
+    <Layout>
       <div className="contenedor">
         <div className='Avisop' >
         <h2>Aviso de Privacidad</h2>
@@ -325,6 +333,7 @@ function PoliticasDePrivacidad() {
       </p>
       </div>
     </div>
+    </Layout>
   );
 
 }
@@ -412,12 +421,14 @@ function App() {
 
 
     <Router>
-      <Header/> 
+      
       <div className="App">
         <main className="main-content" >
           
           <Routes>
-             
+            <Route path="/admin-Usuario" element={<AdminUsuario/>}/>
+
+
             <Route path="/" element={<Inicio/>} />
             <Route path="/Quienes-somos" element={<QuienesSomos />} />
             <Route path="/politicas-de-privacidad" element={<PoliticasDePrivacidad />} />
@@ -431,7 +442,7 @@ function App() {
             <Route path='/token' element={<Token/>}></Route>
             <Route path='/actualizar' element={<Actualizar/>}></Route>
             
-            
+            <Route path='/admin' element={<HomeAdmin/>}/>
              
              <Route path="/Detallecat" element={<DetalleCategoria/>} />
              <Route path="/CategoriasServi" element={<CategoriasServicio/>} />
@@ -448,7 +459,7 @@ function App() {
             
           </Routes>
         </main>
-        <Footer phoneNumber={phoneNumber} message={message}/>
+        
       </div>
     </Router>
   );

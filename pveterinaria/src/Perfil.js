@@ -3,6 +3,7 @@ import { useUser } from './UserContext';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './css/Perfil.css'; // Asegúrate de ajustar la ruta según tu estructura de archivos
+import Layout from './Layout';
 
 const Perfil = () => {
   const navigate = useNavigate();
@@ -19,7 +20,9 @@ const Perfil = () => {
   };
 
   return (
-    <div className="card" style={{marginTop:'50px'}}>
+    
+    <Layout>
+      <div className="card" style={{marginTop:'50px'}}>
       <div className="profile-info">
         <div>
           {/* Si tienes una imagen de perfil, puedes agregarla aquí */}
@@ -47,6 +50,7 @@ const Perfil = () => {
         </button>
       </div>
     </div>
+    </Layout>
   );
 };
 

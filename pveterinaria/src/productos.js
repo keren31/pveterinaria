@@ -19,6 +19,7 @@ import producto3 from './imagenes2/Producto3.jpg';
 import producto4 from './imagenes2/Producto4.jpg';
 import producto5 from './imagenes2/producto5.jpg';
 import producto6 from './imagenes2/producto6.jpg';
+import Layout from './Layout';
 
 const productos = [
   {
@@ -113,7 +114,8 @@ const Productos2 = () => {
   };
 
   return (
-    <Container maxWidth="md" style={{ marginTop: '60px', marginBottom: '20px' }}>
+   <Layout>
+     <Container maxWidth="md" style={{ marginTop: '60px', marginBottom: '20px' }}>
       <div style={{ marginBottom: '20px', textAlign: 'center' }}>
         <TextField
           label="Buscar productos"
@@ -201,6 +203,7 @@ const Productos2 = () => {
         </Container>
       </Modal>
     </Container>
+   </Layout>
   );
 };
 

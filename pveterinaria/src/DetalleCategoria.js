@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Typography, Card, CardContent, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import './css/DetalleCategoria.css'; // Importa el archivo de estilos CSS
+import Layout from './Layout';
 
 const DetalleCategoria = ({ volverACategoriasServicio }) => {
   const { nombre, Duracion, nombreServicio } = useParams(); // Obtiene los parámetros de la URL
@@ -28,7 +29,8 @@ const DetalleCategoria = ({ volverACategoriasServicio }) => {
   };
 
   return (
-    <Card className="detalle-categoria-card">
+    <Layout>
+      <Card className="detalle-categoria-card">
       <CardContent>
         <Typography variant="h5" component="h2">
         Selección del servicio: {servicioSeleccionado ? servicioSeleccionado.nombre : ''}
@@ -50,6 +52,7 @@ const DetalleCategoria = ({ volverACategoriasServicio }) => {
         </Box>
       </CardContent>
     </Card>
+    </Layout>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Grid, Button, Card, CardActionArea, CardContent, CardMedia } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Layout from './Layout';
 
 const CategoriasServicio = () => {
   const [categorias, setCategorias] = useState([]);
@@ -28,6 +29,8 @@ const CategoriasServicio = () => {
   }
 
   return (
+    <Layout>
+      
     <div style={{ marginTop: '90px', padding: '20px', backgroundColor: '#f9f9f9' }}>
       <Typography variant="h3" component="h1" style={{ marginBottom: '20px' }}>
         Categorías del Servicio
@@ -65,6 +68,7 @@ const CategoriasServicio = () => {
         Volver a seleccionar servicio
       </Button>
     </div>
+    </Layout>
   );
 };
 

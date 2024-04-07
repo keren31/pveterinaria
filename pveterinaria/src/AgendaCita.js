@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import imagen from './img/imagen1.jpg'; // Ruta de la imagen que deseas utilizar
 import { useUser } from './UserContext';
 import Swal from 'sweetalert2';
+import Layout from './Layout';
 const AgendarCita = () => {
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   const navigate = useNavigate();
@@ -148,125 +149,126 @@ const AgendarCita = () => {
 
 
   return (
-    <div className="registro-form-containerRegistro">
-      <div className="registro-image-containerRegistro">
-        <img src={imagen} alt="Estética Canina" className="registro-imageRegistro" />
-      </div>
-      <div className="registro-formRegistro">
-        <p className='loginTitulo'>Agendar Cita</p>
-        <form onSubmit={handleSubmit} className='formulario'>
-          <div>
-            <label htmlFor="nombre" className='RegistroLabel'>Nombre* :</label>
-            <input
-              id="nombre"
-              name="nombre"
-              value={nombreUser}
-              
-            />
-           
-          </div>
-          <div>
-            <label htmlFor="apellidoP" className='RegistroLabel'>Apellido Paterno* :</label>
-            <input
-              id="apellidoP"
-              name="apellidoP"
-              value={ApellidoPa}
-             
-            />
-
-          </div>
-          <div>
-            <label htmlFor="apellidoM" className='RegistroLabel'>Apellido Materno* :</label>
-            <input
-              id="apellidoM"
-              name="apellidoM"
-              value={ApellidoMa}
-             
-            />
-            
-          </div>
-          <div>
-            <label htmlFor="email" className='RegistroLabel'>Correo* :</label>
-            <input
-              id="email"
-              name="email"
-              value={CorreUser}
-             
-            />
-           
-          </div>
-          <div>
-            <label htmlFor="telefono" className='RegistroLabel'>Teléfono* :</label>
-            <input
-              type="tel"
-              id="telefono"
-              name="telefono"
-              value={Tel}
-             
-            />
-           
-          </div>
-          <div>
-            <label htmlFor="fechaCita" className='RegistroLabel'>Fecha de Cita* :</label>
-            <input
-              type="date"
-              id="fechaCita"
-              name="fechaCita"
-              value={fechaCita}
-              onChange={(e) => setFechaCita(e.target.value)}
-              onBlur={() => validateFechaCita(fechaCita)}
-              className={fechaCitaError ? 'input-error' : ''}
-              required
-            />
-            {fechaCitaError && <p className="error-message">{fechaCitaError}</p>}
-          </div>
-          <div>
-            <label htmlFor="horaCita" className='RegistroLabel'>Hora de Cita* :</label>
-            <select
-              id="horaCita"
-              name="horaCita"
-              value={horaCita}
-              onChange={(e) => setHoraCita(e.target.value)}
-              onBlur={() => validateHoraCita(horaCita)}
-              className={horaCitaError ? 'input-error' : ''}
-              required
-            >
-              <option value="">Seleccionar horario</option>
-              {horariosDisponibles.map((horario, index) => (
-                <option key={index} value={horario}>{horario}</option>
-              ))}
-            </select>
-            {horaCitaError && <p className="error-message">{horaCitaError}</p>}
-          </div>
-
-          <div>
-            <label htmlFor="servicio" className='RegistroLabel'>Servicio* :</label>
-            <input
-              type="text"
-              id="servicio"
-              name="servicio"
-              value={servicio}
-              readOnly
-            />
-          </div>
-
-          <div>
-            <label htmlFor="categoria" className='RegistroLabel'>Categoría:</label>
-            <input
-              type="text"
-              id="categoria"
-              name="categoria"
-              value={categoria}
-              readOnly
-            />
-          </div>
-
-
-
-          <button className='btn btn-warning text2' type="submit">Agendar Cita</button>
-        </form>
-      </div>
+    <Layout><div className="registro-form-containerRegistro">
+    <div className="registro-image-containerRegistro">
+      <img src={imagen} alt="Estética Canina" className="registro-imageRegistro" />
     </div>
+    <div className="registro-formRegistro">
+      <p className='loginTitulo'>Agendar Cita</p>
+      <form onSubmit={handleSubmit} className='formulario'>
+        <div>
+          <label htmlFor="nombre" className='RegistroLabel'>Nombre* :</label>
+          <input
+            id="nombre"
+            name="nombre"
+            value={nombreUser}
+            
+          />
+         
+        </div>
+        <div>
+          <label htmlFor="apellidoP" className='RegistroLabel'>Apellido Paterno* :</label>
+          <input
+            id="apellidoP"
+            name="apellidoP"
+            value={ApellidoPa}
+           
+          />
+
+        </div>
+        <div>
+          <label htmlFor="apellidoM" className='RegistroLabel'>Apellido Materno* :</label>
+          <input
+            id="apellidoM"
+            name="apellidoM"
+            value={ApellidoMa}
+           
+          />
+          
+        </div>
+        <div>
+          <label htmlFor="email" className='RegistroLabel'>Correo* :</label>
+          <input
+            id="email"
+            name="email"
+            value={CorreUser}
+           
+          />
+         
+        </div>
+        <div>
+          <label htmlFor="telefono" className='RegistroLabel'>Teléfono* :</label>
+          <input
+            type="tel"
+            id="telefono"
+            name="telefono"
+            value={Tel}
+           
+          />
+         
+        </div>
+        <div>
+          <label htmlFor="fechaCita" className='RegistroLabel'>Fecha de Cita* :</label>
+          <input
+            type="date"
+            id="fechaCita"
+            name="fechaCita"
+            value={fechaCita}
+            onChange={(e) => setFechaCita(e.target.value)}
+            onBlur={() => validateFechaCita(fechaCita)}
+            className={fechaCitaError ? 'input-error' : ''}
+            required
+          />
+          {fechaCitaError && <p className="error-message">{fechaCitaError}</p>}
+        </div>
+        <div>
+          <label htmlFor="horaCita" className='RegistroLabel'>Hora de Cita* :</label>
+          <select
+            id="horaCita"
+            name="horaCita"
+            value={horaCita}
+            onChange={(e) => setHoraCita(e.target.value)}
+            onBlur={() => validateHoraCita(horaCita)}
+            className={horaCitaError ? 'input-error' : ''}
+            required
+          >
+            <option value="">Seleccionar horario</option>
+            {horariosDisponibles.map((horario, index) => (
+              <option key={index} value={horario}>{horario}</option>
+            ))}
+          </select>
+          {horaCitaError && <p className="error-message">{horaCitaError}</p>}
+        </div>
+
+        <div>
+          <label htmlFor="servicio" className='RegistroLabel'>Servicio* :</label>
+          <input
+            type="text"
+            id="servicio"
+            name="servicio"
+            value={servicio}
+            readOnly
+          />
+        </div>
+
+        <div>
+          <label htmlFor="categoria" className='RegistroLabel'>Categoría:</label>
+          <input
+            type="text"
+            id="categoria"
+            name="categoria"
+            value={categoria}
+            readOnly
+          />
+        </div>
+
+
+
+        <button className='btn btn-warning text2' type="submit">Agendar Cita</button>
+      </form>
+    </div>
+  </div>
+  </Layout>
   );
 };
 
