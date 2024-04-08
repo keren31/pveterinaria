@@ -4,7 +4,7 @@ import './css/App.css'; // Importa tu archivo CSS
 import Header from "./Header";
 import CategoriasServicio from './CategoriasServicio';
 import Registro from './Registro'
-import TrandingSlider from './TrandingSlider'
+import TrandingSlider from './TrandingSlider' 
 
 import ServicioCard from'./servicios'
 
@@ -28,6 +28,9 @@ import DetalleCategoria from './DetalleCategoria';
 import HomeAdmin from './admin/HomeAdmin';
 import Layout from './Layout';
 import AdminUsuario from './admin/AdminUsuario';
+import AdminProductos from './admin/AdminProductos';
+import CitasAdmin from './admin/CitasAdmin';
+import CardServicios from './componentes/CardServicios';
 
 
 
@@ -69,7 +72,9 @@ function Inicio() {
           <h1 className="titulo">Bienvenido a la Estetica Canina Platon</h1>
         </div>
       </div>
-      <ServicioCard/>
+     
+     <CardServicios/>
+    
       <div className='division2'></div>
       <TrandingSlider/>
       
@@ -426,7 +431,7 @@ function App() {
         <main className="main-content" >
           
           <Routes>
-            <Route path="/admin-Usuario" element={<AdminUsuario/>}/>
+            
 
 
             <Route path="/" element={<Inicio/>} />
@@ -453,6 +458,11 @@ function App() {
               <Route path='/administradoradmin' element={<AgendarCita/>}/>
 
              </Route>
+
+             /////////////////////////////////////
+             <Route path="/admin-Usuario" element={<AdminUsuario/>}/>
+             <Route path="/admin-producto" element={<AdminProductos/>} />
+             <Route path="/admin-citas" element={<CitasAdmin/>} />
      
   
 

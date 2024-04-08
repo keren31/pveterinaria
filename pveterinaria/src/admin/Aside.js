@@ -31,9 +31,9 @@ class AsideAdmin extends Component {
         const bgClass = open ? "w-72" : "w-24";
 
         const Menus = [
-            { title: "Citas", path: "/Admin", icon: TodayIcon },
+            { title: "Citas", path: "/admin-citas", icon: TodayIcon },
             { title: "Servicios", path: "/Admin", icon: MiscellaneousServicesIcon },
-            { title: "Productos", path: "/Admin", icon: AddShoppingCartIcon },
+            { title: "Productos", path: "/admin-producto", icon: AddShoppingCartIcon },
             { title: "Usuarios", path: "/admin-Usuario", icon: SupervisedUserCircleIcon },
             { title: "Mascotas", path: "/Admin", icon: PetsIcon }
         ];
@@ -46,7 +46,7 @@ class AsideAdmin extends Component {
 
         return (
             <div className="flex">
-                <div className={`bg-secondaryBlue h-screen p-5 pt-8 ${bgClass} duration-300 relative`}>
+                <div className={`bg-red h-screen p-5 pt-8 ${bgClass} duration-300 relative`}>
                     <ArrowBackIcon
                         className={`bg-white text-darkPurple text-3xl rounded-full absolute -right-3 top-9 border border-secondaryBlue cursor-pointer ${!open && "rotate-180"}`}
                         onClick={this.toggleMenu}
@@ -92,7 +92,7 @@ class AsideAdmin extends Component {
                     </ul>
                 </div>
                 <div className="p-7">
-                    <h1 className="text-2xl font-semibold">Clínica Veterinaria JIREH</h1>
+                    <h1 className="text-2xl font-semibold">Estetica Canina Platon</h1>
                 </div>
             </div>
         );
