@@ -12,7 +12,7 @@ import TodayIcon from '@mui/icons-material/Today';
 import PetsIcon from '@mui/icons-material/Pets';
 import { Link } from 'react-router-dom';
 
-class AsideAdmin extends Component {
+class AsidePerfil extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,17 +31,17 @@ class AsideAdmin extends Component {
         const bgClass = open ? "w-72" : "w-24";
 
         const Menus = [
-            { title: "Citas", path: "/admin-citas", icon: TodayIcon },
-            { title: "Servicios", path: "/Admin", icon: MiscellaneousServicesIcon },
-            { title: "Productos", path: "/admin-producto", icon: AddShoppingCartIcon },
-            { title: "Usuarios", path: "/admin-Usuario", icon: SupervisedUserCircleIcon },
-            { title: "Mascotas", path: "/perfile", icon: PetsIcon }
+            { title: "Mi Cuenta", path: "/Perfil", icon: PersonIcon },
+            { title: "Mis Citas", path: "/mis-Citas", icon: TodayIcon },
+            { title: "Servicios", path: "/perfile", icon: MiscellaneousServicesIcon },
+            { title: "Productos", path: "/mis-citas", icon: AddShoppingCartIcon },
+            { title: "Usuarios", path: "/mis-citas", icon: SupervisedUserCircleIcon },
+            { title: "Mascotas", path: "/mis citas", icon: PetsIcon }
         ];
 
         const Menu2 = [
-            { title: "Mi Cuenta", path: "/Admin", icon: PersonIcon },
-            { title: "Reportes", path: "/Admin", icon: AssessmentIcon },
             { title: "Salir", path: "/Admin", icon: LogoutIcon }
+            
         ];
 
         return (
@@ -99,4 +99,4 @@ class AsideAdmin extends Component {
     }
 }
 
-export default AsideAdmin;
+export default AsidePerfil;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import imagen from './img/logotipo jas.jpeg';
+import Layout from './Layout';
 
 export default function Actualizar() {
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
@@ -10,14 +11,26 @@ export default function Actualizar() {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [ip, setIp] = useState('');
 
-  
+  function ObtenerIp(){
+    let apiKey = "8c308d0e8f217c1a489e15cb1998c34ffcd76bcead2a2851c3878299";
+    json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
+      setIp(data.ip);
+    });
+  }
+  async function json(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validatePassword(password)) {
       const data = new FormData();
       data.append('Correo', correo);
       data.append('Contrasena', password);
+      data.append('ip', ip);
 
       fetch(
         apiurll+'api/CasaDelMarisco/RecuperarContrasena?Correo=' +
@@ -55,10 +68,12 @@ export default function Actualizar() {
       return false;
     }
     setPasswordError('');
+    ObtenerIp();
     return true;
   };
 
   return (
+    <Layout>
     <div className="registro-form-containerLogin">
       <div className="registro-image-containerLogin">
         <img src={imagen} alt="Registro" className="registro-imageLogin" />
@@ -73,6 +88,7 @@ export default function Actualizar() {
           </label>
           <input
             value={password}
+            type='password'
             onChange={(e) => setPassword(e.target.value)}
             required
           />
@@ -86,5 +102,6 @@ export default function Actualizar() {
         </form>
       </div>
     </div>
+    </Layout>
   );
 }

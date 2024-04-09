@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import imagen from './img/imagen1.jpg';
+import Layout from './Layout';
 
 export default function RecuperarContra() {
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
@@ -52,6 +53,7 @@ export default function RecuperarContra() {
   };
 
   return (
+    <Layout>
     <div className="registro-form-containerLogin">
       <div className="registro-image-containerLogin">
         <img src={imagen} alt="Registro" className="registro-imageLogin" />
@@ -85,5 +87,6 @@ export default function RecuperarContra() {
         </form>
       </div>
     </div>
+    </Layout>
   );
 }

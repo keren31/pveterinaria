@@ -7,6 +7,8 @@ import ReCAPTCHA from "react-google-recaptcha";
 import {useUser} from './UserContext'
 import Swal from 'sweetalert2';
 import Layout from './Layout';
+import { gapi } from "gapi-script";
+import GoogleLogin from "@leecheuk/react-google-login";
 
 export default function Login() {
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
@@ -15,6 +17,8 @@ export default function Login() {
   const [botonDesactivado, setBotonDesactivado] = useState(true);
 
   const [email, setEmail] = useState('');
+  const [ip, setIp] = useState('');
+
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -22,6 +26,7 @@ export default function Login() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Estado para habilitar/deshabilitar el botón de entrar
   const [recaptchaToken, setRecaptchaToken] = useState('');
   const [recaptchaError, setRecaptchaError] = useState('');
+  const ClientID = "30463532374-6m31aqpp06eqco9k3325unc6n62cs8ej.apps.googleusercontent.com"
 
   useEffect(() => {
     // Habilitar el botón después de 3 segundos si se han hecho 3 intentos fallidos
@@ -54,16 +59,29 @@ export default function Login() {
       return null;
     }
   };
+  async function json(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  }
+  function ObtenerIp(){
+    let apiKey = "8c308d0e8f217c1a489e15cb1998c34ffcd76bcead2a2851c3878299";
+    json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
+      setIp(data.ip);
+    });
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    const data = new FormData();
-    data.append('Correo', email);
-    data.append('Contrasena', password);
-  
+    const data = new FormData();  
+    
+    
     if (validateEmail(email) && validatePassword(password)) {
       try {
-        const res = await fetch(apiurll+'api/CasaDelMarisco/Login?Correo=' + email + '&Contrasena=' + password, {
+        data.append('Correo', email);
+        data.append('Contrasena', password);
+        data.append('ip', ip);
+        console.log(email, password, ip)
+        const res = await fetch(apiurll+'api/CasaDelMarisco/Login', {
           method: 'POST',
           body: data,
         });
@@ -79,9 +97,9 @@ export default function Login() {
               body: data,
             });
           }
-        } else if (result === 'Error en las credenciales') {
+        } if (result === 'Error en las credenciales') {
           setEmailError('Error en las credenciales');
-        } else if (result === 'Contraseña correcta') {
+        } if (result === 'Contraseña correcta') {
           const userData = await obtenerDatosUsuario();
           loginUser(userData);
           Swal.fire({
@@ -99,7 +117,7 @@ export default function Login() {
             title: 'Bienvenido de nuevo Administrador!: '+userData.Nombre,
             text: 'Ahora ve y navega en nuestra paguina.',
           });
-          navigate('/')
+          navigate('/admin-citas')
           
         } else {
           setPasswordError('Su cuenta está bloqueada');
@@ -122,6 +140,7 @@ export default function Login() {
       setEmailError('No puede estar vacio este requisito');
     } else if (emailRegex.test(email)) {
       setEmailError('');
+      ObtenerIp();
       return true;
     } else {
       setEmailError('Correo electrónico no válido');
@@ -144,6 +163,59 @@ export default function Login() {
   const handleRecaptchaChange = (token) => {
     setRecaptchaToken(token);
   };
+
+  const onFailure = () => {
+    console.log("Algo salio mal");
+  };
+
+  const onSuccess = async (response) => {
+    const email = response.profileObj.email;
+    const data = new FormData();
+    data.append("Correo", email);
+    fetch(apiurll + "api/CasaDelMarisco/VerificarCorreo", {
+      method: "POST",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then(async (result) => {
+        data.append("ip", ip);
+        if (result === "Correo Existe") {
+          fetch(apiurll + "api/CasaDelMarisco/LoginOauth", {
+            method: "POST",
+            body: data,
+          });
+
+          const resultado = await obtenerDatosUsuario(email);
+          console.log(resultado);
+          loginUser(resultado);
+          if (resultado.Rol === 2) {
+            Swal.fire({
+              icon: "success",
+              title: "Login de administrador",
+              text: "Cuidado, eres administrador. Puedes modificar datos de la página, siempre con cuidado.",
+            });
+            navigate("/dashboard/home");
+          } else {
+            navigate("/");
+          }
+          console.log(resultado);
+        } else {
+        }
+      });
+    console.log(response);
+    //console.log(response.profileObj.email)
+  };
+
+  useEffect(() => {
+    const start = () => {
+      gapi.auth2.init({
+        clientId: ClientID,
+      });
+    };
+    gapi.load("client:auth2", start);
+  }, []);
+
+  
 
   return (
     <Layout>
@@ -205,6 +277,13 @@ export default function Login() {
           </button>
           <br />
           <p className="Text">or wiht</p>
+          <GoogleLogin
+            clientId={ClientID}
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            cookiePolicy={"single_host_policy"}
+            className="google-login-button"
+          />
           <div className="sesionButton">
             <div></div>
             <div></div>

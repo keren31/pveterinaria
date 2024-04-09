@@ -19,8 +19,10 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
-import AdminLayout from "./AdminLayout";
+import PerfilLayout from "./PerfilLayout";
 import { useState ,useEffect} from "react";
+import Layout from "../Layout";
+
  
 const TABS = [
   {
@@ -41,7 +43,7 @@ const TABLE_HEAD = ["IdCita", "Nombre","NombreServicio","fecha", "Hora", "Correo
  
 
  
-export default function Citasadmin() {
+export default function VerCita() {
 
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
 
@@ -74,7 +76,8 @@ export default function Citasadmin() {
     }
   }
   return (
-    <AdminLayout>
+    <Layout>
+    <PerfilLayout>
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-8 flex items-center justify-between gap-8">
@@ -256,6 +259,7 @@ export default function Citasadmin() {
         </div>
       </CardFooter>
     </Card>
-    </AdminLayout>
+    </PerfilLayout>
+    </Layout>
   );
 }

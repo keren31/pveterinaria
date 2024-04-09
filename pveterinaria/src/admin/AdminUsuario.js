@@ -48,6 +48,7 @@ export default function AdminUsuario() {
   const [userData, setUserData] = useState([]);
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   const [Estado,setEstado]=useState('Ofline');
+  
   const estadoColor = (estado) => {
     let color = '';
     if (estado === 'Activo') {
@@ -94,6 +95,8 @@ export default function AdminUsuario() {
         }
     })
   }
+
+  const [EstadoC,setEstadoC]=useState('Activo');
 
   const desbloquearUser=(idUser)=>{
 
@@ -161,7 +164,7 @@ export default function AdminUsuario() {
         }
     })
   }
-  const [EstadoC,setEstadoC]=useState('Activo');
+
   
 
   const estadoTexto = (estado) => {
@@ -247,11 +250,12 @@ export default function AdminUsuario() {
                 {["ID","Usuario", "Telefono","Rol", "Estado",  "Opciones"].map((el) => (
                   <th
                     key={el}
-                    className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                    className="border-b border-blue-gray-50 py-3 px-5 text-left text-xl"
                   >
                     <Typography
                       variant="h4"
                       className="text-[14px] font-bold uppercase text-blue-gray-400"
+                      size="xl"
                     >
                       {el}
                     </Typography>
@@ -274,6 +278,7 @@ export default function AdminUsuario() {
                         variant="h5"
                         color="blue-gray"
                         className="font-semibold"
+                        size="xl"
                       >
                         {idUsuario}
                       </Typography>
@@ -286,6 +291,7 @@ export default function AdminUsuario() {
                             variant="h5"
                             color="blue-gray"
                             className="font-semibold"
+                            size="xl"
                           >
                             {Nombre}
                           </Typography>
@@ -350,10 +356,10 @@ export default function AdminUsuario() {
           Page 1 of 10
         </Typography>
         <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
+          <Button variant="outlined" size="xl">
             Previous
           </Button>
-          <Button variant="outlined" size="sm">
+          <Button variant="outlined" size="xl">
             Next
           </Button>
         </div>

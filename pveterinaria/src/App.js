@@ -31,6 +31,8 @@ import AdminUsuario from './admin/AdminUsuario';
 import AdminProductos from './admin/AdminProductos';
 import CitasAdmin from './admin/CitasAdmin';
 import CardServicios from './componentes/CardServicios';
+import CardPerfil from './perfil/Profile';
+import VerCita from './perfil/VerCita';
 
 
 
@@ -463,6 +465,10 @@ function App() {
              <Route path="/admin-Usuario" element={<AdminUsuario/>}/>
              <Route path="/admin-producto" element={<AdminProductos/>} />
              <Route path="/admin-citas" element={<CitasAdmin/>} />
+             ////////////////////////////////////
+             <Route path="/perfile" element={<CardPerfil/>} />
+             <Route path="/mis-citas" element={<VerCita/>} />
+
      
   
 

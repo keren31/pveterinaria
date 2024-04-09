@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './css/Perfil.css'; // Asegúrate de ajustar la ruta según tu estructura de archivos
 import Layout from './Layout';
+import PerfilLayout from './perfil/PerfilLayout';
 
 const Perfil = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Perfil = () => {
   return (
     
     <Layout>
+      <PerfilLayout>
       <div className="card" style={{marginTop:'50px'}}>
       <div className="profile-info">
         <div>
@@ -50,6 +52,7 @@ const Perfil = () => {
         </button>
       </div>
     </div>
+    </PerfilLayout>
     </Layout>
   );
 };
