@@ -28,72 +28,120 @@ class AsidePerfil extends Component {
 
     render() {
         const { open } = this.state;
-        const bgClass = open ? "w-72" : "w-24";
+        const bgClass = open ? { width: '25rem' } : { width: '10rem' };
 
         const Menus = [
-            { title: "Mi Cuenta", path: "/Perfil", icon: PersonIcon },
+            { title: "Mi Cuenta" , path: "/Perfil", icon: PersonIcon },
             { title: "Mis Citas", path: "/mis-Citas", icon: TodayIcon },
-            { title: "Servicios", path: "/perfile", icon: MiscellaneousServicesIcon },
             { title: "Productos", path: "/mis-citas", icon: AddShoppingCartIcon },
             { title: "Usuarios", path: "/mis-citas", icon: SupervisedUserCircleIcon },
-            { title: "Mascotas", path: "/mis citas", icon: PetsIcon }
+            { title: "Mascotas", path: "/mascotas", icon: PetsIcon }
         ];
 
         const Menu2 = [
             { title: "Salir", path: "/Admin", icon: LogoutIcon }
-            
         ];
 
         return (
-            <div className="flex">
-                <div className={`bg-red h-screen p-5 pt-8 ${bgClass} duration-300 relative`}>
+            <div style={{ display: 'flex' }}>
+                <div style={{ fontSize: '10px', backgroundColor: '#0a5cb8', height: '100vh', padding: '1.25rem', paddingTop: '2rem', ...bgClass, transition: 'width 300ms', position: 'relative' }}>
                     <ArrowBackIcon
-                        className={`bg-white text-darkPurple text-3xl rounded-full absolute -right-3 top-9 border border-secondaryBlue cursor-pointer ${!open && "rotate-180"}`}
+                        style={{
+                            backgroundColor: 'white',
+                            color: 'darkPurple',
+                            fontSize: '3rem',
+                            borderRadius: '50%',
+                            position: 'absolute',
+                            right: '-0.75rem',
+                            top: '2.25rem',
+                            border: '1px solid secondaryBlue',
+                            cursor: 'pointer',
+                            transform: !open && 'rotate(180deg)'
+                        }}
                         onClick={this.toggleMenu}
                     />
-                    <div className='inline-flex items-center'>
-                        <ComputerIcon sx={{ fontSize: 50 }} className={`bg-primaryBlue text-4xl rounded cursor-pointer block float-left mr-2 duration-300 ${open && "rotate-[360deg]"}`} />
-                        <div className='flex flex-col'>
-                            <h1 className={`text-white origin-left font-medium text-2xl duration-300 ${!open && "scale-0"}`}>Dashboard</h1>
+                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                        <ComputerIcon sx={{ fontSize: 50 }} style={{ backgroundColor: 'primaryBlue', color: 'white', fontSize: '4rem', borderRadius: '50%', cursor: 'pointer', display: 'block', float: 'left', marginRight: '0.5rem', transition: 'transform 300ms', transform: open && 'rotate(360deg)' }} />
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <h1 style={{ color: 'white', fontWeight: 500, fontSize: '2rem', transition: 'transform 300ms', transform: !open && 'scale(0)' }}>Mi Perfil</h1>
                         </div>
                     </div>
-                    <div className='flex items-center rounded-md bg-lightWhite mt-6 px-4 py-2'>
-                        <SearchIcon className='text-white text-lg block float-left cursor-pointer mr-2' />
-                        <input type='search' placeholder='Buscar...' className='w-full text-base bg-transparent text-white focus:outline-none' />
+                    <div style={{ display: 'flex', alignItems: 'center', borderRadius: '0.5rem', backgroundColor: 'lightWhite', marginTop: '1.5rem', paddingX: '1rem', paddingY: '0.5rem' }}>
+                        <SearchIcon style={{ color: 'white', fontSize: '1.25rem', display: 'block', float: 'left', cursor: 'pointer', marginRight: '0.5rem' }} />
+                        <input type='search' placeholder='Buscar...' style={{ width: '100%', fontSize: '1.5rem', backgroundColor: 'transparent', color: 'white', outline: 'none' }} />
                     </div>
-                    <ul className='pt-2'>
+                    <ul style={{ paddingTop: '0.5rem' }}>
                         {Menus.map((menu, index) => (
                             <li
-                                className="flex items-center justify-center p-2 text-primaryBlue text-sm gap-x-4 cursor-pointer  hover:text-secondaryBlue hover:bg-primaryBlue rounded-md mt-2"
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '0.5rem',
+                                    color: '#fff',
+                                    fontSize: '2rem',
+                                    gap: '1rem',
+                                    cursor: 'pointer',
+                                    color: 'hover:text-secondaryBlue',
+                                    backgroundColor: 'hover:bg-primaryBlue',
+                                    borderRadius: '0.5rem',
+                                    marginTop: '0.5rem'
+                                }}
                                 key={index}
                             >
-                                <span className='text-2xl block float-left'>
+                                <span style={{ fontSize: '2rem', display: 'block', float: 'left',color:'#fff' }}>
                                     {React.createElement(menu.icon, null)}
                                 </span>
                                 <Link to={menu.path}
-                                 className={`text-base font-medium flex-1 duration-200 pt-1 ${!open && "hidden"}`} >
-                                <span>{menu.title}</span>
+                                 style={{
+                                     fontSize: '2rem',
+                                     fontWeight: 500,
+                                     flex: 1,
+                                     transition: 'opacity 200ms',
+                                     paddingTop: '0.25rem',
+                                     opacity: !open ? 0 : 1,
+                                     color:'#fff'
+                                 }} >
+                                    <span>{menu.title}</span>
                                 </Link>
                             </li>
                         ))}
                     </ul>
-                    <ul className='mt-10'>
+                    <ul style={{ marginTop: '2.5rem' }}>
                         {Menu2.map((menu, index) => (
                             <li
-                                className="flex items-center justify-center p-2 text-primaryBlue text-sm gap-x-4 cursor-pointer  hover:text-secondaryBlue hover:bg-primaryBlue rounded-md mt-2"
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '0.5rem',
+                                    color: '#ff0000 ',
+                                    fontSize: '2rem',
+                                    gap: '1rem',
+                                    cursor: 'pointer',
+                                    color: 'hover:text-secondaryBlue',
+                                    backgroundColor: 'hover:bg-primaryBlue',
+                                    borderRadius: '0.5rem',
+                                    marginTop: '0.5rem'
+                                }}
                                 key={index}
                             >
-                                <span className='text-2xl block float-left'>
-                                    {React.createElement(menu.icon, { className: 'm-0 p-0' })}
+                                <span style={{ fontSize: '2rem', display: 'block', float: 'left' }}>
+                                    {React.createElement(menu.icon, { style: { margin: 0, padding: 0 } })}
                                 </span>
-                                <span className={`text-base font-medium flex-1 duration-200 pt-1 ${!open && "hidden"}`}>{menu.title}</span>
+                                <span style={{
+                                    fontSize: '2rem',
+                                    fontWeight: 500,
+                                    flex: 1,
+                                    transition: 'opacity 200ms',
+                                    paddingTop: '0.25rem',
+                                    opacity: !open ? 0 : 1
+                                }}>{menu.title}</span>
                             </li>
                         ))}
                     </ul>
                 </div>
-                <div className="p-7">
-                    <h1 className="text-2xl font-semibold">Estetica Canina Platon</h1>
-                </div>
+               
             </div>
         );
     }

@@ -22,6 +22,8 @@ import {
 import PerfilLayout from "./PerfilLayout";
 import { useState ,useEffect} from "react";
 import Layout from "../Layout";
+import { useUser } from '../../src/UserContext'; 
+import { useNavigate } from "react-router-dom";
 
  
 const TABS = [
@@ -39,24 +41,34 @@ const TABS = [
   },
 ];
  
-const TABLE_HEAD = ["IdCita", "Nombre","NombreServicio","fecha", "Hora", "Correo", "Telefono","Opciones"];
+const TABLE_HEAD = ["IdCita","NombreServicio","fecha", "Hora","Telefono","Opciones"];
  
 
  
 export default function VerCita() {
 
+  const { user, logoutUser } = useUser();
+  const navigate=useNavigate();
+
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
+
+  const obtenerIdUsuario = (user) => {
+    return user && user.idUsuario ? user.idUsuario : null;
+  };
+
+  const id = obtenerIdUsuario(user);
+
 
   useEffect(() => {
     obtenerCitas();  
   }, []);
 
   const [dataCitas,setDataCitas]=useState([]);
-
+  console.log(id)
   const obtenerCitas = async () => {
     try {
       const response = await fetch(
-        `${apiurll}/api/CasaDelMarisco/ObtenerCitasCAN`,
+        `${apiurll}/api/CasaDelMarisco/ObtenerCitasCANPorId?idUsuario=${id}`,
         {
           method: 'GET',
           // No es necesario incluir el body para una solicitud GET
@@ -66,8 +78,8 @@ export default function VerCita() {
       if (response.ok) {
         const userData1 = await response.json();
         setDataCitas(userData1);
-        console.log(dataCitas);
-        console.log(userData1)
+        console.log(userData1);
+       
       } else {
         console.error('Error al obtener datos de los usuarios:', response.statusText);
       }
@@ -108,12 +120,7 @@ export default function VerCita() {
               ))}
             </TabsHeader>
           </Tabs>
-          <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-            />
-          </div>
+         
         </div>
       </CardHeader>
       <CardBody className="overflow-scroll px-0">
@@ -141,7 +148,8 @@ export default function VerCita() {
           </thead>
           <tbody>
             {dataCitas !== null && dataCitas.map(
-              ({IdCita, Nombre, ApellidoMaterno, ApellidoPaterno,NombreServicio,Fecha, Hora, Correo, Telefono}, key) => {
+              ({IdCita,NombreServicio,Fecha, Hora,Telefono}, key) => {
+                const fechaFormateada = Fecha.split("T")[0];
                 const isLast = key === dataCitas.length - 1;
                 const classes = isLast
                   ? "p-4"
@@ -149,38 +157,15 @@ export default function VerCita() {
  
                 return (
                   <tr>
-                     <td className={classes}>
+                    <td className={classes}>
                       <Typography
-                        variant="h5"
-                        color="blue-gray"
-                        className="font-normal"
-                        size="xl"
-                      >
+                       variant="h5"
+                       color="blue-gray"
+                       className="font-normal"
+                       size="xl">
                         {IdCita}
                       </Typography>
                     </td>
-                    <td className={classes}>
-                      <div className="flex flex-col">
-                        <Typography
-                          variant="h5"
-                          color="blue-gray"
-                          className="font-normal"
-                          size="xl"
-                  
-                        >
-                          {Nombre}
-                        </Typography>
-                        <Typography
-                          variant="h5"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                          size="xl"
-                        >
-                          {ApellidoMaterno+ ApellidoPaterno}
-                        </Typography>
-                      </div>
-                    </td>
-                    
                     <td className={classes}>
                       <Typography
                         variant="h5"
@@ -198,7 +183,7 @@ export default function VerCita() {
                         className="font-normal"
                         size="xl"
                         >
-                        {Fecha}
+                        {fechaFormateada}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -211,16 +196,7 @@ export default function VerCita() {
                         {Hora}
                       </Typography>
                     </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="h5"
-                        color="blue-gray"
-                        className="font-normal"
-                        size="xl"
-                        >
-                        {Correo}
-                      </Typography>
-                    </td>
+                  
                     <td className={classes}>
                       <Typography
                         variant="h5"
@@ -232,8 +208,8 @@ export default function VerCita() {
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <Tooltip content="Edit User">
-                        <IconButton variant="text">
+                      <Tooltip content="Editar Usuario">
+                        <IconButton variant="text" onClick={()=> navigate('/editarCita',{state:{IdCita}})}>
                           <PencilIcon className="h-4 w-4" />
                         </IconButton>
                       </Tooltip>

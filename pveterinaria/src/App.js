@@ -33,6 +33,8 @@ import CitasAdmin from './admin/CitasAdmin';
 import CardServicios from './componentes/CardServicios';
 import CardPerfil from './perfil/Profile';
 import VerCita from './perfil/VerCita';
+import EditarCita from './perfil/EditarCita';
+import Mascotas from './perfil/Mascotas';
 
 
 
@@ -63,6 +65,7 @@ function Inicio() {
         <img src={imagen1} alt="Registro" className="Imagen-inicio" />
         <div className="division">
           <h2>SE BIENVENIDO</h2>
+          
           <p>
             ¡Te damos una cálida bienvenida a Estetica Canina Platon, donde la pasión por el cuidado y la estética de tus queridas mascotas se convierte en una experiencia extraordinaria!
           </p>
@@ -468,6 +471,9 @@ function App() {
              ////////////////////////////////////
              <Route path="/perfile" element={<CardPerfil/>} />
              <Route path="/mis-citas" element={<VerCita/>} />
+             <Route path="/editarCita" element={<EditarCita/>} />
+             <Route path="/mascotas" element={<Mascotas/>} />
+
 
      
   

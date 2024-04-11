@@ -235,12 +235,7 @@ export default function AdminUsuario() {
               ))}
             </TabsHeader>
           </Tabs>
-          <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-            />
-          </div>
+          
         </div>
       </CardHeader>
       <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
@@ -283,8 +278,8 @@ export default function AdminUsuario() {
                         {idUsuario}
                       </Typography>
                     </td>
-                    <td className={className}>
-                      <div className="flex items-start gap-4 min-w-[20rem]">
+                    <td className={className} >
+                      <div className="flex gap-4 mr-5" >
                         <Avatar src={Icono}  size="md" className="rounded-full" />
                         <div className="flex-1">
                           <Typography
