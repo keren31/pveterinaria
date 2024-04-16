@@ -11,7 +11,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import TodayIcon from '@mui/icons-material/Today';
 import PetsIcon from '@mui/icons-material/Pets';
 import { Link } from 'react-router-dom';
-
+import './aside.css'
 class AsideAdmin extends Component {
     constructor(props) {
         super(props);
@@ -35,65 +35,48 @@ class AsideAdmin extends Component {
             { title: "Servicios", path: "/Admin", icon: MiscellaneousServicesIcon },
             { title: "Productos", path: "/admin-producto", icon: AddShoppingCartIcon },
             { title: "Usuarios", path: "/admin-Usuario", icon: SupervisedUserCircleIcon },
+            { title: "Reportes", path: "/admin-edit-cita", icon: AssessmentIcon },
             { title: "Mascotas", path: "/perfile", icon: PetsIcon }
         ];
 
         const Menu2 = [
             { title: "Mi Cuenta", path: "/Admin", icon: PersonIcon },
-            { title: "Reportes", path: "/Admin", icon: AssessmentIcon },
             { title: "Salir", path: "/Admin", icon: LogoutIcon }
         ];
 
         return (
-            <div className="flex">
-                <div className={`bg-red h-screen p-5 pt-8 ${bgClass} duration-300 relative`}>
+            <div style={{ display: 'flex' }}>
+                <div className={`aside-container ${open ? 'open' : 'closed'}`}>
                     <ArrowBackIcon
-                        className={`bg-white text-darkPurple text-3xl rounded-full absolute -right-3 top-9 border border-secondaryBlue cursor-pointer ${!open && "rotate-180"}`}
+                        className="back-icon"
                         onClick={this.toggleMenu}
                     />
-                    <div className='inline-flex items-center'>
-                        <ComputerIcon sx={{ fontSize: 50 }} className={`bg-primaryBlue text-4xl rounded cursor-pointer block float-left mr-2 duration-300 ${open && "rotate-[360deg]"}`} />
-                        <div className='flex flex-col'>
-                            <h1 className={`text-white origin-left font-medium text-2xl duration-300 ${!open && "scale-0"}`}>Dashboard</h1>
-                        </div>
+                    <div className="dashboard">
+                        <ComputerIcon className="computer-icon" />
+                        <h1 className="dashboard-title">Administrador</h1>
                     </div>
-                    <div className='flex items-center rounded-md bg-lightWhite mt-6 px-4 py-2'>
-                        <SearchIcon className='text-white text-lg block float-left cursor-pointer mr-2' />
-                        <input type='search' placeholder='Buscar...' className='w-full text-base bg-transparent text-white focus:outline-none' />
+                    <div className="search-container">
+                        <SearchIcon className="search-icon" />
+                        <input type="search" placeholder="Buscar..." className="search-input" />
                     </div>
-                    <ul className='pt-2'>
+                    <ul className="menu">
                         {Menus.map((menu, index) => (
-                            <li
-                                className="flex items-center justify-center p-2 text-primaryBlue text-sm gap-x-4 cursor-pointer  hover:text-secondaryBlue hover:bg-primaryBlue rounded-md mt-2"
-                                key={index}
-                            >
-                                <span className='text-2xl block float-left'>
-                                    {React.createElement(menu.icon, null)}
-                                </span>
-                                <Link to={menu.path}
-                                 className={`text-base font-medium flex-1 duration-200 pt-1 ${!open && "hidden"}`} >
-                                <span>{menu.title}</span>
-                                </Link>
+                            <li className="menu-item" key={index}>
+                                <span className="menu-icon">{React.createElement(menu.icon, null)}</span>
+                                <Link to={menu.path} className="menu-link">{menu.title}</Link>
                             </li>
                         ))}
                     </ul>
-                    <ul className='mt-10'>
+                    <ul className="menu">
                         {Menu2.map((menu, index) => (
-                            <li
-                                className="flex items-center justify-center p-2 text-primaryBlue text-sm gap-x-4 cursor-pointer  hover:text-secondaryBlue hover:bg-primaryBlue rounded-md mt-2"
-                                key={index}
-                            >
-                                <span className='text-2xl block float-left'>
-                                    {React.createElement(menu.icon, { className: 'm-0 p-0' })}
-                                </span>
-                                <span className={`text-base font-medium flex-1 duration-200 pt-1 ${!open && "hidden"}`}>{menu.title}</span>
+                            <li className="menu-item" key={index}>
+                                <span className="menu-icon">{React.createElement(menu.icon, { style: { margin: '0', padding: '0' } })}</span>
+                                <span className="menu-link">{menu.title}</span>
                             </li>
                         ))}
                     </ul>
                 </div>
-                <div className="p-7">
-                    <h1 className="text-2xl font-semibold">Estetica Canina Platon</h1>
-                </div>
+              
             </div>
         );
     }

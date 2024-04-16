@@ -1,0 +1,133 @@
+/* Estilos para el contenedor principal */
+.flex {
+    display: flex;
+}
+
+/* Estilos para el contenedor del aside */
+.aside-container {
+    background-color: rgb(55, 0, 255);
+    height: 100vh;
+    padding: 20px;
+    padding-top: 32px;
+    width: 288px;
+    transition: width 0.3s;
+}
+
+/* Estilos para el aside cuando está cerrado */
+.aside-container.closed {
+    width: 96px;
+}
+
+/* Estilos para el icono de flecha de retroceso */
+.back-icon {
+    background-color: white;
+    color: purple;
+    font-size: 24px;
+    border-radius: 50%;
+    position: absolute;
+    right: -12px;
+    top: 36px;
+    border: 1px solid blue;
+    cursor: pointer;
+}
+
+/* Estilos para el contenedor del dashboard */
+.dashboard {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilos para el icono de computadora */
+.computer-icon {
+    font-size: 50px;
+    background-color: blue;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+/* Estilos para el título del dashboard */
+.dashboard-title {
+    color: white;
+    font-family: sans-serif;
+    font-size: 20px;
+}
+
+/* Estilos para el contenedor de búsqueda */
+.search-container {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    background-color: lightgray;
+    margin-top: 24px;
+    padding: 8px;
+}
+
+/* Estilos para el icono de búsqueda */
+.search-icon {
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+/* Estilos para el campo de búsqueda */
+.search-input {
+    width: 100%;
+    font-size: 16px;
+    background-color: transparent;
+    color: white;
+    outline: none;
+    border: none;
+}
+
+/* Estilos para el menú */
+.menu {
+    padding-top: 8px;
+}
+
+/* Estilos para cada ítem del menú */
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    color: rgb(233, 233, 233);
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 8px;
+    transition: background-color 0.3s;
+}
+
+/* Estilos para el ítem del menú al pasar el cursor */
+.menu-item:hover {
+    background-color: #3f51b5;
+}
+
+/* Estilos para el icono de cada ítem del menú */
+.menu-icon {
+    font-size: 24px;
+    margin-right: 8px;
+}
+
+/* Estilos para el enlace de cada ítem del menú */
+.menu-link {
+    font-size: 16px;
+    font-family: sans-serif;
+    flex: 1;
+    color: white;
+    text-decoration: none;
+}
+
+/* Estilos para el contenido */
+.content {
+    padding: 28px;
+}
+
+/* Estilos para el título del contenido */
+.content-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: black;
+}

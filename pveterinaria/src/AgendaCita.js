@@ -81,8 +81,8 @@ const AgendarCita = () => {
       validateHoraCita(horaCita) &&
       validateServicio(servicio)
     ) {
-      const horaCita1='12:09'
-      const data = new FormData();
+      
+        const data = new FormData();
         data.append("usuario_id", id);
         data.append("servicio_id", servicio);
         data.append("Fecha", fechaCita);
@@ -169,28 +169,40 @@ const AgendarCita = () => {
   const obtenerhorariosFecha=(fecha)=>{
     
     const proData=new FormData();
-        proData.append("fecha",fecha);
+    proData.append("fecha",fecha);
 
-        fetch(
-            "http://localhost:5029/api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha,
-            {
+    fetch("http://localhost:5029/api/CasaDelMarisco/ObtenerDiasInhabiles?fecha=" + fecha, {
+      method: 'POST',
+      body: proData,
+    }).then((res) => res.json())
+    .then((result) => {
+        if (result === "Si hay servicio") {
+            // No hay servicio, usar horarios por defecto
+            setHorariosDisponibles(horarios);
+        } else {
+            const horariosOcupados = result; // Suponiendo que result contiene los horarios ocupados
+            const horariosDisponibles1 = horarios.filter(horario => !horariosOcupados.includes(horario));
+    
+            // Realizar la segunda llamada a la API después de filtrar los horarios
+            fetch("http://localhost:5029/api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
                 method: 'POST',
                 body: proData,
-            }
-        ) .then((res) => res.json())
-        .then((result) => {
-          if(result==="No hay horas"){
-            setHorariosDisponibles(horarios);
-            console.log('jjaja pendejo');
-          }else{
-            const horariosOcupados = result; // Suponiendo que result contiene los horarios ocupados
-            const horariosDisponibles = horarios.filter(horario => !horariosOcupados.includes(horario));
-            console.log(horariosDisponibles + 'disponibles');
-            console.log(horariosOcupados +'ocupados')
-            setHorariosDisponibles(horariosDisponibles);
-          } 
-        })
-      
+            }).then((res) => res.json())
+            .then((result) => {
+                if (result === "No hay horas") {
+                    // No hay horas disponibles, usar el primer filtrado
+                    setHorariosDisponibles(horariosDisponibles1);
+                } else {
+                    const horariosOcupados2 = result; // Suponiendo que result contiene los horarios ocupados
+                    const horariosDisponibles2 = horariosDisponibles1.filter(horario => !horariosOcupados2.includes(horario));
+                    // Aplicar el segundo filtrado a partir del primer filtrado
+                    setHorariosDisponibles(horariosDisponibles2);
+                } 
+            })
+        } 
+    });
+  
+    
      
   }
 
@@ -221,6 +233,8 @@ const AgendarCita = () => {
             value={nombreUser}
             
           />
+
+          
          
         </div>
         <div>

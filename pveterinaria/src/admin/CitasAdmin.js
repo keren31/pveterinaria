@@ -1,6 +1,7 @@
 import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
@@ -21,7 +22,8 @@ import {
 } from "@material-tailwind/react";
 import AdminLayout from "./AdminLayout";
 import { useState ,useEffect} from "react";
- 
+import Swal from "sweetalert2";
+
 const TABS = [
   {
     label: "All",
@@ -37,14 +39,50 @@ const TABS = [
   },
 ];
  
-const TABLE_HEAD = ["IdCita", "Nombre","NombreServicio","fecha", "Hora", "Correo", "Telefono","Opciones"];
+const TABLE_HEAD = ["IdCita", "Nombre","NombreServicio","fecha", "Hora", "Correo", "Telefono","Opciones","Estado"];
  
 
  
 export default function Citasadmin() {
 
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
+  const [idCita, setIdCita] = useState(null); // Estado para almacenar el idReservacion seleccionado\
 
+  const handleCancel = (IdCita) => {
+    setIdCita(IdCita);
+    CancelarReservacion()
+  };
+  const CancelarReservacion = () => {
+    const data = new FormData();
+    data.append("idCita", parseInt(idCita));
+    data.append("Estado", "Cancelada");
+
+    try {
+      fetch(apiurll + "api/CasaDelMarisco/CambiarEstadoCitas", {
+        method: "POST",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          if (result === "Cita pendiente") {
+            Swal.fire({
+              icon: "success",
+              title: "La cancelación ha sido exitosa",
+              showConfirmButton: false,
+              timer: 2500,
+            }).then(() => {
+            });
+          }
+   
+        });
+    } catch {
+      Swal.fire({
+        icon: "warning",
+        title: "Lo sentimos",
+        text: "Parece que hay un error en el servidor. Por favor, inténtelo de nuevo más tarde.",
+      });
+    }
+  };
   useEffect(() => {
     obtenerCitas();  
   }, []);
@@ -138,7 +176,7 @@ export default function Citasadmin() {
           </thead>
           <tbody>
             {dataCitas !== null && dataCitas.map(
-              ({IdCita, Nombre, ApellidoMaterno, ApellidoPaterno,NombreServicio,Fecha, Hora, Correo, Telefono}, key) => {
+              ({IdCita, Nombre, ApellidoMaterno, ApellidoPaterno,NombreServicio,Fecha, Hora, Correo, Telefono,Estado}, key) => {
                 const isLast = key === dataCitas.length - 1;
                 const classes = isLast
                   ? "p-4"
@@ -234,6 +272,24 @@ export default function Citasadmin() {
                           <PencilIcon className="h-4 w-4" />
                         </IconButton>
                       </Tooltip>
+                      <Tooltip content="Editar Usuario">
+                        <IconButton variant="text" onClick={() =>
+                      handleCancel(IdCita)
+                    }>
+                          <TrashIcon className="h-4 w-4" />
+
+                        </IconButton>
+                      </Tooltip>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="h5"
+                        color="blue-gray"
+                        className="font-normal"
+                        size="xl"
+                        >
+                        {Estado}
+                      </Typography>
                     </td>
                   </tr>
                 );

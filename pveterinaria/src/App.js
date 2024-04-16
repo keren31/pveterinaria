@@ -36,6 +36,8 @@ import VerCita from './perfil/VerCita';
 import EditarCita from './perfil/EditarCita';
 import Mascotas from './perfil/Mascotas';
 
+import AdminEditCita from './admin/AdminEditCita';
+
 
 
 const WhatsAppLink = ({ phoneNumber, message }) => {
@@ -464,11 +466,12 @@ function App() {
 
              </Route>
 
-             /////////////////////////////////////
+           
              <Route path="/admin-Usuario" element={<AdminUsuario/>}/>
              <Route path="/admin-producto" element={<AdminProductos/>} />
              <Route path="/admin-citas" element={<CitasAdmin/>} />
-             ////////////////////////////////////
+             <Route path="/admin-edit-cita" element={<AdminEditCita/>} />
+           
              <Route path="/perfile" element={<CardPerfil/>} />
              <Route path="/mis-citas" element={<VerCita/>} />
              <Route path="/editarCita" element={<EditarCita/>} />
