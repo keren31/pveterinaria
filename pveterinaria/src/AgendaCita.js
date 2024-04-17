@@ -45,6 +45,7 @@ const AgendarCita = () => {
     return user && user.Telefono ? user.Telefono : null;
   };
   
+
   const obtenerDatosServicios = async () => {
     try {
       const response = await fetch(
@@ -135,7 +136,7 @@ const AgendarCita = () => {
   const validateHoraCita = (horaCita) => {
     const selectedHour = parseInt(horaCita.split(":")[0]);
     if (selectedHour < 9 || selectedHour > 16) {
-      setHoraCitaError('Seleccione una hora para la cita entre las 9:00 AM y las 4:00 PM.');
+      setHoraCitaError('Seleccione una hora entre las 9:00 AM y las 4:00 PM.');
       return false;
     } else {
       setHoraCitaError('');
