@@ -79,7 +79,7 @@ export default function EditarCita(){
     proData.append("idCita",idCita);
 
     fetch(
-        "http://localhost:5029/api/CasaDelMarisco/TraerCitaPorID?idCita=" + idCita,
+        apiurll+"api/CasaDelMarisco/TraerCitaPorID?idCita=" + idCita,
         {
             method: 'POST',
             body: proData,
@@ -143,7 +143,7 @@ export default function EditarCita(){
         const proData = new FormData();
         proData.append("fecha", fecha);
     
-        fetch("http://localhost:5029/api/CasaDelMarisco/ObtenerDiasInhabiles?fecha=" + fecha, {
+        fetch(apiurll+"api/CasaDelMarisco/ObtenerDiasInhabiles?fecha=" + fecha, {
             method: 'POST',
             body: proData,
         }).then((res) => res.json())
@@ -167,7 +167,7 @@ export default function EditarCita(){
                 });
     
                 // Realizar la segunda llamada a la API después de marcar los horarios ocupados
-                fetch("http://localhost:5029/api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
+                fetch(apiurll+"api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
                     method: 'POST',
                     body: proData,
                 }).then((res) => res.json())
