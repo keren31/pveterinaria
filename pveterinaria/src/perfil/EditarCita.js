@@ -212,7 +212,7 @@ export default function EditarCita(){
             }
         ).then((res)=> res.json())
         .then((result)=>{
-            if(result==="Cita editada exitosamente!!"){
+            if(result==="Cita a sido editada exitosamente!!"){
                 Swal.fire({
                     icon: 'success',
                     title: 'Cita Actualiza',
