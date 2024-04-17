@@ -181,8 +181,10 @@ export default function VerCita() {
               );
             }
           )}
+          
         </div>
       </PerfilLayout>
     </Layout>
   );
 }
+
