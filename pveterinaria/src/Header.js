@@ -56,11 +56,11 @@ const Header = () => {
             </div>
 
 
-                <div className='container flex'>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <div className='logo'>
                         <img src={logo} alt='' />
                     </div>
-                    <div className='nav'>
+                    <div className='nav' style={{display: 'flex', justifyContent: 'center', alignItems: 'center', paddingRight: '40px'}}>
                         <ul className={sidebar ? "nav-links-sidebar" : "nav-links"} onClick={() => setSidebar(false)}>
                             <li><Link to='/'>Inicio</Link></li>
                             <li><Link to='/Quienes-Somos'>Quienes Somos</Link></li>

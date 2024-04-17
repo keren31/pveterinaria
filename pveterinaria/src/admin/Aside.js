@@ -11,7 +11,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import TodayIcon from '@mui/icons-material/Today';
 import PetsIcon from '@mui/icons-material/Pets';
 import { Link } from 'react-router-dom';
-import './aside.css'
+import './aside.css';
+
 class AsideAdmin extends Component {
     constructor(props) {
         super(props);
@@ -28,14 +29,14 @@ class AsideAdmin extends Component {
 
     render() {
         const { open } = this.state;
-        const bgClass = open ? "w-72" : "w-24";
+        const asideWidth = open ? "288px" : "96px"; // Ancho del aside según el estado
 
         const Menus = [
             { title: "Citas", path: "/admin-citas", icon: TodayIcon },
             { title: "Servicios", path: "/Admin", icon: MiscellaneousServicesIcon },
             { title: "Productos", path: "/admin-producto", icon: AddShoppingCartIcon },
             { title: "Usuarios", path: "/admin-Usuario", icon: SupervisedUserCircleIcon },
-            { title: "Reportes", path: "/admin-edit-cita", icon: AssessmentIcon },
+            { title: "Editar Horarios", path: "/admin-edit-cita", icon: AssessmentIcon },
             { title: "Mascotas", path: "/perfile", icon: PetsIcon }
         ];
 
@@ -45,12 +46,9 @@ class AsideAdmin extends Component {
         ];
 
         return (
-            <div style={{ display: 'flex' }}>
-                <div className={`aside-container ${open ? 'open' : 'closed'}`}>
-                    <ArrowBackIcon
-                        className="back-icon"
-                        onClick={this.toggleMenu}
-                    />
+            <div className="flex">
+                <div className={`aside-container ${open ? 'open' : 'closed'}`} style={{ width: asideWidth }}>
+                    <ArrowBackIcon className="back-icon" onClick={this.toggleMenu} />
                     <div className="dashboard">
                         <ComputerIcon className="computer-icon" />
                         <h1 className="dashboard-title">Administrador</h1>
@@ -76,7 +74,9 @@ class AsideAdmin extends Component {
                         ))}
                     </ul>
                 </div>
-              
+                <div className="content">
+                    {/* Contenido aquí */}
+                </div>
             </div>
         );
     }

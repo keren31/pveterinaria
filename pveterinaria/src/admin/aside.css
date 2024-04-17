@@ -6,11 +6,14 @@
 /* Estilos para el contenedor del aside */
 .aside-container {
     background-color: rgb(55, 0, 255);
-    height: 100vh;
+    height: 100vh; /* Cambiar a 100% de la altura de la ventana */
     padding: 20px;
-    padding-top: 32px;
     width: 288px;
     transition: width 0.3s;
+    position: fixed; /* Cambiar a posición fija */
+    top: 0; /* Alinear arriba */
+    left: 0; /* Alinear a la izquierda */
+    z-index: 999; /* Asegurar que esté por encima de otros elementos */
 }
 
 /* Estilos para el aside cuando está cerrado */
@@ -84,7 +87,7 @@
 
 /* Estilos para el menú */
 .menu {
-    padding-top: 8px;
+    padding-top: 10px;
 }
 
 /* Estilos para cada ítem del menú */
@@ -123,6 +126,8 @@
 /* Estilos para el contenido */
 .content {
     padding: 28px;
+    margin-left: 288px; /* Ajustar el margen izquierdo para evitar la superposición del contenido */
+    margin-top: 0px;
 }
 
 /* Estilos para el título del contenido */

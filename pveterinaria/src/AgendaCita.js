@@ -75,12 +75,7 @@ const AgendarCita = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (
-     
-      validateFechaCita(fechaCita) &&
-      validateHoraCita(horaCita) &&
-      validateServicio(servicio)
-    ) {
+    if (validateFechaCita(fechaCita) && validateHoraCita(horaCita) && validateServicio(servicio) ) {
       
         const data = new FormData();
         data.append("usuario_id", id);
@@ -139,8 +134,8 @@ const AgendarCita = () => {
 
   const validateHoraCita = (horaCita) => {
     const selectedHour = parseInt(horaCita.split(":")[0]);
-    if (selectedHour < 9 || selectedHour > 15) {
-      setHoraCitaError('Seleccione una hora para la cita entre las 9:00 AM y las 3:00 PM.');
+    if (selectedHour < 9 || selectedHour > 16) {
+      setHoraCitaError('Seleccione una hora para la cita entre las 9:00 AM y las 4:00 PM.');
       return false;
     } else {
       setHoraCitaError('');
@@ -162,49 +157,123 @@ const AgendarCita = () => {
 
     // Aquí puedes hacer una llamada a la API para obtener los horarios disponibles para la fecha seleccionada
     // Por ahora, solo generamos algunos horarios de ejemplo para demostración
-    const horarios = ['09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00'];
+    const horarios = ['09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00','16:00:00'];
     const [horariosDisponibles, setHorariosDisponibles] = useState(horarios);
 
-    console.log(horaCita)
-  const obtenerhorariosFecha=(fecha)=>{
-    
-    const proData=new FormData();
-    proData.append("fecha",fecha);
+    const segundoFetch=(fecha,horariosDisponiblesConEstado)=>{
 
-    fetch("http://localhost:5029/api/CasaDelMarisco/ObtenerDiasInhabiles?fecha=" + fecha, {
-      method: 'POST',
-      body: proData,
+      const proData = new FormData();
+      proData.append("fecha", fecha);
+  
+       // Realizar la segunda llamada a la API después de marcar los horarios ocupados
+       fetch("http://localhost:5029/api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
+        method: 'POST',
+        body: proData,
     }).then((res) => res.json())
     .then((result) => {
-        if (result === "Si hay servicio") {
-            // No hay servicio, usar horarios por defecto
-            setHorariosDisponibles(horarios);
+          console.log(result)
+        if (result === "No hay horas") {
+            // No hay horas disponibles, usar el primer marcado
+            setHorariosDisponibles(horariosDisponiblesConEstado);
         } else {
-            const horariosOcupados = result; // Suponiendo que result contiene los horarios ocupados
-            const horariosDisponibles1 = horarios.filter(horario => !horariosOcupados.includes(horario));
+          const horariosOcupados2 = result; // Suponiendo que result contiene los horarios ocupados
+
+        // Obtener solo las horas ocupadas del segundo conjunto de horarios
+        const horasOcupadas2 = horariosOcupados2.map(horario => horario.substring(0, 5)); // Extraer solo HH:mm
+
+        // Filtrar las horas ocupadas del segundo conjunto de horarios de las disponibles
+        const horariosDisponibles2 = horariosDisponiblesConEstado.filter(horario => !horasOcupadas2.includes(horario.hora.substring(0, 5)));
+
+        // Usar el segundo conjunto de horarios filtrado
+        setHorariosDisponibles(horariosDisponibles2);   
+
+        }
+    });
+    }
     
-            // Realizar la segunda llamada a la API después de filtrar los horarios
-            fetch("http://localhost:5029/api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
+    const obtenerhorariosFecha = (fecha) => {
+      const proData = new FormData();
+      proData.append("fecha", fecha);
+  
+      fetch( apiurll+"api/CasaDelMarisco/ObtenerDiasInhabiles?fecha=" + fecha, {
+          method: 'POST',
+          body: proData,
+      }).then((res) => res.json())
+      .then((result) => {
+         console.log(result)
+          if (result === "Si hay servicio") {
+
+              fetch( apiurll+"api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
                 method: 'POST',
                 body: proData,
-            }).then((res) => res.json())
-            .then((result) => {
-                if (result === "No hay horas") {
-                    // No hay horas disponibles, usar el primer filtrado
-                    setHorariosDisponibles(horariosDisponibles1);
-                } else {
+              }).then((res) => res.json())
+              .then((result) => {
+                  console.log(result);
+                  if (result === "No hay horas") {
+                      // No hay horas disponibles, usar el primer marcado
+                      setHorariosDisponibles(horarios.map(horario => ({ hora: horario, ocupada: false })));
+
+                  } else {
                     const horariosOcupados2 = result; // Suponiendo que result contiene los horarios ocupados
-                    const horariosDisponibles2 = horariosDisponibles1.filter(horario => !horariosOcupados2.includes(horario));
-                    // Aplicar el segundo filtrado a partir del primer filtrado
-                    setHorariosDisponibles(horariosDisponibles2);
-                } 
-            })
-        } 
-    });
+
+                    // Mapear los horarios disponibles y actualizar el estado de ocupada si están en horariosOcupados2
+                    const horariosConEstadoActualizado = horarios.map(horario => ({
+                        hora: horario,
+                        ocupada: horariosOcupados2.includes(horario) // Verificar si el horario está en horariosOcupados2
+                    }));
+                    
+                    // Usar los horarios con el estado actualizado
+                    setHorariosDisponibles(horariosConEstadoActualizado);
+
+                  }
+              });
+
+          } else {
+              const horariosOcupados = result; // Suponiendo que result contiene los horarios ocupados
+              const horariosDisponiblesConEstado = horarios.map(horario => ({ hora: horario, ocupada: false }));
   
-    
-     
+              // Marcar los horarios ocupados
+              horariosOcupados.forEach(horarioOcupado => {
+                  const [horaInicioOcupada, horaFinOcupada] = horarioOcupado.split('-'); // Dividimos la cadena en horaInicio y horaFin
+                  horariosDisponiblesConEstado.forEach(horario => {
+                      if (horario.hora >= horaInicioOcupada && horario.hora <= horaFinOcupada) {
+                          horario.ocupada = true;
+                      }
+                  });
+              });
+  
+              // Realizar la segunda llamada a la API después de marcar los horarios ocupados
+              fetch(apiurll+"api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
+                  method: 'POST',
+                  body: proData,
+              }).then((res) => res.json())
+              .then((result) => {
+                  console.log(result);
+                  if (result === "No hay horas") {
+                      // No hay horas disponibles, usar el primer marcado
+                      setHorariosDisponibles(horariosDisponiblesConEstado);
+                  } else {
+                      const horariosOcupados2 = result; // Suponiendo que result contiene los horarios ocupados
+
+                                              
+                        // Obtener solo las horas ocupadas del segundo conjunto de horarios
+                        const horasOcupadas2 = horariosOcupados2.map(horario => horario.substring(0, 5)); // Extraer solo HH:mm
+
+                        // Actualizar el estado "ocupada" para los horarios presentes en horariosDisponiblesConEstado
+                        const horariosActualizados = horariosDisponiblesConEstado.map(horario => ({
+                            hora: horario.hora,
+                            ocupada: horasOcupadas2.includes(horario.hora.substring(0, 5)) || horario.ocupada // Si está en horasOcupadas2 o ya está ocupada
+                        }));
+
+                        // Usar los horarios actualizados
+                        setHorariosDisponibles(horariosActualizados);
+                  }
+              });
+          }
+      });
   }
+  
+  
 
   const handleFechaCitaChange = (e) => {
     const nuevaFechaCita = e.target.value;
@@ -296,24 +365,34 @@ const AgendarCita = () => {
             </div>
         </div>
         <div>
-          <label htmlFor="horaCita" className='RegistroLabel'>Hora de Cita* :</label>
-          <select
-            id="horaCita"
-            name="horaCita"
-            disabled={valorhora}
-            value={horaCita}
-            onChange={(e) => setHoraCita(e.target.value)}
-            onBlur={() => validateHoraCita(horaCita)}
-            className={horaCitaError ? 'input-error' : ''}
-         
-          >
-            <option value="">Seleccionar horario</option>
-            {horariosDisponibles.map((horario, index) => (
-              <option key={index} value={horario}>{horario}</option>
-            ))}
-          </select>
-          {horaCitaError && <p className="error-message">{horaCitaError}</p>}
-        </div>
+  <label htmlFor="horaCita" className='RegistroLabel'>Hora de Cita* :</label>
+  <select
+    id="horaCita"
+    name="horaCita"
+    disabled={valorhora}
+    value={horaCita}
+    onChange={(e) => setHoraCita(e.target.value)}
+    onBlur={() => validateHoraCita(horaCita)}
+    className={horaCitaError ? 'input-error' : ''}
+  >
+    <option value="">Seleccionar horario</option>
+    {horariosDisponibles.map((horario, index) => (
+      <option
+        key={index}
+        value={horario.hora}
+        disabled={horario.ocupada} // Desactivar opciones ocupadas
+        style={{
+          backgroundColor: horario.ocupada ? 'lightgray' : 'white',
+          color: horario.ocupada ? 'gray' : 'black'
+        }}
+      >
+        {horario.hora} {horario.ocupada && "(Ocupada)"}
+      </option>
+    ))}
+  </select>
+  {horaCitaError && <p className="error-message">{horaCitaError}</p>}
+</div>
+
 
         <div>
           <label htmlFor="servicio" className='RegistroLabel'>Servicio* :</label>

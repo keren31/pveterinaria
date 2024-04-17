@@ -4,7 +4,9 @@ import './css/App.css'; // Importa tu archivo CSS
 import Header from "./Header";
 import CategoriasServicio from './CategoriasServicio';
 import Registro from './Registro'
-import TrandingSlider from './TrandingSlider' 
+
+
+import TrandingSlider from './TrandingSlider';
 
 import ServicioCard from'./servicios'
 
@@ -83,7 +85,7 @@ function Inicio() {
      <CardServicios/>
     
       <div className='division2'></div>
-      <TrandingSlider/>
+      
       
     </div>
     </Layout>

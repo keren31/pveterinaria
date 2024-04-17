@@ -41,7 +41,7 @@ export default function EditarCita(){
     const obtenerDatosServicios = async () => {
         try {
           const response = await fetch(
-            'http://localhost:5029/api/CasaDelMarisco/ObtenerServiciosCAN',
+            apiurll+'api/CasaDelMarisco/ObtenerServiciosCAN',
             {
               method: 'GET',
               // No es necesario incluir el body para una solicitud GET
@@ -139,34 +139,62 @@ export default function EditarCita(){
       
       
     
-
-      const obtenerhorariosFecha=(fecha)=>{
+      const obtenerhorariosFecha = (fecha) => {
+        const proData = new FormData();
+        proData.append("fecha", fecha);
     
-        const proData=new FormData();
-            proData.append("fecha",fecha);
+        fetch("http://localhost:5029/api/CasaDelMarisco/ObtenerDiasInhabiles?fecha=" + fecha, {
+            method: 'POST',
+            body: proData,
+        }).then((res) => res.json())
+        .then((result) => {
+            console.log(result);
+            if (result === "Si hay servicio") {
+                // No hay servicio, usar horarios por defecto
+                setHorariosDisponibles(horarios.map(horario => ({ hora: horario, ocupada: false })));
+            } else {
+                const horariosOcupados = result; // Suponiendo que result contiene los horarios ocupados
+                const horariosDisponiblesConEstado = horarios.map(horario => ({ hora: horario, ocupada: false }));
     
-            fetch(
-                "http://localhost:5029/api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha,
-                {
+                // Marcar los horarios ocupados
+                horariosOcupados.forEach(horarioOcupado => {
+                    const [horaInicioOcupada, horaFinOcupada] = horarioOcupado.split('-'); // Dividimos la cadena en horaInicio y horaFin
+                    horariosDisponiblesConEstado.forEach(horario => {
+                        if (horario.hora >= horaInicioOcupada && horario.hora <= horaFinOcupada) {
+                            horario.ocupada = true;
+                        }
+                    });
+                });
+    
+                // Realizar la segunda llamada a la API después de marcar los horarios ocupados
+                fetch("http://localhost:5029/api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
                     method: 'POST',
                     body: proData,
-                }
-            ) .then((res) => res.json())
-            .then((result) => {
-              if(result==="No hay horas"){
-                setHorariosDisponibles(horarios);
-                console.log('jjaja pendejo');
-              }else{
-                const horariosOcupados = result;
-                const horariosDisponibles = horarios.filter(horario => !horariosOcupados.includes(horario));
-                console.log(horariosOcupados)
-                console.log(horariosDisponibles)
-                setHorariosDisponibles(horariosDisponibles);
-              } 
-            })
-          
-         
-      }
+                }).then((res) => res.json())
+                .then((result) => {
+                    if (result === "No hay horas") {
+                        // No hay horas disponibles, usar el primer marcado
+                        setHorariosDisponibles(horariosDisponiblesConEstado);
+                    } else {
+                        const horariosOcupados2 = result; // Suponiendo que result contiene los horarios ocupados
+    
+                        // Filtrar los horarios ocupados del segundo conjunto de horarios
+                        const horariosDisponibles2 = horariosDisponiblesConEstado.map(horario => {
+                            if (horario.ocupada && horariosOcupados2.includes(horario.hora)) {
+                                return { hora: horario.hora, ocupada: true };
+                            } else {
+                                return { hora: horario.hora, ocupada: false };
+                            }
+                        });
+    
+                        // Usar el segundo conjunto de horarios con el marcado
+                        setHorariosDisponibles(horariosDisponibles2);
+                    }
+                });
+            }
+        });
+    }
+    
     
     const enviarDatosActualizados =()=>{
         const data= new FormData();
@@ -177,7 +205,7 @@ export default function EditarCita(){
         data.append("Telefono",telefono);
 
         fetch (
-            "http://localhost:5029/api/CasaDelMarisco/EditarCita?idCita=" + idCita +"&servicio_id="+ servicio + "&Fecha=" + fechaCita + "&Hora=" + horaCita + "&Telefono=" +telefono,
+            apiurll+"api/CasaDelMarisco/EditarCita?idCita=" + idCita +"&servicio_id="+ servicio + "&Fecha=" + fechaCita + "&Hora=" + horaCita + "&Telefono=" +telefono,
             {
                 method: "POST",
                 body:data,
@@ -263,26 +291,35 @@ export default function EditarCita(){
                  <Button color='blue' className='text-xl ml-3' onClick={()=> setValorHora(false)}>Ver horaio</Button>
                 </div>
             </div>
-            <div className="sm:col-span-2">
-                <label htmlFor="company" className="block  font-semibold leading-6 text-gray-900">
-                Hora
-                </label>
-                <div className="mt-2.5">
-                <select
-                    disabled={valorhora}
-                    value={horaCita}
-                    onChange={(e) => setHoraCita(e.target.value)}
-                    onBlur={() => validateHoraCita(horaCita)}
-                    className="block w-full rounded-md border px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
-                >
-                     <option value="">Seleccionar horario</option>
-                    {horariosDisponibles.map((horario, index) => (
-                    <option key={index} value={horario}>{horario}</option>
-                    ))}
-                </select>
-              
-                </div>
-            </div>
+            
+            <div>
+    <label htmlFor="horaCita" className='RegistroLabel'>Hora de Cita* :</label>
+    <select
+        id="horaCita"
+        name="horaCita"
+        disabled={valorhora}
+        value={horaCita}
+        onChange={(e) => setHoraCita(e.target.value)}
+        onBlur={() => validateHoraCita(horaCita)}
+        className={horaCitaError ? 'input-error' : ''}
+    >
+        <option value="">Seleccionar horario</option>
+        {horariosDisponibles.map((horario, index) => (
+            <option
+                key={index}
+                value={horario.hora}
+                style={{
+                    backgroundColor: horario.ocupada ? 'lightgray' : 'white',
+                    color: horario.ocupada ? 'gray' : 'black'
+                }}
+            >
+                {horario.hora} {horario.ocupada && "(Ocupada)"}
+            </option>
+        ))}
+    </select>
+    {horaCitaError && <p className="error-message">{horaCitaError}</p>}
+        </div>
+
             <div className="sm:col-span-2">
                 <label htmlFor="email" className="block font-semibold leading-6 text-gray-900">
                 Telefono
@@ -291,7 +328,7 @@ export default function EditarCita(){
                 <input
                     value={telefono}
                     type="number"
-               
+                    
 
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />

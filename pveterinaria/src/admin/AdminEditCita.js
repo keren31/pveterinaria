@@ -1,24 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import './calendar.css';
 import AdminLayout from './AdminLayout';
+import Swal from 'sweetalert2'
+import { Typography } from '@material-tailwind/react';
 
 const AdminEditCita = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [fecha, setFecha]=useState()
   const [showTimeInput, setShowTimeInput] = useState(false);
   const [showSpecificTimeInput, setShowSpecificTimeInput] = useState(false);
   const [showRangeTimeInput, setShowRangeTimeInput] = useState(false);
   const [startHour, setStartHour] = useState('');
+  const [startHour2, setStartHour2] = useState('');
   const [endHour, setEndHour] = useState('');
 
-  const handleDateChange = date => {
+   const handleDateChange = date => {
     setSelectedDate(date);
     setShowTimeInput(true);
-    console.log('Fecha seleccionada:', date);
   };
+
+  const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
+
+  useEffect(() => {
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(selectedDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    setFecha(formattedDate);
+  }, [selectedDate]);
+
+  useEffect(() => {
+    console.log(fecha);
+  }, [fecha]);
+
+
 
   const handleSpecificTimeClick = () => {
     setShowSpecificTimeInput(true);
     setShowRangeTimeInput(false);
+    
   };
 
   const handleRangeTimeClick = () => {
@@ -27,20 +47,38 @@ const AdminEditCita = () => {
   };
 
   const handleTimeSubmit = () => {
-    console.log('Hora de inicio:', startHour);
-    console.log('Hora de fin:', endHour);
+
+    let hora;
+    if(showSpecificTimeInput){
+      hora=startHour2
+      setStartHour('')
+      setEndHour('')
+    }else{
+      hora=startHour + '-' + endHour;
+      setStartHour2('')
+    }
+
+    const data = new FormData()
+    data.append("Fecha",fecha);
+    data.append("Hora",hora);
+    fetch (
+      apiurll + "api/CasaDelMarisco/AgregarDiaInhabil?Fecha=" + fecha + '&Hora=' + hora,
+      {
+        method: 'POST',
+        body: data,
+      }
+    ).then((res) => res.json())
+    .then((result) => {
+      if (result === "Agregado!!") {
+        Swal.fire({
+          icon: "success",
+          title: "Se realizo con exito",
+        });
+      }
+    });
   };
 
-  const generateHoursOptions = () => {
-    const hours = [];
-    for (let i = 0; i < 24; i++) {
-      const hour = `${i < 10 ? '0' : ''}${i}:00`;
-      hours.push(hour);
-    }
-    return hours.map((hour, index) => (
-      <option key={index} value={hour}>{hour}</option>
-    ));
-  };
+
 
   const getDayOfWeekText = date => {
     const daysOfWeek = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
@@ -70,6 +108,9 @@ const AdminEditCita = () => {
   return (
     <AdminLayout>
       <div className="container">
+      <Typography variant="h1" color="blue-gray" size="xl" >
+              Actualiza horarios de trabajo 
+            </Typography>
         <div className="calendario-container">
           <div className="calendario">
             <div className="calendario-header">
@@ -97,7 +138,9 @@ const AdminEditCita = () => {
         </div>
         {selectedDate && showTimeInput && (
           <div className="time-container">
+            <br/>
             <p>Has seleccionado la fecha: {getDayOfWeekText(selectedDate)}, {selectedDate.getDate()} de {getMonthText(selectedDate)} de {selectedDate.getFullYear()}</p>
+            <br/>
             <div className="time-selection-container">
               <div>
                 <button onClick={handleSpecificTimeClick}>Seleccionar horas específicas</button>
@@ -106,24 +149,51 @@ const AdminEditCita = () => {
               {showSpecificTimeInput && (
                 <div>
                   <label>Selecciona una hora:</label>
-                  <select value={startHour} onChange={(e) => setStartHour(e.target.value)}>
+                  
+                  <select value={startHour2} onChange={(e) => setStartHour2(e.target.value)}>
                     <option value="">Selecciona una hora</option>
-                    {generateHoursOptions()}
+                    <option value="09:00:00-09:59:00">09:00 am</option>
+                    <option value="10:00:00-10:59:00">10:00 am</option>
+                    <option value="11:00:00-11:59:00">11:00 am</option>
+                    <option value="12:00:00-12:59:00">12:00 pm</option>
+                    <option value="13:00:00-13:59:00">13:00 pm</option>
+                    <option value="14:00:00-14:59:00">14:00 pm</option>
+                    <option value="15:00:00-15:59:00">15:00 pm</option>
+                    <option value="16:00:00-16:59:00">16:00 pm</option>
                   </select>
                   <button onClick={handleTimeSubmit}>Guardar hora</button>
                 </div>
               )}
               {showRangeTimeInput && (
                 <div>
+                  <br/>
                   <label>Hora de inicio:</label>
+                  <br/>
                   <select value={startHour} onChange={(e) => setStartHour(e.target.value)}>
                     <option value="">Selecciona una hora</option>
-                    {generateHoursOptions()}
+                    <option value="09:00:00">09:00 am</option>
+                    <option value="10:00:00">10:00 am</option>
+                    <option value="11:00:00">11:00 am</option>
+                    <option value="12:00:00">12:00 pm</option>
+                    <option value="13:00:00">13:00 pm</option>
+                    <option value="14:00:00">14:00 pm</option>
+                    <option value="15:00:00">15:00 pm</option>
+                    <option value="16:00:00">16:00 pm</option>
+                    
                   </select>
+                  <br/>
                   <label>Hora de fin:</label>
+                  <br/>
                   <select value={endHour} onChange={(e) => setEndHour(e.target.value)}>
                     <option value="">Selecciona una hora</option>
-                    {generateHoursOptions()}
+                    <option value="10:00:00">10:00 am</option>
+                    <option value="11:00:00">11:00 am</option>
+                    <option value="12:00:00">12:00 pm</option>
+                    <option value="13:00:00">13:00 pm</option>
+                    <option value="14:00:00">14:00 pm</option>
+                    <option value="15:00:00">15:00 pm</option>
+                    <option value="16:00:00">16:00 pm</option>
+
                   </select>
                   <button onClick={handleTimeSubmit}>Guardar rango de horas</button>
                 </div>

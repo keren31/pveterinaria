@@ -1,90 +1,88 @@
-.calendario-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.calendario {
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .calendario-container {
+    margin-bottom: 20px;
+  }
+  
+  .calendario {
     border: 1px solid #ccc;
-    display: inline-block;
-    padding: 20px;
-    background-color: #f9f9f9;
-}
-
-.calendario-header {
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .calendario-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-}
-
-.calendario-header button {
+  }
+  
+  .calendario-header button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    font-size: 20px;
-}
-
-.calendario-days {
+    font-size: 18px;
+  }
+  
+  .calendario-days {
     display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-}
-
-.calendario-day {
-    width: calc(100% / 7);
-    font-weight: bold;
-}
-
-.calendario-dates {
+  }
+  
+  .calendario-day {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .calendario-dates {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
-}
-
-.calendario-date {
-    cursor: pointer;
-    border: 1px solid #ccc;
-    padding: 10px;
+  }
+  
+  .calendario-date {
     text-align: center;
-    background-color: #fff;
-}
-
-.calendario-date.selected {
+    cursor: pointer;
+    padding: 30px;
+  }
+  
+  .calendario-date.selected {
     background-color: #007bff;
     color: #fff;
-}
-
-.time-selection-container {
-    margin-top: 20px;
-    text-align: center; /* Añadido para centrar los elementos */
-}
-
-.time-selection-container label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.time-selection-container select {
-    width: 150px;
-    padding: 8px;
-    font-size: 14px;
+    border-radius: 50%;
+  }
+  
+  .time-container {
     border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-}
-
-.time-selection-container button {
-    padding: 10px 20px;
+    border-radius: 5px;
+    padding: 10px;
+    width: 600px;
+    height: 320px;
+  }
+  
+  .time-selection-container {
+    margin-top: 0px;
+  }
+  
+  .time-selection-container button {
+    margin-right: 10px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    padding: 5px 10px;
+    border-radius: 1100px;
     cursor: pointer;
-}
-
-.time-selection-container button:hover {
-    background-color: #0056b3;
-}
+  }
+  
+  .time-selection-container select {
+    margin-right: 10px;
+    padding: 20px;
+  }
+  
+  .time-selection-container label {
+    margin-right: 10px;
+  }
+  

@@ -79,7 +79,8 @@ export default function VerCita() {
               title: "La cancelación ha sido exitosa",
               showConfirmButton: false,
               timer: 2500,
-            }).then(() => {});
+            }).then(() =>  obtenerCitas());
+           
           }
         });
     } catch {
