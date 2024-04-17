@@ -97,7 +97,88 @@ export default function EditarCita(){
     })
   
     } 
-
+    const obtenerhorariosFecha = (fecha) => {
+        const proData = new FormData();
+        proData.append("fecha", fecha);
+    
+        fetch( apiurll+"api/CasaDelMarisco/ObtenerDiasInhabiles?fecha=" + fecha, {
+            method: 'POST',
+            body: proData,
+        }).then((res) => res.json())
+        .then((result) => {
+           console.log(result)
+            if (result === "Si hay servicio") {
+  
+                fetch( apiurll+"api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
+                  method: 'POST',
+                  body: proData,
+                }).then((res) => res.json())
+                .then((result) => {
+                    console.log(result);
+                    if (result === "No hay horas") {
+                        // No hay horas disponibles, usar el primer marcado
+                        setHorariosDisponibles(horarios.map(horario => ({ hora: horario, ocupada: false })));
+  
+                    } else {
+                      const horariosOcupados2 = result; // Suponiendo que result contiene los horarios ocupados
+  
+                      // Mapear los horarios disponibles y actualizar el estado de ocupada si están en horariosOcupados2
+                      const horariosConEstadoActualizado = horarios.map(horario => ({
+                          hora: horario,
+                          ocupada: horariosOcupados2.includes(horario) // Verificar si el horario está en horariosOcupados2
+                      }));
+                      
+                      // Usar los horarios con el estado actualizado
+                      setHorariosDisponibles(horariosConEstadoActualizado);
+  
+                    }
+                });
+  
+            } else {
+                const horariosOcupados = result; // Suponiendo que result contiene los horarios ocupados
+                const horariosDisponiblesConEstado = horarios.map(horario => ({ hora: horario, ocupada: false }));
+    
+                // Marcar los horarios ocupados
+                horariosOcupados.forEach(horarioOcupado => {
+                    const [horaInicioOcupada, horaFinOcupada] = horarioOcupado.split('-'); // Dividimos la cadena en horaInicio y horaFin
+                    horariosDisponiblesConEstado.forEach(horario => {
+                        if (horario.hora >= horaInicioOcupada && horario.hora <= horaFinOcupada) {
+                            horario.ocupada = true;
+                        }
+                    });
+                });
+    
+                // Realizar la segunda llamada a la API después de marcar los horarios ocupados
+                fetch(apiurll+"api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
+                    method: 'POST',
+                    body: proData,
+                }).then((res) => res.json())
+                .then((result) => {
+                    console.log(result);
+                    if (result === "No hay horas") {
+                        // No hay horas disponibles, usar el primer marcado
+                        setHorariosDisponibles(horariosDisponiblesConEstado);
+                    } else {
+                        const horariosOcupados2 = result; // Suponiendo que result contiene los horarios ocupados
+  
+                                                
+                          // Obtener solo las horas ocupadas del segundo conjunto de horarios
+                          const horasOcupadas2 = horariosOcupados2.map(horario => horario.substring(0, 5)); // Extraer solo HH:mm
+  
+                          // Actualizar el estado "ocupada" para los horarios presentes en horariosDisponiblesConEstado
+                          const horariosActualizados = horariosDisponiblesConEstado.map(horario => ({
+                              hora: horario.hora,
+                              ocupada: horasOcupadas2.includes(horario.hora.substring(0, 5)) || horario.ocupada // Si está en horasOcupadas2 o ya está ocupada
+                          }));
+  
+                          // Usar los horarios actualizados
+                          setHorariosDisponibles(horariosActualizados);
+                    }
+                });
+            }
+        });
+    }
+    
     const pasarServicio=()=>{
         if(idServicio===1){
             setServicio('Corte de pelo')
@@ -139,62 +220,7 @@ export default function EditarCita(){
       
       
     
-      const obtenerhorariosFecha = (fecha) => {
-        const proData = new FormData();
-        proData.append("fecha", fecha);
-    
-        fetch(apiurll+"api/CasaDelMarisco/ObtenerDiasInhabiles?fecha=" + fecha, {
-            method: 'POST',
-            body: proData,
-        }).then((res) => res.json())
-        .then((result) => {
-            console.log(result);
-            if (result === "Si hay servicio") {
-                // No hay servicio, usar horarios por defecto
-                setHorariosDisponibles(horarios.map(horario => ({ hora: horario, ocupada: false })));
-            } else {
-                const horariosOcupados = result; // Suponiendo que result contiene los horarios ocupados
-                const horariosDisponiblesConEstado = horarios.map(horario => ({ hora: horario, ocupada: false }));
-    
-                // Marcar los horarios ocupados
-                horariosOcupados.forEach(horarioOcupado => {
-                    const [horaInicioOcupada, horaFinOcupada] = horarioOcupado.split('-'); // Dividimos la cadena en horaInicio y horaFin
-                    horariosDisponiblesConEstado.forEach(horario => {
-                        if (horario.hora >= horaInicioOcupada && horario.hora <= horaFinOcupada) {
-                            horario.ocupada = true;
-                        }
-                    });
-                });
-    
-                // Realizar la segunda llamada a la API después de marcar los horarios ocupados
-                fetch(apiurll+"api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
-                    method: 'POST',
-                    body: proData,
-                }).then((res) => res.json())
-                .then((result) => {
-                    if (result === "No hay horas") {
-                        // No hay horas disponibles, usar el primer marcado
-                        setHorariosDisponibles(horariosDisponiblesConEstado);
-                    } else {
-                        const horariosOcupados2 = result; // Suponiendo que result contiene los horarios ocupados
-    
-                        // Filtrar los horarios ocupados del segundo conjunto de horarios
-                        const horariosDisponibles2 = horariosDisponiblesConEstado.map(horario => {
-                            if (horario.ocupada && horariosOcupados2.includes(horario.hora)) {
-                                return { hora: horario.hora, ocupada: true };
-                            } else {
-                                return { hora: horario.hora, ocupada: false };
-                            }
-                        });
-    
-                        // Usar el segundo conjunto de horarios con el marcado
-                        setHorariosDisponibles(horariosDisponibles2);
-                    }
-                });
-            }
-        });
-    }
-    
+     
     
     const enviarDatosActualizados =()=>{
         const data= new FormData();
