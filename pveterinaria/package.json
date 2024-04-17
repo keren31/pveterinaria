@@ -35,7 +35,8 @@
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.10.5",
     "swiper": "^11.0.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webpack-dev-middleware": "^5.3.4"
   },
   "scripts": {
     "start": "react-scripts start",
