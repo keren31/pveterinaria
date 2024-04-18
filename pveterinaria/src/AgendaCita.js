@@ -87,7 +87,7 @@ const AgendarCita = () => {
         data.append("Hora", horaCita);
 
         fetch(
-         "http://localhost:5029/api/CasaDelMarisco/AgregarCita?usuario_id=" +
+         apiurll+"/api/CasaDelMarisco/AgregarCita?usuario_id=" +
           id +
           "&servicio_id=" +
           servicio +

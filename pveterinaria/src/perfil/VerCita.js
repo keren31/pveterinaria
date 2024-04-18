@@ -45,6 +45,9 @@ const TABS = [
 ];
 
 export default function VerCita() {
+  const [Estado, setEstado] = useState("Cancelada")
+  const [Ip, setIp] = useState("Cancelada")
+
   const { user, logoutUser } = useUser();
   const navigate = useNavigate();
 
@@ -61,10 +64,23 @@ export default function VerCita() {
     setIdCita(IdCita);
     CancelarReservacion();
   };
+  async function json(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  }
+  function ObtenerIp(){
+    let apiKey = "8c308d0e8f217c1a489e15cb1998c34ffcd76bcead2a2851c3878299";
+    json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
+      setIp(data.ip);
+    });
+  }
   const CancelarReservacion = () => {
     const data = new FormData();
     data.append("idCita", parseInt(idCita));
-    data.append("Estado", "Cancelada");
+    data.append("Estado", Estado);
+    data.append("ip", Ip);
+
 
     try {
       fetch(apiurll + "api/CasaDelMarisco/CambiarEstadoCitas", {
@@ -97,6 +113,7 @@ export default function VerCita() {
 
   useEffect(() => {
     obtenerCitas();
+    ObtenerIp();
   }, []);
 
   console.log(id);

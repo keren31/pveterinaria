@@ -319,32 +319,36 @@ export default function EditarCita(){
             </div>
             
             <div>
-    <label htmlFor="horaCita" className='RegistroLabel'>Hora de Cita* :</label>
-    <select
-        id="horaCita"
-        name="horaCita"
-        disabled={valorhora}
-        value={horaCita}
-        onChange={(e) => setHoraCita(e.target.value)}
-        onBlur={() => validateHoraCita(horaCita)}
-        className={horaCitaError ? 'input-error' : ''}
-    >
-        <option value="">Seleccionar horario</option>
-        {horariosDisponibles.map((horario, index) => (
-            <option
-                key={index}
-                value={horario.hora}
-                style={{
-                    backgroundColor: horario.ocupada ? 'lightgray' : 'white',
-                    color: horario.ocupada ? 'gray' : 'black'
-                }}
-            >
-                {horario.hora} {horario.ocupada && "(Ocupada)"}
-            </option>
-        ))}
-    </select>
-    {horaCitaError && <p className="error-message">{horaCitaError}</p>}
-        </div>
+            <label htmlFor="last-name" className="block font-semibold leading-6 text-gray-900">
+                Hora Cita
+                </label>
+                <select
+                    id="horaCita"
+                    name="horaCita"
+                    disabled={valorhora}
+                    value={horaCita}
+                    onChange={(e) => setHoraCita(e.target.value)}
+                    onBlur={() => validateHoraCita(horaCita)}
+                    className="block w-full rounded-md border px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    
+                >
+                    <option value="">Seleccionar horario</option>
+                    {horariosDisponibles.map((horario, index) => (
+                    <option
+                        key={index}
+                        value={horario.hora}
+                        disabled={horario.ocupada} // Desactivar opciones ocupadas
+                        style={{
+                        backgroundColor: horario.ocupada ? 'lightgray' : 'white',
+                        color: horario.ocupada ? 'gray' : 'black'
+                        }}
+                    >
+                        {horario.hora} {horario.ocupada && "(Ocupada)"}
+                    </option>
+                    ))}
+                </select>
+                {horaCitaError && <p className="error-message">{horaCitaError}</p>}
+            </div>
 
             <div className="sm:col-span-2">
                 <label htmlFor="email" className="block font-semibold leading-6 text-gray-900">

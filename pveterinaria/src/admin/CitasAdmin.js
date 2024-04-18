@@ -24,20 +24,7 @@ import AdminLayout from "./AdminLayout";
 import { useState ,useEffect} from "react";
 import Swal from "sweetalert2";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
+
  
 const TABLE_HEAD = ["IdCita", "Nombre","NombreServicio","fecha", "Hora", "Correo", "Telefono","Opciones","Estado"];
  
@@ -45,8 +32,18 @@ const TABLE_HEAD = ["IdCita", "Nombre","NombreServicio","fecha", "Hora", "Correo
  
 export default function Citasadmin() {
 
+
+  const [dataCitas,setDataCitas]=useState([]);
+
+
+  const [tabValue, setTabValue] = useState("todos");
+
+  
+
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   const [idCita, setIdCita] = useState(null); // Estado para almacenar el idReservacion seleccionado\
+  const [dataCitasVer, setDataCitasVer] = useState([]);
+
 
   const handleCancel = (IdCita) => {
     setIdCita(IdCita);
@@ -87,7 +84,35 @@ export default function Citasadmin() {
     obtenerCitas();  
   }, []);
 
-  const [dataCitas,setDataCitas]=useState([]);
+  const filtrarCitasDelDia = (citas) => {
+    const fechaActual = new Date(); // Obtiene la fecha actual
+    return citas.filter(cita => {
+        const fechaCita = new Date(cita.Fecha);
+        return (
+            fechaCita.getDate() === fechaActual.getDate() &&
+            fechaCita.getMonth() === fechaActual.getMonth() &&
+            fechaCita.getFullYear() === fechaActual.getFullYear()
+        );
+    });
+};
+
+
+const filtrarCitasDelDiaSiguiente = (citas) => {
+  const fechaActual = new Date(); // Obtiene la fecha actual
+  const fechaSiguiente = new Date(fechaActual);
+  fechaSiguiente.setDate(fechaSiguiente.getDate() + 1); // Añade un día
+
+  return citas.filter(cita => {
+      const fechaCita = new Date(cita.Fecha);
+      return (
+          fechaCita.getDate() === fechaSiguiente.getDate() &&
+          fechaCita.getMonth() === fechaSiguiente.getMonth() &&
+          fechaCita.getFullYear() === fechaSiguiente.getFullYear()
+      );
+  });
+};
+
+
 
   const obtenerCitas = async () => {
     try {
@@ -102,8 +127,7 @@ export default function Citasadmin() {
       if (response.ok) {
         const userData1 = await response.json();
         setDataCitas(userData1);
-        console.log(dataCitas);
-        console.log(userData1)
+        setDataCitasVer(userData1)
       } else {
         console.error('Error al obtener datos de los usuarios:', response.statusText);
       }
@@ -111,6 +135,43 @@ export default function Citasadmin() {
       console.error('Error al obtener datos del usuario:', error);
     }
   }
+
+
+  const handleTabChange = (newValue) => {
+    console.log("Nuevo valor de pestaña:", newValue);
+    setTabValue(newValue);
+    // Llama a la función correspondiente según el tab seleccionado
+    if (newValue === "todos") {
+        // Llama a la función para mostrar todas las citas
+        setDataCitasVer(dataCitas)
+ ;
+    } else if (newValue === "hoy") {
+        // Llama a la función para mostrar las citas de hoy
+        const data= filtrarCitasDelDia(dataCitas)
+        setDataCitasVer(data)
+        
+    } else if (newValue === "mañana") {
+         const data= filtrarCitasDelDiaSiguiente(dataCitas)
+         setDataCitasVer(data)
+    }
+};
+
+  const VerCitaTodas=()=>{
+
+    setDataCitasVer(dataCitas)
+    
+  }
+  const VerCitaHoy=()=>{
+    const data= filtrarCitasDelDia(dataCitas)
+    setDataCitasVer(data)
+    
+  }
+  const VerCitaSiguie=()=>{
+    const data= filtrarCitasDelDiaSiguiente(dataCitas)
+    setDataCitasVer(data)
+    
+  }
+
   return (
     <AdminLayout>
     <Card className="h-full w-full">
@@ -124,31 +185,22 @@ export default function Citasadmin() {
               Informacion de Citas
             </Typography>
           </div>
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button variant="outlined" size="sm">
-              view all
-            </Button>
-            <Button className="flex items-center gap-3" size="sm">
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
-            </Button>
-          </div>
+         
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
-            <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
-          <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-            />
-          </div>
+            <Tabs className="w-full md:w-max">
+                <TabsHeader>
+                    <Tab>
+                        <button style={{ width: '100%' }} onClick={() => VerCitaTodas()}>Todas</button>
+                    </Tab>
+                    <Tab value="hoy">
+                        <button style={{ width: '100%' }} onClick={() => VerCitaHoy()}>Citas de Hoy</button>
+                    </Tab>
+                    <Tab value="mañana">
+                        <button style={{ width: '100%' }} onClick={() => VerCitaSiguie()}>Citas de Mañana</button>
+                    </Tab>
+                </TabsHeader>
+            </Tabs>
         </div>
       </CardHeader>
       <CardBody className="overflow-scroll px-0">
@@ -175,9 +227,9 @@ export default function Citasadmin() {
             </tr>
           </thead>
           <tbody>
-            {dataCitas !== null && dataCitas.map(
+            {dataCitasVer !== null && dataCitasVer.map(
               ({IdCita, Nombre, ApellidoMaterno, ApellidoPaterno,NombreServicio,Fecha, Hora, Correo, Telefono,Estado}, key) => {
-                const isLast = key === dataCitas.length - 1;
+                const isLast = key === dataCitasVer.length - 1;
                 const classes = isLast
                   ? "p-4"
                   : "p-4 border-b border-blue-gray-50";
