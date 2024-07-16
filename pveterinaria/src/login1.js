@@ -180,25 +180,30 @@ export default function Login() {
       .then(async (result) => {
         data.append("ip", ip);
         if (result === "Correo Existe") {
+          const resultado = await obtenerDatosUsuario(email);
           fetch(apiurll + "api/CasaDelMarisco/LoginOauth", {
             method: "POST",
             body: data,
-          });
+          })
+          .then((res) => res.json())
+          .then((loginResult) => {
+              loginUser(resultado);
+              if (resultado.Rol === 2) {
+                  Swal.fire({
+                      icon: "success",
+                      title: "Login de administrador",
+                      text: "Cuidado, eres administrador. Puedes modificar datos de la página, siempre con cuidado.",
+                  });
+                  navigate("/dashboard/home");
+              } else {
+                  navigate("/");
+              }
+              //console.log(loginResult);
+          })
+          .catch((error) => {
+              console.error("Error en la segunda llamada fetch:", error);
+          });;
 
-          const resultado = await obtenerDatosUsuario(email);
-          console.log(resultado);
-          loginUser(resultado);
-          if (resultado.Rol === 2) {
-            Swal.fire({
-              icon: "success",
-              title: "Login de administrador",
-              text: "Cuidado, eres administrador. Puedes modificar datos de la página, siempre con cuidado.",
-            });
-            navigate("/dashboard/home");
-          } else {
-            navigate("/");
-          }
-          console.log(resultado);
         } else {
         }
       });
