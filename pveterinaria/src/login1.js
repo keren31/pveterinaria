@@ -37,28 +37,31 @@ export default function Login() {
       }, 5000);
     }
   }, [loginAttempts]);
-  const obtenerDatosUsuario = async () => {
+
+  const obtenerDatosUsuario = async (email) => {
     try {
       const response = await fetch(
-        apiurll+'api/CasaDelMarisco/TraerUsuario?Correo=' + encodeURIComponent(email),
+        apiurll + "api/CasaDelMarisco/TraerUsuario?Correo=" + email,
         {
-          method: 'GET',
+          method: "GET",
         }
       );
-      
-  
       if (response.ok) {
-        const userData = await response.json();
-        return userData;
+        return await response.json();
       } else {
-        console.error('Error al obtener datos del usuario que ingresaste:', response.statusText);
+        console.error(
+          "Error al obtener datos del usuario que ingresaste:",
+          response.statusText
+        );
         return null;
       }
     } catch (error) {
-      console.error('Error al obtener datos del usuario:', error);
+      console.error("Error al obtener datos del usuario:", error);
       return null;
     }
   };
+
+
   async function json(url) {
     const response = await fetch(url);
     const data = await response.json();
@@ -172,18 +175,21 @@ export default function Login() {
     const email = response.profileObj.email;
     const data = new FormData();
     data.append("Correo", email);
+    data.append("ip", ip);
+
     fetch(apiurll + "api/CasaDelMarisco/VerificarCorreo", {
       method: "POST",
       body: data,
-    })
-      .then((res) => res.json())
-      .then(async (result) => {
-        data.append("ip", ip);
-        if (result === "Correo Existe") {
+  })
+  .then((res) => res.json())
+  .then(async (result) => {
+      if (result === "Correo Existe") {
           const resultado = await obtenerDatosUsuario(email);
+
+          // Segunda llamada fetch
           fetch(apiurll + "api/CasaDelMarisco/LoginOauth", {
-            method: "POST",
-            body: data,
+              method: "POST",
+              body: data,
           })
           .then((res) => res.json())
           .then((loginResult) => {
@@ -202,14 +208,17 @@ export default function Login() {
           })
           .catch((error) => {
               console.error("Error en la segunda llamada fetch:", error);
-          });;
+          });
+      } else {
+          // Aquí puedes manejar el caso en el que el correo no existe
+      }
+  })
+  .catch((error) => {
+      console.error("Error en la primera llamada fetch:", error);
+  });
 
-        } else {
-        }
-      });
-    console.log(response);
-    //console.log(response.profileObj.email)
-  };
+  //console.log(response);
+};
 
   useEffect(() => {
     const start = () => {

@@ -41,7 +41,7 @@ const Header = () => {
                 <div>
                   {user ? (
                     <div style={{display: "flex"}}>
-                      <li style={{listStyle:'none'}} className='username'>{user.nombre}</li>
+                      <li style={{listStyle:'none'}} className='username'>{user.Nombre}</li>
                       <li style={{listStyle:'none'}}><Link to='/Perfil'>Perfil</Link></li>
                     </div>
                   ) : (
