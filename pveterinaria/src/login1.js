@@ -277,7 +277,7 @@ export default function Login() {
             Recuérdame
           </label>
           <Link to="/Registro" className="singText">
-            No tienes cuenta? Registrarse
+            No tienes cuenta? Registrarsesxdcfvbghnujmik,
           </Link>
 
           <ReCAPTCHA
