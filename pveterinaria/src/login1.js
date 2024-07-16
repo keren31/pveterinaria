@@ -97,9 +97,9 @@ export default function Login() {
               body: data,
             });
           }
-        } if (result === 'Error en las credenciales') {
+        }else if (result === 'Error en las credenciales') {
           setEmailError('Error en las credenciales');
-        } if (result === 'Contraseña correcta') {
+        }else if (result === 'Contraseña correcta') {
           const userData = await obtenerDatosUsuario();
           loginUser(userData);
           Swal.fire({

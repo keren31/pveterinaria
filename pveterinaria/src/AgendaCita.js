@@ -216,6 +216,7 @@ const AgendarCita = () => {
 
                   } else {
                     const horariosOcupados2 = result; // Suponiendo que result contiene los horarios ocupados
+                    console.log (horariosOcupados2)
 
                     // Mapear los horarios disponibles y actualizar el estado de ocupada si están en horariosOcupados2
                     const horariosConEstadoActualizado = horarios.map(horario => ({
