@@ -71,10 +71,14 @@ function Inicio() {
           <h2>SE BIENVENIDO</h2>
           
           <p>
+            <h2>
             ¡Te damos una cálida bienvenida a Estetica Canina Platon, donde la pasión por el cuidado y la estética de tus queridas mascotas se convierte en una experiencia extraordinaria!
+            </h2>
           </p>
           <p>
+            <h2>
             En nuestro santuario dedicado a la belleza y bienestar canino, nos esforzamos por ofrecer mucho más que un simple servicio de estética. Cada corte de pelo, cada baño relajante y cada tratamiento de spa es un acto de amor hacia tus peludos compañeros.
+            </h2>
           </p>
         </div>
         <div className="bienvenida">

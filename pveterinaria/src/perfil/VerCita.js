@@ -2,8 +2,8 @@ import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
   TrashIcon,
-} from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+} from "@heroicons/react/outline";
+import { PencilIcon, UserPlusIcon } from "@heroicons/react/solid";
 import {
   Card,
   CardHeader,
@@ -25,8 +25,6 @@ import { useState, useEffect } from "react";
 import Layout from "../Layout";
 import { useUser } from "../../src/UserContext";
 import { useNavigate } from "react-router-dom";
-
-
 import Swal from "sweetalert2";
 
 const TABS = [
@@ -45,8 +43,8 @@ const TABS = [
 ];
 
 export default function VerCita() {
-  const [Estado, setEstado] = useState("Cancelada")
-  const [Ip, setIp] = useState("Cancelada")
+  const [Estado, setEstado] = useState("Cancelada");
+  const [Ip, setIp] = useState("Cancelada");
 
   const { user, logoutUser } = useUser();
   const navigate = useNavigate();
@@ -58,29 +56,31 @@ export default function VerCita() {
   };
 
   const id = obtenerIdUsuario(user);
-  const [idCita, setIdCita] = useState(null); // Estado para almacenar el idReservacion seleccionado\
+  const [idCita, setIdCita] = useState(null);
 
   const handleCancel = (IdCita) => {
     setIdCita(IdCita);
     CancelarReservacion();
   };
+
   async function json(url) {
     const response = await fetch(url);
     const data = await response.json();
     return data;
   }
-  function ObtenerIp(){
+
+  function ObtenerIp() {
     let apiKey = "8c308d0e8f217c1a489e15cb1998c34ffcd76bcead2a2851c3878299";
     json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
       setIp(data.ip);
     });
   }
+
   const CancelarReservacion = () => {
     const data = new FormData();
     data.append("idCita", parseInt(idCita));
     data.append("Estado", Estado);
     data.append("ip", Ip);
-
 
     try {
       fetch(apiurll + "api/CasaDelMarisco/CambiarEstadoCitas", {
@@ -95,8 +95,7 @@ export default function VerCita() {
               title: "La cancelación ha sido exitosa",
               showConfirmButton: false,
               timer: 2500,
-            }).then(() =>  obtenerCitas());
-           
+            }).then(() => obtenerCitas());
           }
         });
     } catch {
@@ -116,14 +115,12 @@ export default function VerCita() {
     ObtenerIp();
   }, []);
 
-  console.log(id);
   const obtenerCitas = async () => {
     try {
       const response = await fetch(
         `${apiurll}/api/CasaDelMarisco/ObtenerCitasCANPorId?idUsuario=${id}`,
         {
           method: "GET",
-          // No es necesario incluir el body para una solicitud GET
         }
       );
 
@@ -140,6 +137,7 @@ export default function VerCita() {
       console.error("Error al obtener datos del usuario:", error);
     }
   };
+
   return (
     <Layout>
       <PerfilLayout>
@@ -188,7 +186,6 @@ export default function VerCita() {
                           variant="text"
                           onClick={() => handleCancel(IdCita)}
                         >
-  
                           <TrashIcon className="h-6 w-6" />
                         </IconButton>
                       </Tooltip>
@@ -198,10 +195,8 @@ export default function VerCita() {
               );
             }
           )}
-          
         </div>
       </PerfilLayout>
     </Layout>
   );
 }
-

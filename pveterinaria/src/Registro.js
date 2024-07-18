@@ -32,6 +32,9 @@ const Registro = () => {
 
   const [passwordStrength, setPasswordStrength] = useState(''); // Estado para la fortaleza de la contraseña
 
+
+  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // Validar campos antes de enviar el formulario
@@ -109,6 +112,15 @@ const Registro = () => {
     }
   };
 
+  const handleClick = (e) => {
+    if (e.currentTarget) {
+      e.currentTarget.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        e.currentTarget.style.transform = 'scale(1)';
+      }, 100);
+    }
+  };
+  
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -254,6 +266,8 @@ const Registro = () => {
       }
     }
   };
+
+  
 
   return (
     <Layout><div className="registro-form-containerRegistro">
@@ -443,9 +457,24 @@ const Registro = () => {
           <Link to="/politicas-de-privacidad"> Acepta los términos y condiciones</Link>
         </label>
 
-        <button className="btn btn-warning text2" type="submit">
-          Registro
-        </button>
+        <button
+  className="btn btn-warning text2"
+  type="submit"
+  style={{
+    position: 'relative',
+    backgroundColor: '#f0ad4e',
+    color: '#fff',
+    border: 'none',
+    padding: '10px 20px',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    borderRadius: '5px',
+    
+  }}
+  
+>
+  Registro
+</button>
         <br />
       </form>
     </div>

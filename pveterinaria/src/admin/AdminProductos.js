@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { ArrowDownTrayIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import React, { useState } from 'react';
+import { PencilIcon, TrashIcon, ArrowDownIcon, SearchIcon } from '@heroicons/react/solid';  // Importamos los íconos adecuadamente
 import {
   Card,
   CardHeader,
@@ -17,8 +16,8 @@ import {
   DialogBody,
   DialogFooter,
   Textarea
-} from "@material-tailwind/react";
-import AdminLayout from './AdminLayout';
+} from '@material-tailwind/react';  // Ajustamos la importación de Material Tailwind
+import AdminLayout from './AdminLayout';  // Asumo que tienes un archivo AdminLayout.js en la misma carpeta
 
 import producto1 from './imagenes2/Producto1.jpg';
 import producto2 from './imagenes2/Producto2.jpg';
@@ -146,13 +145,13 @@ const AdminProductos = () => {
               <div className="w-full md:w-72">
                 <Input
                   label="Buscar productos"
-                  icon={<MagnifyingGlassIcon className="h-6 w-6" />}
+                  icon={<SearchIcon className="h-6 w-6" />}
                   value={searchQuery}
                   onChange={handleSearchChange}
                 />
               </div>
               <Button className="flex items-center gap-3" size="lg" onClick={applyFilters}>
-                <ArrowDownTrayIcon strokeWidth={2} className="h-5 w-5" /> Filtrar
+                <ArrowDownIcon className="h-5 w-5" /> Filtrar
               </Button>
               <Button className="flex items-center gap-3" size="lg" onClick={handleOpenModal}>
                 Agregar Producto
@@ -262,9 +261,9 @@ const AdminProductos = () => {
         </CardFooter>
       </Card>
 
-      <Dialog open={isModalOpen} handler={handleOpenModal}>
+      <Dialog open={isModalOpen} onClose={handleOpenModal}>
         <DialogHeader>Agregar Nuevo Producto</DialogHeader>
-        <DialogBody divider>
+        <DialogBody>
           <div className="flex flex-col gap-4">
             <Input
               label="Nombre del producto"
@@ -297,10 +296,10 @@ const AdminProductos = () => {
           </div>
         </DialogBody>
         <DialogFooter>
-          <Button variant="text" color="red" onClick={handleOpenModal}>
+          <Button color="red" onClick={handleOpenModal}>
             Cancelar
           </Button>
-          <Button variant="gradient" color="green" onClick={handleAddProduct}>
+          <Button color="green" onClick={handleAddProduct}>
             Agregar
           </Button>
         </DialogFooter>

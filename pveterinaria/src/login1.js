@@ -14,7 +14,7 @@ export default function Login() {
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   const {loginUser} = useUser();
   const navigate = useNavigate();
-  const [botonDesactivado, setBotonDesactivado] = useState(true);
+
 
   const [email, setEmail] = useState('');
   const [ip, setIp] = useState('');
@@ -61,7 +61,6 @@ export default function Login() {
     }
   };
 
-
   async function json(url) {
     const response = await fetch(url);
     const data = await response.json();
@@ -76,14 +75,12 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData();  
-    
+    data.append('Correo', email);
+    data.append('Contrasena', password);
+    data.append('ip', ip);
     
     if (validateEmail(email) && validatePassword(password)) {
       try {
-        data.append('Correo', email);
-        data.append('Contrasena', password);
-        data.append('ip', ip);
-        console.log(email, password, ip)
         const res = await fetch(apiurll+'api/CasaDelMarisco/Login', {
           method: 'POST',
           body: data,
@@ -103,7 +100,7 @@ export default function Login() {
         }else if (result === 'Error en las credenciales') {
           setEmailError('Error en las credenciales');
         }else if (result === 'Contraseña correcta') {
-          const userData = await obtenerDatosUsuario();
+          const userData = await obtenerDatosUsuario(email);
           loginUser(userData);
           Swal.fire({
             icon: 'success',
@@ -132,7 +129,6 @@ export default function Login() {
       console.log('Formulario no válido');
     }
   };
-  
   
   const onChange =()=>{
     setIsButtonDisabled(false)
@@ -185,8 +181,6 @@ export default function Login() {
   .then(async (result) => {
       if (result === "Correo Existe") {
           const resultado = await obtenerDatosUsuario(email);
-
-          // Segunda llamada fetch
           fetch(apiurll + "api/CasaDelMarisco/LoginOauth", {
               method: "POST",
               body: data,
@@ -286,9 +280,28 @@ export default function Login() {
           />
           {recaptchaError && <p className="error-message">{recaptchaError}</p>}
 
-          <button className="btn btn-warning text2" type="submit" disabled={isButtonDisabled}>
-            Entrar
-          </button>
+          <button
+  className="btn btn-warning text2"
+  type="submit"
+  disabled={isButtonDisabled}
+  style={{
+    position: 'relative',
+    backgroundColor: '#f0ad4e',
+    color: '#fff',
+    border: 'none',
+    padding: '10px 20px',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    overflow: 'hidden',
+    transition: 'background-color 0.3s',
+    opacity: isButtonDisabled ? '0.6' : '1', // Establecer opacidad reducida cuando está deshabilitado
+    pointerEvents: isButtonDisabled ? 'none' : 'auto', // Deshabilitar eventos de puntero cuando está deshabilitado
+  }}
+>
+  Entrar
+</button>
           <br />
           <p className="Text">or wiht</p>
           <GoogleLogin
