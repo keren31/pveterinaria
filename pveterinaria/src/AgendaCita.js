@@ -49,7 +49,7 @@ const AgendarCita = () => {
   const obtenerDatosServicios = async () => {
     try {
       const response = await fetch(
-        'http://localhost:5029/api/CasaDelMarisco/ObtenerServiciosCAN',
+        apiurll +'api/CasaDelMarisco/ObtenerServiciosCAN',
         {
           method: 'GET',
           // No es necesario incluir el body para una solicitud GET
@@ -167,7 +167,7 @@ const AgendarCita = () => {
       proData.append("fecha", fecha);
   
        // Realizar la segunda llamada a la API después de marcar los horarios ocupados
-       fetch("http://localhost:5029/api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
+       fetch("api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
         method: 'POST',
         body: proData,
     }).then((res) => res.json())
