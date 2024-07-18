@@ -411,7 +411,23 @@ const AgendarCita = () => {
           </select>
         </div>
 
-        <button className='btn btn-warning text2' type="submit">Agendar Cita</button>
+        <button
+  className='btn btn-warning text2'
+  type="submit"
+  style={{
+    backgroundColor: '#f0ad4e',
+    color: '#fff',
+    border: 'none',
+    padding: '10px 20px',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
+  }}
+>
+  Agendar Cita
+</button>
       </form>
     </div>
   </div>
