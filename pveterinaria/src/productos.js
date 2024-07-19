@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
+import { useUser } from "./UserContext";
 import producto1 from './imagenes2/Producto1.jpg';
 import producto2 from './imagenes2/Producto2.jpg';
 import producto3 from './imagenes2/Producto3.jpg';
@@ -95,6 +95,38 @@ const Productos2 = () => {
 
   const handleMaxPriceChange = (event) => {
     setMaxPrice(event.target.value);
+  };
+
+  const { user } = useUser();
+  const [productData, setProductData] = useState([]);
+  const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
+ 
+
+  useEffect(() => {
+    obtenterDatosProductos();
+  //  obtenerProductoCarrito();
+  }, []); 
+
+  const obtenterDatosProductos = async () => {
+    try {
+      const response = await fetch(
+        `${apiurll}/api/CasaDelMarisco/TraerProductosCan`,
+        {
+          method: 'GET',
+          // No es necesario incluir el body para una solicitud GET
+        }
+      );
+
+      if (response.ok) {
+        const product1Data = await response.json();
+        setProductData(product1Data);
+        console.log(product1Data)
+      } else {
+        console.error('Error al obtener datos de los usuarios:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error al obtener datos del usuario:', error);
+    }
   };
 
   const applyFilters = () => {
@@ -183,23 +215,22 @@ const Productos2 = () => {
           </Button>
         </div>
         <Grid container spacing={3}>
-          {(filteredProductos.length > 0 ? filteredProductos : productos).map((producto) => (
-            <Grid item key={producto.id} xs={20} sm={6} md={4}>
+          {(filteredProductos.length > 0 ? filteredProductos : productData).map((producto) => (
+            <Grid item key={producto.idProducto} xs={20} sm={6} md={4}>
               <Card>
                 <CardActionArea
                   style={{ display: 'flex', flexDirection: 'column', background: 'transparent' }}
                 >
                   <CardMedia
-                    component="img"
-                    alt={producto.nombre}                     
-                    image={producto.imagen}
+                    component="img"                  
+                    image={producto.Imagen}
                     style={{ transition: 'transform 0.3s', height: '200px' }}
                     onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.3)')}
                     onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
                   />
                   <CardContent style={{ flex: '1' }}>
                     <Typography variant="h6" component="div">
-                      {producto.nombre}
+                      {producto.Nombre}
                       <Button
                         size="small"
                         style={{ marginLeft: '37%', margin: '10px', backgroundColor: 'orange', color: 'white' }}
@@ -212,10 +243,10 @@ const Productos2 = () => {
                       </Badge>
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {producto.descripcion}
+                      {producto.Descripcion}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Precio: {producto.precio}
+                      Precio: {producto.Precio}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
