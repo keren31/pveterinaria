@@ -125,7 +125,7 @@ const AgendarCita = () => {
     const selectedDate = new Date(fechaCita);
     const dayOfWeek = selectedDate.getDay();
     if (dayOfWeek === 5 || dayOfWeek === 6) {
-      setFechaCitaError('La estética no abre los fines de semana, por favor seleccione un día hábil.');
+      setFechaCitaError('No abre los fines de semana eliga otro dia porfavor');
       return false;
     } else {
       setFechaCitaError('');
@@ -363,7 +363,30 @@ const AgendarCita = () => {
               required
               />
               {fechaCitaError && <p className="error-message">{fechaCitaError}</p>}
-              <button className='btn btn-warning ml-3' onClick={()=> setValorHora(false)}>Ver horaio</button>
+              <button
+          className='btn btn-warning ml-3'
+          onClick={() => setValorHora(false)}
+          style={{
+            backgroundColor: 'orange',
+            color: 'white',
+            padding: '10px 20px',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            fontSize: '16px',
+            transition: 'background-color 0.3s, transform 0.3s',
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.backgroundColor = 'darkorange';
+            e.currentTarget.style.transform = 'scale(1.05)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.backgroundColor = 'orange';
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+        >
+          Ver Horarios
+        </button>
             </div>
         </div>
         <div>
@@ -415,15 +438,22 @@ const AgendarCita = () => {
   className='btn btn-warning text2'
   type="submit"
   style={{
-    backgroundColor: '#f0ad4e',
-    color: '#fff',
-    border: 'none',
+    backgroundColor: 'orange',
+    color: 'white',
     padding: '10px 20px',
-    fontSize: '16px',
-    fontWeight: 'bold',
+    border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
-    transition: 'background-color 0.3s',
+    fontSize: '16px',
+    transition: 'background-color 0.3s, transform 0.3s',
+  }}
+  onMouseOver={(e) => {
+    e.currentTarget.style.backgroundColor = 'darkorange';
+    e.currentTarget.style.transform = 'scale(1.05)';
+  }}
+  onMouseOut={(e) => {
+    e.currentTarget.style.backgroundColor = 'orange';
+    e.currentTarget.style.transform = 'scale(1)';
   }}
 >
   Agendar Cita
