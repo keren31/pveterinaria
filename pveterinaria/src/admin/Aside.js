@@ -35,8 +35,11 @@ class AsideAdmin extends Component {
             { title: "Citas", path: "/admin-citas", icon: TodayIcon },
             { title: "Servicios", path: "/Admin", icon: MiscellaneousServicesIcon },
             { title: "Productos", path: "/admin-producto", icon: AddShoppingCartIcon },
+            { title: "Pedidos Generales", path: "/Pedidos_admin", icon: AssessmentIcon },
             { title: "Usuarios", path: "/admin-Usuario", icon: SupervisedUserCircleIcon },
             { title: "Editar Horarios", path: "/admin-edit-cita", icon: AssessmentIcon },
+            
+
             { title: "Mascotas", path: "/perfile", icon: PetsIcon }
         ];
 

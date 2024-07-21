@@ -1,77 +1,84 @@
-import React, { useState, useEffect } from 'react';
-import './css/login.css';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import imagen from './img/imagen1.jpg';
+import React, { useState, useRef, useEffect } from "react";
+
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import LoginIcon from "@mui/icons-material/Login";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 import ReCAPTCHA from "react-google-recaptcha";
-import {useUser} from './UserContext'
-import Swal from 'sweetalert2';
-import Layout from './Layout';
 import { gapi } from "gapi-script";
-import GoogleLogin from "@leecheuk/react-google-login";
+import GoogleLogin from "@leecheuk/react-google-login"; 
+import { useUser } from "./UserContext";
+import "./css/login.css";
+import { reactApiIP } from "./variables";
+import imagen from './img/imagen1.jpg';
+
+import Layout from './Layout';
 
 export default function Login() {
+  //const apiurll ="http://localhost:5029/"
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
-  const {loginUser} = useUser();
-  const navigate = useNavigate();
+  const { loginUser } = useUser();
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [email, setEmail] = useState("");
+  const [ip, setIp] = useState("");
 
-
-  const [email, setEmail] = useState('');
-  const [ip, setIp] = useState('');
-
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [loginAttempts, setLoginAttempts] = useState(0); // Estado para contar los intentos de inicio de sesión fallidos
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Estado para habilitar/deshabilitar el botón de entrar
-  const [recaptchaToken, setRecaptchaToken] = useState('');
-  const [recaptchaError, setRecaptchaError] = useState('');
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  const [loginAttempts2, setLoginAttempts2] = useState(0);
   const ClientID = "30463532374-6m31aqpp06eqco9k3325unc6n62cs8ej.apps.googleusercontent.com"
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  useEffect(() => {
-    // Habilitar el botón después de 3 segundos si se han hecho 3 intentos fallidos
-    if (loginAttempts >= 3) {
-      setTimeout(() => {
-        setIsButtonDisabled(false);
-        setLoginAttempts(0); // Reiniciar el contador de intentos de inicio de sesión
-      }, 5000);
-    }
-  }, [loginAttempts]);
+  const navigate = useNavigate();
+  const loginAttemptsRef = useRef(loginAttempts);
+  const loginAttemptsRef2 = useRef(loginAttempts2);
 
-  const obtenerDatosUsuario = async (email) => {
-    try {
-      const response = await fetch(
-        apiurll + "api/CasaDelMarisco/TraerUsuario?Correo=" + email,
-        {
-          method: "GET",
-        }
-      );
-      if (response.ok) {
-        return await response.json();
-      } else {
-        console.error(
-          "Error al obtener datos del usuario que ingresaste:",
-          response.statusText
-        );
-        return null;
-      }
-    } catch (error) {
-      console.error("Error al obtener datos del usuario:", error);
-      return null;
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleBlur = () => {
+    validatePassword(password);
+  };
+
+  function json(url) {
+    return fetch(url).then((res) => res.json());
+  }
+
+  //
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email === "") {
+      setEmailError("Este campo no puede estar vacío");
+    } else if (emailRegex.test(email)) {
+      setEmailError("");
+      return true;
+    } else {
+      setEmailError("Correo electrónico no válido, incluya un @");
+      return false;
     }
   };
 
-  async function json(url) {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  }
-  function ObtenerIp(){
-    let apiKey = "8c308d0e8f217c1a489e15cb1998c34ffcd76bcead2a2851c3878299";
-    json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
-      setIp(data.ip);
-    });
-  }
+  const validatePassword = (password) => {
+    if (password === "") {
+      setPasswordError("Este campo no puede estar vacío");
+    } else if (password.length >= 8) {
+      setPasswordError("");
+      return true;
+    } else {
+      setPasswordError("La contraseña debe tener al menos 8 caracteres");
+      return false;
+    }
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData();  
@@ -130,42 +137,28 @@ export default function Login() {
     }
   };
   
-  const onChange =()=>{
-    setIsButtonDisabled(false)
+
+  function onChange(value) {
+    setIsButtonDisabled(false);
+    ObtenerIp();
+
   }
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (email === '') {
-      setEmailError('No puede estar vacio este requisito');
-    } else if (emailRegex.test(email)) {
-      setEmailError('');
-      ObtenerIp();
-      return true;
-    } else {
-      setEmailError('Correo electrónico no válido');
-      return false;
-    }
-  };
-
-  const validatePassword = (password) => {
-    if (password === '') {
-      setPasswordError('No puede estar vacio este requisito');
-    } else if (password.length >= 8) {
-      setPasswordError('');
-      return true;
-    } else {
-      setPasswordError('La contraseña debe tener al menos 8 caracteres');
-      return false;
-    }
-  };
-
-  const handleRecaptchaChange = (token) => {
-    setRecaptchaToken(token);
-  };
-
-  const onFailure = () => {
-    console.log("Algo salio mal");
-  };
+  function ObtenerIp() {
+    const apiKey = reactApiIP;
+    json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
+      setIp(data.ip);
+      //console.log(ip);
+    });
+  }
+  useEffect(() => {
+    ObtenerIp();
+    const start = () => {
+      gapi.auth2.init({
+        clientId: ClientID,
+      });
+    };
+    gapi.load("client:auth2", start);
+  }, []);
 
   const onSuccess = async (response) => {
     const email = response.profileObj.email;
@@ -181,6 +174,8 @@ export default function Login() {
   .then(async (result) => {
       if (result === "Correo Existe") {
           const resultado = await obtenerDatosUsuario(email);
+
+          // Segunda llamada fetch
           fetch(apiurll + "api/CasaDelMarisco/LoginOauth", {
               method: "POST",
               body: data,
@@ -214,17 +209,33 @@ export default function Login() {
   //console.log(response);
 };
 
-  useEffect(() => {
-    const start = () => {
-      gapi.auth2.init({
-        clientId: ClientID,
-      });
-    };
-    gapi.load("client:auth2", start);
-  }, []);
 
-  
+  const onFailure = () => {
+    console.log("Algo salio mal");
+  };
 
+  const obtenerDatosUsuario = async (email) => {
+    try {
+      const response = await fetch(
+        apiurll + "api/CasaDelMarisco/TraerUsuario?Correo=" + email,
+        {
+          method: "GET",
+        }
+      );
+      if (response.ok) {
+        return await response.json();
+      } else {
+        console.error(
+          "Error al obtener datos del usuario que ingresaste:",
+          response.statusText
+        );
+        return null;
+      }
+    } catch (error) {
+      console.error("Error al obtener datos del usuario:", error);
+      return null;
+    }
+  };
   return (
     <Layout>
     <div className="registro-form-containerLogin">
@@ -232,78 +243,67 @@ export default function Login() {
         <img src={imagen} alt="Registro" className="registro-imageLogin" />
       </div>
       <div className="registro-formLogin">
-        <p className="loginTitulo">Login</p>
-        <label className="loginText">Inicia sesión para obtener nuevos permisos y opciones dentro del sitio web</label>
+        <p className="loginTitulo">
+          Login <LoginIcon />
+        </p>
+        <label className="loginText">
+          Inicia sesión para obtener nuevos permisos y opciones dentro del sitio
+          web
+        </label>
         <form onSubmit={handleSubmit}>
           <label htmlFor="nombre" className="loginLabel">
             Correo electrónico :
           </label>
           <input
+            type="email"
             id="email"
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onBlur={() => validateEmail(email)}
-            className={emailError ? 'input-error' : ''}
+            className={emailError ? "input-error" : ""}
             required
           />
+
           {emailError && <p className="error-message">{emailError}</p>}
+
           <label htmlFor="email" className="loginLabel">
             Contraseña :
           </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onBlur={() => validatePassword(password)}
-            className={passwordError ? 'input-error' : ''}
-          />
+          <div className="password-input-container">
+            <input
+              type={passwordVisible ? "text" : "password"}
+              id="password"
+              name="password"
+              value={password}
+              required
+              size={37}
+              onChange={handlePasswordChange}
+              onBlur={handleBlur}
+              className={passwordError ? "input-error" : ""}
+            />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              class="btn btn-light"
+            >
+              {passwordVisible ? (
+                <VisibilityOutlinedIcon fontSize="small" />
+              ) : (
+                <VisibilityOffOutlinedIcon fontSize="small" />
+              )}
+            </button>
+          </div>
           {passwordError && <p className="error-message">{passwordError}</p>}
-
-          <Link to="/recuperar" className="forget">
-            ¿Olvidaste tu password?
-          </Link>
-
           <label className="recuerdame">
-            <input type="checkbox" className="cuadro" />
+            <input
+              type="checkbox"
+              className="cuadro"
+              style={{ marginTop: "10px" }}
+            />
             Recuérdame
           </label>
-          <Link to="/Registro" className="singText">
-            No tienes cuenta? Registrarsesxdcfvbghnujmik,
-          </Link>
 
-          <ReCAPTCHA
-            sitekey="6LfhTZkpAAAAAEypBbINYHIc9ssKr74nF8HElu46"
-            onChange={onChange}
-          />
-          {recaptchaError && <p className="error-message">{recaptchaError}</p>}
-
-          <button
-  className="btn btn-warning text2"
-  type="submit"
-  disabled={isButtonDisabled}
-  style={{
-    position: 'relative',
-    backgroundColor: '#f0ad4e',
-    color: '#fff',
-    border: 'none',
-    padding: '10px 20px',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    overflow: 'hidden',
-    transition: 'background-color 0.3s',
-    opacity: isButtonDisabled ? '0.6' : '1', // Establecer opacidad reducida cuando está deshabilitado
-    pointerEvents: isButtonDisabled ? 'none' : 'auto', // Deshabilitar eventos de puntero cuando está deshabilitado
-  }}
->
-  Entrar
-</button>
-          <br />
-          <p className="Text">or wiht</p>
           <GoogleLogin
             clientId={ClientID}
             onSuccess={onSuccess}
@@ -311,12 +311,51 @@ export default function Login() {
             cookiePolicy={"single_host_policy"}
             className="google-login-button"
           />
-          <div className="sesionButton">
-            <div></div>
-            <div></div>
+          <div className="recaptcha">
+            <ReCAPTCHA
+              className="recaptch"
+              sitekey="6LcM1HgpAAAAAPRLXOZ5D4aIwp7JtiBeH3IR9QW6"
+              onChange={onChange}
+            />
           </div>
-          
+          <button
+            className="btn btn-warning text2"
+            type="submit"
+            disabled={isButtonDisabled}
+            style={{
+              backgroundColor: 'orange',
+              color: 'white',
+              padding: '10px 20px',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              transition: 'background-color 0.3s, transform 0.3s',
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = 'darkorange';
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = 'orange';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+            
+          >
+            Entrar
+          </button>
+          <br />
         </form>
+
+        <div className="container">
+          <Link to="/menuRecuperacion" className="singText">
+            ¿Olvidaste tu password?
+          </Link>
+          <Link to="/registrar" className="singText ms-3">
+            ¿Sin cuenta? Registrate
+          </Link>
+          <></>
+        </div>
       </div>
     </div>
     </Layout>

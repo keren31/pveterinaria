@@ -1,0 +1,70 @@
+/* Archivo: styles.css */
+
+.card-container {
+    @apply p-4 shadow-lg rounded-lg bg-white border border-gray-200;
+  }
+  
+  .card-header {
+    @apply text-2xl font-semibold mb-4;
+  }
+  
+  .card-body {
+    @apply mb-4;
+  }
+  
+  .card-footer {
+    @apply border-t border-gray-300 pt-4;
+  }
+  
+  .product-card {
+    @apply flex border-b border-gray-200 py-4;
+  }
+  
+  .product-image {
+    @apply w-32 h-32 object-cover rounded-md;
+  }
+  
+  .product-details {
+    @apply flex-col pl-4;
+  }
+  
+  .product-name {
+    @apply text-xl font-bold;
+  }
+  
+  .product-price {
+    @apply text-lg text-gray-700;
+  }
+  
+  .product-actions {
+    @apply flex items-center space-x-2;
+  }
+  
+  .product-actions button {
+    @apply p-2 rounded-full text-gray-600;
+  }
+  
+  .product-quantity {
+    @apply w-16 text-center mx-2;
+  }
+  
+  .select-address {
+    @apply mt-4 p-2 border rounded-md w-full;
+  }
+  
+  .order-summary {
+    @apply text-lg font-semibold mb-4;
+  }
+  
+  .summary-item {
+    @apply flex justify-between mb-2;
+  }
+  
+  .summary-total {
+    @apply font-semibold;
+  }
+  
+  .paypal-button {
+    @apply mt-4;
+  }
+  

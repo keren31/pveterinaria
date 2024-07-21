@@ -33,8 +33,8 @@ class AsidePerfil extends Component {
         const Menus = [
             { title: "Mi Cuenta" , path: "/Perfil", icon: PersonIcon },
             { title: "Mis Citas", path: "/mis-Citas", icon: TodayIcon },
-            { title: "Productos", path: "/mis-citas", icon: AddShoppingCartIcon },
-            { title: "Usuarios", path: "/mis-citas", icon: SupervisedUserCircleIcon },
+            { title: "Productos", path: "/detalleCarrito", icon: AddShoppingCartIcon },
+            { title: "Mis Pedidos", path: "/Mis_Pedidos", icon: SupervisedUserCircleIcon },
             { title: "Mascotas", path: "/mascotas", icon: PetsIcon }
         ];
 

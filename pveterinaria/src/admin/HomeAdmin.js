@@ -2,10 +2,16 @@ import React from 'react'
 
 import AdminLayout from './AdminLayout'
 
+import PedidosGeneral from './Pedidos_Admin'
+
+
+
 function HomeAdmin() {
   return (
     <AdminLayout>
-      <h1>Home Admin</h1>
+            <PedidosGeneral /> {/* Incluye PedidosGeneral dentro del AdminLayout */}
+
+      
     </AdminLayout>
   )
 }

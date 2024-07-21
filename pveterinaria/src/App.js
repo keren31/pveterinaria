@@ -39,6 +39,9 @@ import EditarCita from './perfil/EditarCita';
 import Mascotas from './perfil/Mascotas';
 
 import AdminEditCita from './admin/AdminEditCita';
+import CarritoDetalle from './detalleCarrito';
+import Pedidos from './perfil/Pedidos';
+import PedidosGeneral from './admin/Pedidos_Admin';
 
 
 
@@ -469,6 +472,11 @@ function App() {
              <Route path='/Perfil' element={<Perfil/>}/>
               <Route path='/Citas' element={<AgendarCita/>}/>
               <Route path='/administradoradmin' element={<AgendarCita/>}/>
+              <Route path='/detalleCarrito' element={<CarritoDetalle/>}/>
+              <Route path='/Mis_Pedidos' element={<Pedidos/>}/>
+              <Route path='/Mis_Pedidos' element={<Pedidos/>}/>
+              <Route path="/Pedidos_admin" element={<PedidosGeneral/>} />
+
 
              </Route>
 

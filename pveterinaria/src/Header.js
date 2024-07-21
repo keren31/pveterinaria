@@ -4,6 +4,7 @@ import { Link,useLocation } from 'react-router-dom';
 import './css/Header.css'; // Importar archivo de estilos CSS
 import { useUser } from './UserContext';
 import  Breadcrumbs from './Breadcrumbs';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const Header = () => {
     const { user } = useUser();
@@ -66,6 +67,20 @@ const Header = () => {
                             <li><Link to='/Quienes-Somos'>Quienes Somos</Link></li>
                             <li><Link to='/servicio'>Servicios</Link></li>
                             <li><Link to='/Productos'>Tienda</Link></li>
+                            <li style={{ listStyle: 'none', marginBottom: '8px' }}>
+                              <Link 
+                                to='/detalleCarrito' 
+                                style={{ 
+                                  display: 'flex', 
+                                  alignItems: 'center', 
+                                  textDecoration: 'none', 
+                                  color: 'inherit' // Ajusta el color según tu preferencia
+                                }}
+                              >
+                                <AddShoppingCartIcon style={{ marginRight: '8px' }} />
+                                Carrito
+                              </Link>
+                            </li>
                             <li><Link to='/Citas'>Citas</Link></li>
                             
                             {/* Aquí puedes agregar tu lógica de autenticación personalizada si es necesario */}
