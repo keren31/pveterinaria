@@ -35,7 +35,8 @@ class AsidePerfil extends Component {
             { title: "Mis Citas", path: "/mis-Citas", icon: TodayIcon },
             { title: "Productos", path: "/detalleCarrito", icon: AddShoppingCartIcon },
             { title: "Mis Pedidos", path: "/Mis_Pedidos", icon: SupervisedUserCircleIcon },
-            { title: "Mascotas", path: "/mascotas", icon: PetsIcon }
+            { title: "Mascotas", path: "/mascotas", icon: PetsIcon },
+            { title: "Mis Pedidos", path: "/Direccion", icon: TodayIcon }
         ];
 
         const Menu2 = [

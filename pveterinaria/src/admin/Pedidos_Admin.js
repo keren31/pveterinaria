@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { useUser } from "../UserContext";
+import AdminLayout from './AdminLayout';
 
 const useStyles = styled({
   root: {
@@ -55,6 +56,7 @@ const PedidosGeneral = () => {
   }, []);
 
   return (
+    <AdminLayout>
     <Container style={{ marginTop: '20px', marginBottom: '10px' }}>
       
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -116,6 +118,7 @@ const PedidosGeneral = () => {
       </div>
       
     </Container>
+    </AdminLayout>
   );
 };
 

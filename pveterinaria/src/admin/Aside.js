@@ -53,13 +53,12 @@ class AsideAdmin extends Component {
                 <div className={`aside-container ${open ? 'open' : 'closed'}`} style={{ width: asideWidth }}>
                     <ArrowBackIcon className="back-icon" onClick={this.toggleMenu} />
                     <div className="dashboard">
-                        <ComputerIcon className="computer-icon" />
-                        <h1 className="dashboard-title">Administrador</h1>
+                    <div style={{ backgroundColor: 'white', height: '50px', width: '100px', borderRadius: '50%', padding: '0px', marginRight: '0px' }}>
+                    <img src='https://jcayikuywrhnwjltyxaz.supabase.co/storage/v1/object/sign/skill%20platon/logo_perro.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJza2lsbCBwbGF0b24vbG9nb19wZXJyby5wbmciLCJpYXQiOjE3MjE1ODI4NTcsImV4cCI6MTc1MzExODg1N30.QfzTZcdALJNyB4gmbfrqYljG36iC9aKNOWeOeYhUqDM&t=2024-07-21T17%3A27%3A36.659Z' alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                  </div>
+                        <h1 className="dashboard-title">ESTETICA CANINA PLATON ADMINISTRADOR</h1>
                     </div>
-                    <div className="search-container">
-                        <SearchIcon className="search-icon" />
-                        <input type="search" placeholder="Buscar..." className="search-input" />
-                    </div>
+                   
                     <ul className="menu">
                         {Menus.map((menu, index) => (
                             <li className="menu-item" key={index}>

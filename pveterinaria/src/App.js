@@ -42,6 +42,7 @@ import AdminEditCita from './admin/AdminEditCita';
 import CarritoDetalle from './detalleCarrito';
 import Pedidos from './perfil/Pedidos';
 import PedidosGeneral from './admin/Pedidos_Admin';
+import Direcciones from './perfil/direcciones';
 
 
 
@@ -468,6 +469,7 @@ function App() {
              <Route path="/Detallecat" element={<DetalleCategoria/>} />
              <Route path="/CategoriasServi" element={<CategoriasServicio/>} />
              
+             
              <Route element={<ProtectorRutas/>}>
              <Route path='/Perfil' element={<Perfil/>}/>
               <Route path='/Citas' element={<AgendarCita/>}/>
@@ -476,6 +478,7 @@ function App() {
               <Route path='/Mis_Pedidos' element={<Pedidos/>}/>
               <Route path='/Mis_Pedidos' element={<Pedidos/>}/>
               <Route path="/Pedidos_admin" element={<PedidosGeneral/>} />
+              <Route path="/Direccion" element={<Direcciones/>} />
 
 
              </Route>
