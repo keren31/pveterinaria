@@ -33,6 +33,7 @@ const Perfil = () => {
               <h4 className="subtitle">Correo: {user ? user.Correo : 'Correo del Usuario'}</h4>
               <h4 className="subtitle">Teléfono: {user ? user.Telefono : 'Telefono del Usuario'}</h4>
               <h4 className="subtitle">Estado de la cuenta: {user ? user.Rol : 'Estado de la cuenta del Usuario'}</h4>
+              
             </div>
           </div>
           <div className="options">

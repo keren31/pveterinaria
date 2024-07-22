@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './css/registro.css';
-import imagen from './img/imagen1.jpg';
+import imagen from './img/pixlr-image-generator-fd08d275-bff4-4995-bb65-c63a369e379b.png';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -275,10 +275,35 @@ const Registro = () => {
       <img src={imagen} alt="Registro" className="registro-imageRegistro" />
     </div>
     <div className="registro-formRegistro">
-      <p className="loginTitulo">Crear Cuenta/Registrarse</p>
-      <label className="loginText">
-        Bienvenidos a la Estetica Canina Platon ingresa los datos para crear una cuenta con nosotros.
-      </label>
+      <p className="loginTitulo" style={{
+    color: '#fff', 
+    fontSize: '24px', 
+    fontWeight: 'bold', 
+    textAlign: 'center', 
+    margin: '20px 0', 
+    padding: '10px', 
+    backgroundColor: '#0055A5',
+    borderRadius: '8px'
+  }}>Crear Cuenta/Registrarse</p>
+      <label 
+  className="loginText" 
+  style={{
+    color: '#333', 
+    fontSize: '20px', 
+    fontWeight: '300', 
+    textAlign: 'center', 
+    margin: '20px 0', 
+    padding: '20px', 
+    backgroundColor: '#f0f0f0', 
+    borderRadius: '12px', 
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
+    display: 'block',
+    lineHeight: '1.6'
+  }}
+>
+  Bienvenidos a la Estética Canina Platon, ingresa los datos para crear una cuenta con nosotros.
+</label>
+
       <form onSubmit={handleSubmit} className="formulario">
         <div>
           <label htmlFor="nombre" className="RegistroLabel">
@@ -461,15 +486,22 @@ const Registro = () => {
   className="btn btn-warning text2"
   type="submit"
   style={{
-    position: 'relative',
-    backgroundColor: '#f0ad4e',
-    color: '#fff',
-    border: 'none',
+    backgroundColor: 'orange',
+    color: 'white',
     padding: '10px 20px',
-    fontSize: '16px',
-    fontWeight: 'bold',
+    border: 'none',
     borderRadius: '5px',
-    
+    cursor: 'pointer',
+    fontSize: '16px',
+    transition: 'background-color 0.3s, transform 0.3s',
+  }}
+  onMouseOver={(e) => {
+    e.currentTarget.style.backgroundColor = 'darkorange';
+    e.currentTarget.style.transform = 'scale(1.05)';
+  }}
+  onMouseOut={(e) => {
+    e.currentTarget.style.backgroundColor = 'orange';
+    e.currentTarget.style.transform = 'scale(1)';
   }}
   
 >

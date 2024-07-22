@@ -243,17 +243,48 @@ export default function Login() {
         <img src={imagen} alt="Registro" className="registro-imageLogin" />
       </div>
       <div className="registro-formLogin">
-        <p className="loginTitulo">
+        <p className="loginTitulo"  style={{
+    color: '#fff', 
+    fontSize: '26px', 
+    fontWeight: 'bold', 
+    textAlign: 'center', 
+    margin: '20px 0', 
+    padding: '10px', 
+    backgroundColor: '#0055A5', 
+    borderRadius: '10px', 
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+  }}>
           Login <LoginIcon />
         </p>
-        <label className="loginText">
+        <label className="loginText"
+        style={{
+          color: '#555', 
+          fontSize: '18px', 
+          fontWeight: 'bold',  
+          textAlign: 'center', 
+          margin: '5px 0', 
+          padding: '5px', 
+          lineHeight: '1.5'
+        }}>
           Inicia sesión para obtener nuevos permisos y opciones dentro del sitio
           web
         </label>
+
+
         <form onSubmit={handleSubmit}>
-          <label htmlFor="nombre" className="loginLabel">
+          <label htmlFor="nombre" className="loginLabel"
+          style={{
+            color: '#555', 
+            fontSize: '18px', 
+            fontWeight: 'bold', 
+            margin: '5px 0', 
+            padding: '5px', 
+            lineHeight: '1.5'
+          }}>
             Correo electrónico :
           </label>
+
+
           <input
             type="email"
             id="email"
@@ -267,9 +298,17 @@ export default function Login() {
 
           {emailError && <p className="error-message">{emailError}</p>}
 
-          <label htmlFor="email" className="loginLabel">
+          <label htmlFor="email" className="loginLabel"style={{
+            color: '#555', 
+            fontSize: '18px', 
+            fontWeight: 'bold', 
+            margin: '5px 0', 
+            padding: '5px', 
+            lineHeight: '1.5'
+          }}>
             Contraseña :
           </label>
+
           <div className="password-input-container">
             <input
               type={passwordVisible ? "text" : "password"}
@@ -293,13 +332,21 @@ export default function Login() {
                 <VisibilityOffOutlinedIcon fontSize="small" />
               )}
             </button>
+
           </div>
           {passwordError && <p className="error-message">{passwordError}</p>}
           <label className="recuerdame">
             <input
               type="checkbox"
               className="cuadro"
-              style={{ marginTop: "10px" }}
+              style={{
+            color: '#555', 
+            fontSize: '18px', 
+            fontWeight: 'bold', 
+            margin: '5px 0', 
+            padding: '5px', 
+            lineHeight: '1.5'
+          }}
             />
             Recuérdame
           </label>
@@ -311,7 +358,11 @@ export default function Login() {
             cookiePolicy={"single_host_policy"}
             className="google-login-button"
           />
-          <div className="recaptcha">
+          <div className="recaptcha" style={{
+            margin: '10px 0', 
+            padding: '10px', 
+            
+          }}>
             <ReCAPTCHA
               className="recaptch"
               sitekey="6Lc_AHkpAAAAAPklyV-VTMQlYLL1tC0Z_P8Sc1O-"
@@ -348,10 +399,10 @@ export default function Login() {
         </form>
 
         <div className="container">
-          <Link to="/menuRecuperacion" className="singText">
+          <Link to="/recuperar" className="singText">
             ¿Olvidaste tu password?
           </Link>
-          <Link to="/registrar" className="singText ms-3">
+          <Link to="/registro" className="singText ms-3">
             ¿Sin cuenta? Registrate
           </Link>
           <></>
