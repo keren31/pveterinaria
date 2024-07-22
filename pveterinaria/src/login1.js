@@ -314,7 +314,7 @@ export default function Login() {
           <div className="recaptcha">
             <ReCAPTCHA
               className="recaptch"
-              sitekey="6LcM1HgpAAAAAPRLXOZ5D4aIwp7JtiBeH3IR9QW6"
+              sitekey="6Lc_AHkpAAAAAPklyV-VTMQlYLL1tC0Z_P8Sc1O-"
               onChange={onChange}
             />
           </div>
