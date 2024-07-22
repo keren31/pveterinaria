@@ -305,84 +305,73 @@ main{
 
 /*estilos del footer*/
 .Footer {
-  background-color: #333;
+  background-color: #1e1e1e;
   color: #fff;
-  padding: 50px;
   display: flex;
   justify-content: space-around;
+  padding: 40px 0;
   flex-wrap: wrap;
-  font-family: Arial, sans-serif;
 }
 
-.contact-info,
-.business-hours,
-.quick-links,
-.whatsapp-link {
-  flex: 1 1 20%;
-  margin-bottom: 30px;
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+  margin: 20px;
 }
 
-.contact-info h2,
-.business-hours h2,
-.quick-links h2,
-.whatsapp-link h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
+.footer-section h2 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #815aff;
 }
 
-.contact-info p,
-.business-hours p,
-.quick-links ul,
-.whatsapp-link p {
-  font-size: 16px;
-  line-height: 1.6;
+.footer-section p,
+.footer-section ul,
+.footer-section a {
+  font-size: 0.9em;
+  color: #fff;
+  text-decoration: none;
 }
 
-.quick-links ul {
-  list-style: none;
+.footer-section ul {
+  list-style-type: none;
   padding: 0;
 }
 
-.quick-links ul li {
-  margin-bottom: 10px;
+.footer-section ul li {
+  margin-bottom: 5px;
 }
 
-.quick-links button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+.footer-section .social-icons a {
+  font-size: 1.5em;
+  margin: 0 10px;
   color: #fff;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
 }
 
-.rotate-arrow {
-  transition: transform 0.3s ease;
+.footer-section .social-icons a:hover {
+  color: #5ac5ff;
 }
 
-.faq {
-  background-color: #444;
-  color: #fff;
-  padding: 30px;
-  margin-top: 30px;
-  flex-basis: 100%;
+.footer-section a:hover {
+  color: #5ac5ff;
 }
 
-.faq h2 {
-  font-size: 28px;
-  margin-bottom: 20px;
+@media (max-width: 768px) {
+  .Footer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-section {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .footer-section .social-icons {
+    justify-content: center;
+  }
 }
 
-.faq-item h3 {
-  font-size: 24px;
-  margin-bottom: 15px;
-}
-
-.faq-item p {
-  font-size: 18px;
-  line-height: 1.6;
-}
 
 
 /* Estilos para el botón de Preguntas Frecuentes */

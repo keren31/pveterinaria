@@ -4,27 +4,19 @@ import './css/App.css'; // Importa tu archivo CSS
 import Header from "./Header";
 import CategoriasServicio from './CategoriasServicio';
 import Registro from './Registro'
-
-
 import TrandingSlider from './TrandingSlider';
-
 import ServicioCard from'./servicios'
-
 import Error404 from './pagina_error';
 import Login from './login1'
 import RecuperarContra from './RecuperarContraseña';
 import Token from './Token'
 import Actualizar from './actualizar';
 import AgendarCita from './AgendaCita';
-import Fotter, { useState } from 'react';
+
 import ProtectorRutas from './ProtectorRutas';
-
-
 import Productos2 from './productos'; // Importa el componente Productos2
 import imagen1 from './slider/imagen fondo1.jpg';
 
-
-import { FaWhatsapp } from 'react-icons/fa';
 import Perfil from './Perfil';
 import DetalleCategoria from './DetalleCategoria';
 import HomeAdmin from './admin/HomeAdmin';
@@ -37,31 +29,12 @@ import CardPerfil from './perfil/Profile';
 import VerCita from './perfil/VerCita';
 import EditarCita from './perfil/EditarCita';
 import Mascotas from './perfil/Mascotas';
-
 import AdminEditCita from './admin/AdminEditCita';
 import CarritoDetalle from './detalleCarrito';
 import Pedidos from './perfil/Pedidos';
 import PedidosGeneral from './admin/Pedidos_Admin';
 import Direcciones from './perfil/direcciones';
-
-
-
-const WhatsAppLink = ({ phoneNumber, message }) => {
-  const handleWhatsAppClick = () => {
-    const whatsappUrl = 'https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}';
-    window.open(whatsappUrl, '_blank');
-  };
-
-  return (
-    <div>
-      <p>Contact us on WhatsApp:</p>
-      <button onClick={handleWhatsAppClick}>
-        <FaWhatsapp size={30} />
-      </button>
-    </div>
-  );
-};
-
+import PreguntasFrecuentes from './PreguntasFrecuentes';
 
 
 function Inicio() {
@@ -360,82 +333,8 @@ function PoliticasDePrivacidad() {
 
 }
 
-function FAQ() {
-  return (
-    <div className="faq">
-      <h2>Preguntas Frecuentes</h2>
-      <div className="faq-item">
-        <h3>¿Cuál es su política de cancelación?</h3>
-        <p>Nuestra política de cancelación permite...</p>
-      </div>
-      <div className="faq-item">
-        <h3>¿Cómo puedo programar una cita?</h3>
-        <p>Puede programar una cita llamándonos al (123) 456-7890...</p>
-      </div>
-      {/* Agrega más preguntas y respuestas según sea necesario */}
-    </div>
-  );
-}
-
-function Footer() {
-  const [showFAQ, setShowFAQ] = useState(false);
-
-  const toggleFAQ = () => {
-    setShowFAQ(!showFAQ);
-  };
-
-  return (
-    <footer className='Footer'>
-      <div className="contact-info">
-        <h2>Contacto</h2>
-        <p>Dirección: Calle de la Estética Canina, Ciudad</p>
-        <p>Teléfono: (123) 456-7890</p>
-        <p>Email: info@esteticacanina.com</p>
-      </div>
-      
-      <div className="business-hours">
-        <h2>Horario de Atención</h2>
-        <p>Lunes a Viernes: 9:00 am - 6:00 pm</p>
-        <p>Sábados: 10:00 am - 4:00 pm</p>
-        <p>Domingos: Cerrado</p>
-      </div>
-
-      <div className="quick-links">
-        <h2>Enlaces Rápidos</h2>
-        <ul>
-          <li><a href="/servicios">Servicios</a></li>
-          <li><a href="/galeria">Galería</a></li>
-          <li><a href="/tarifas">Tarifas</a></li>
-          <li><button onClick={toggleFAQ}>Preguntas Frecuentes <span className={showFAQ ? 'rotate-arrow' : ''}>&#9660;</span></button></li>
-        </ul>
-      </div>
-
-      {showFAQ && <FAQ />}
-
-      <div className="whatsapp-link">
-        <h2>Contactar por WhatsApp</h2>
-        {/* Asegúrate de que WhatsAppLink es un componente que renderiza un enlace de WhatsApp */}
-        <WhatsAppLink phoneNumber={phoneNumber} message={message} />  
-      </div>
-    </footer>
-  );
-}
-
-const phoneNumber = '7891216079'; // Reemplaza con el número de teléfono deseado
-  const message = 'Hola, estoy interesado en sus servicios';
 
 function App() {
-  
-  const servicios = [
-    {
-      id: 1,
-      imagenSrc: 'URL_IMAGEN_SERVICIO_1',
-      precio: '$500',
-      descripcion: 'Servicio de Corte de Pelo Profesional',
-    },
-    // Agrega más servicios según sea necesario
-  ];
-  
 
   return (
     
@@ -468,6 +367,7 @@ function App() {
              
              <Route path="/Detallecat" element={<DetalleCategoria/>} />
              <Route path="/CategoriasServi" element={<CategoriasServicio/>} />
+             <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
              
              
              <Route element={<ProtectorRutas/>}>
@@ -476,27 +376,24 @@ function App() {
               <Route path='/administradoradmin' element={<AgendarCita/>}/>
               <Route path='/detalleCarrito' element={<CarritoDetalle/>}/>
               <Route path='/Mis_Pedidos' element={<Pedidos/>}/>
-              <Route path='/Mis_Pedidos' element={<Pedidos/>}/>
-              <Route path="/Pedidos_admin" element={<PedidosGeneral/>} />
+              
+             
               <Route path="/Direccion" element={<Direcciones/>} />
 
-
-             </Route>
-
-           
-             <Route path="/admin-Usuario" element={<AdminUsuario/>}/>
+              <Route path="/Pedidos_admin" element={<PedidosGeneral/>} />
+              <Route path="/admin-Usuario" element={<AdminUsuario/>}/>
              <Route path="/admin-producto" element={<AdminProductos/>} />
              <Route path="/admin-citas" element={<CitasAdmin/>} />
              <Route path="/admin-edit-cita" element={<AdminEditCita/>} />
-           
+             <Route path="/mis-citas" element={<VerCita/>} />
              <Route path="/perfile" element={<CardPerfil/>} />
              <Route path="/mis-citas" element={<VerCita/>} />
              <Route path="/editarCita" element={<EditarCita/>} />
              <Route path="/mascotas" element={<Mascotas/>} />
+            
 
 
-     
-  
+             </Route>
 
             
           </Routes>

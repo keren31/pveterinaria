@@ -115,7 +115,7 @@ const ServicioCard = () => {
     <Layout>
       <Container className="servicio-container">
       <div className="titulo-container">
-        <Typography variant="h3" component="h1" padding={'50px'} justifyContent={'center'} gutterBottom>
+        <Typography variant="h3" marginTop={'35px'} component="h1" padding={'50px'} justifyContent={'center'} gutterBottom>
           Servicios de la Estetica Canina Platon
         </Typography>
       </div>

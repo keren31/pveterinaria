@@ -46,9 +46,9 @@ const Perfil = () => {
             <button className="edit-profile-button" onClick={cerrarSesion}>
               Editar Perfil
             </button>
-            <button className="logout-button" onClick={cerrarSesion}>
-              Cerrar sesión
-            </button>
+              <button className="logout-button" onClick={cerrarSesion}>
+                Cerrar sesión
+              </button>
           </div>
         </div>
       </PerfilLayout>

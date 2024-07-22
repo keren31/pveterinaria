@@ -34,15 +34,19 @@ export default function EditarCita() {
   const [hora, setHora] = useState();
   const [telefono, setTelefono] = useState();
   const [dataServicio, setDataServicio] = useState([]);
+  const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
+
 
   const obtenerDatosServicios = async () => {
     try {
       const response = await fetch(
-        'https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/ObtenerServiciosCAN',
+        apiurll +'api/CasaDelMarisco/ObtenerServiciosCAN',
         {
           method: 'GET',
+          // No es necesario incluir el body para una solicitud GET
         }
       );
+
 
       if (response.ok) {
         const dataService = await response.json();

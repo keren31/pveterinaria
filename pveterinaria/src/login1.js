@@ -189,7 +189,7 @@ export default function Login() {
                       title: "Login de administrador",
                       text: "Cuidado, eres administrador. Puedes modificar datos de la página, siempre con cuidado.",
                   });
-                  navigate("/dashboard/home");
+                  navigate("/Pedidos_admin");
               } else {
                   navigate("/");
               }
