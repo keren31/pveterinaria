@@ -31,7 +31,8 @@ export default function RecuperarContra() {
       data.append('Correo', email);
 
       fetch(
-        `${apiurll}api/CasaDelMarisco/ActualizarTokenEstetica?Correo=${email}`,
+       
+          'http://localhost:5029/api/CasaDelMarisco/ActualizarTokenEstetica',
         {
           method: 'POST',
           body: data,
@@ -61,37 +62,86 @@ export default function RecuperarContra() {
 
   return (
     <Layout>
-      <div className="registro-form-containerLogin">
-        <div className="registro-image-containerLogin">
-          <img src={imagen} alt="Registro" className="registro-imageLogin" />
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '650px',
+      backgroundColor: '#f8f9fa'
+    }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+        padding: '20px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+      }}>
+        <div style={{
+          marginRight: '20px'
+        }}>
+          <img src={imagen} alt="Registro" style={{
+            width: '400px',
+            height: '400px',
+            objectFit: 'cover',
+            borderRadius: '50%'
+          }} />
         </div>
-        <div className="registro-formLogin">
-          <p className="loginTitulo">Recuperación</p>
-          <label className="loginText">
-            Ingrese su correo electrónico para el proceso de recuperación de contraseña
-          </label>
+  
+        <div>
+          <p style={{
+            fontSize: '24px',
+            fontWeight: 'bold',
+            color: '#333',
+            marginBottom: '20px'
+          }}>Recuperación</p>
+          <label style={{
+            fontSize: '16px',
+            color: '#666',
+            marginBottom: '10px'
+          }}>Ingrese su correo electrónico para el proceso de recuperación de contraseña</label>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="email" className="loginLabel">
-              Correo electrónico :
-            </label>
+            <label htmlFor="email" style={{
+              display: 'block',
+              fontSize: '14px',
+              color: '#333',
+              marginBottom: '5px'
+            }}>Correo electrónico :</label>
             <input
               id="email"
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onBlur={() => validateEmail(email)}
-              className={emailError ? 'input-error' : ''}
+              style={{
+                width: '100%',
+                padding: '10px',
+                borderRadius: '4px',
+                border: emailError ? '1px solid red' : '1px solid #ccc',
+                marginBottom: '20px'
+              }}
               required
             />
-            {emailError && <p className="error-message">{emailError}</p>}
-            <br />
-            <button className="btn btn-warning text2" type="submit">
+            {emailError && <p style={{
+              color: 'red',
+              fontSize: '12px',
+              marginBottom: '20px'
+            }}>{emailError}</p>}
+            <button type="submit" style={{
+              backgroundColor: '#ffc107',
+              color: '#fff',
+              padding: '10px 20px',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '16px'
+            }}>
               Enviar
             </button>
-            <br />
           </form>
         </div>
       </div>
-    </Layout>
+    </div>
+  </Layout>
   );
 }

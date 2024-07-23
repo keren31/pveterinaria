@@ -37,7 +37,7 @@ const AsideAdmin = () => {
 
     const Menus = [
         { title: "Citas", path: "/admin-citas", icon: TodayIcon },
-        { title: "Servicios", path: "/Admin", icon: MiscellaneousServicesIcon },
+    
         { title: "Productos", path: "/admin-producto", icon: AddShoppingCartIcon },
         { title: "Pedidos Generales", path: "/Pedidos_admin", icon: AssessmentIcon },
         { title: "Usuarios", path: "/admin-Usuario", icon: SupervisedUserCircleIcon },

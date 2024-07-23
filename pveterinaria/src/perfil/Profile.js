@@ -7,7 +7,7 @@ import PerfilLayout from '../perfil/PerfilLayout';
 
 
 const Perfil = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const { user, logoutUser } = useUser();
   
   const cerrarSesion = () => {
