@@ -109,12 +109,12 @@ export default function Login() {
         }else if (result === 'Contraseña correcta') {
           const userData = await obtenerDatosUsuario(email);
           loginUser(userData);
-          Swal.fire({
-            icon: 'success',
-            title: 'Bienvenido de nuevo!'+userData.Nombre,
-            text: 'Ahora ve y navega en nuestra paguina Suerte!.',
+          fetch( 'http://localhost:5029/api/CasaDelMarisco/ActualizarTokenEstetica', {
+            method: "POST",
+            body: data,
           });
-          navigate('/')
+          localStorage.setItem("userData", JSON.stringify({ email }));
+          navigate('/multifactor')
          
         } else if (result === 'Contraseña correcta para administrador') {
           const userData = await obtenerDatosUsuario();

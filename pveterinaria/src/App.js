@@ -35,6 +35,7 @@ import Pedidos from './perfil/Pedidos';
 import PedidosGeneral from './admin/Pedidos_Admin';
 import Direcciones from './perfil/direcciones';
 import PreguntasFrecuentes from './PreguntasFrecuentes';
+import Bienvenida from './pantallaMultifactor';
 
 
 function Inicio() {
@@ -376,7 +377,7 @@ function App() {
               <Route path='/administradoradmin' element={<AgendarCita/>}/>
               <Route path='/detalleCarrito' element={<CarritoDetalle/>}/>
               <Route path='/Mis_Pedidos' element={<Pedidos/>}/>
-              
+              <Route path='/multifactor' element={<Bienvenida/>}/>
              
               <Route path="/Direccion" element={<Direcciones/>} />
 
