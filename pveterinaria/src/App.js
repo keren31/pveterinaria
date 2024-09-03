@@ -28,7 +28,7 @@ import CardServicios from './componentes/CardServicios';
 import CardPerfil from './perfil/Profile';
 import VerCita from './perfil/VerCita';
 import EditarCita from './perfil/EditarCita';
-import Mascotas from './perfil/Mascotas';
+
 import AdminEditCita from './admin/AdminEditCita';
 import CarritoDetalle from './detalleCarrito';
 import Pedidos from './perfil/Pedidos';
@@ -36,7 +36,8 @@ import PedidosGeneral from './admin/Pedidos_Admin';
 import Direcciones from './perfil/direcciones';
 import PreguntasFrecuentes from './PreguntasFrecuentes';
 import Bienvenida from './pantallaMultifactor';
-
+import CalcularCitas from './admin/CalcularCitas';
+import Recomendaciones from './perfil/Recomendaciones';
 
 function Inicio() {
   
@@ -364,6 +365,7 @@ function App() {
             <Route path='/token' element={<Token/>}></Route>
             <Route path='/actualizar' element={<Actualizar/>}></Route>
             
+            
             <Route path='/admin' element={<HomeAdmin/>}/>
              
              <Route path="/Detallecat" element={<DetalleCategoria/>} />
@@ -372,15 +374,17 @@ function App() {
              
              
              <Route element={<ProtectorRutas/>}>
+             <Route path='/recomendaciones' element={<Recomendaciones/>}></Route>
              <Route path='/Perfil' element={<Perfil/>}/>
               <Route path='/Citas' element={<AgendarCita/>}/>
               <Route path='/administradoradmin' element={<AgendarCita/>}/>
               <Route path='/detalleCarrito' element={<CarritoDetalle/>}/>
               <Route path='/Mis_Pedidos' element={<Pedidos/>}/>
               <Route path='/multifactor' element={<Bienvenida/>}/>
+
              
               <Route path="/Direccion" element={<Direcciones/>} />
-
+              <Route path="/CitasCalcular" element={<CalcularCitas/>} />
               <Route path="/Pedidos_admin" element={<PedidosGeneral/>} />
               <Route path="/admin-Usuario" element={<AdminUsuario/>}/>
              <Route path="/admin-producto" element={<AdminProductos/>} />
@@ -390,7 +394,8 @@ function App() {
              <Route path="/perfile" element={<CardPerfil/>} />
              <Route path="/mis-citas" element={<VerCita/>} />
              <Route path="/editarCita" element={<EditarCita/>} />
-             <Route path="/mascotas" element={<Mascotas/>} />
+
+            
             
 
 

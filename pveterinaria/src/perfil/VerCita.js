@@ -110,11 +110,7 @@ export default function VerCita() {
 
   const [dataCitas, setDataCitas] = useState([]);
 
-  useEffect(() => {
-    obtenerCitas();
-    ObtenerIp();
-  }, []);
-
+  
   const obtenerCitas = async () => {
     try {
       const response = await fetch(
@@ -137,6 +133,12 @@ export default function VerCita() {
       console.error("Error al obtener datos del usuario:", error);
     }
   };
+
+  useEffect(() => {
+    obtenerCitas();
+    ObtenerIp();
+  }, []);
+
 
   return (
     <Layout>
