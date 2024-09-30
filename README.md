@@ -45,6 +45,25 @@ Se utiliza un pipeline de CI/CD que automatiza las pruebas y el despliegue a los
 
 ## Instrucciones para Clonar y Ejecutar el Proyecto
 
-1. *Clonar el repositorio:*
-   ```bash
-   git clone https://github.com/tu-usuario/estetica-canina.git
+### 1. Clonar el repositorio:
+Para clonar el repositorio en tu máquina local, utiliza el siguiente comando:
+bash
+git clone https://github.com/tu-usuario/estetica-canina.git
+
+Navegar al directorio del proyecto:
+Una vez clonado, accede al directorio del proyecto con:
+
+cd estetica-canina
+3. Instalar dependencias:
+Instala todas las dependencias necesarias usando npm o yarn:
+
+npm install
+o si usas Yarn
+yarn install
+4. Ejecutar el proyecto en modo desarrollo:
+Para ejecutar la aplicación en modo desarrollo y ver los cambios en tiempo real, usa:
+
+npm start
+# o si usas Yarn
+yarn start
+Esto abrirá la aplicación en tu navegador en http://localhost:3000.
