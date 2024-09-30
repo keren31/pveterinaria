@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# Proyecto: PWA para Estética Canina Platón
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyecto tiene como objetivo transformar la página web de Estética Canina Platón en una Progressive Web App (PWA), mejorando la accesibilidad, la experiencia del usuario y permitiendo el acceso offline.
 
-## Available Scripts
+## Objetivos del Proyecto
+- **Implementar PWA:** Añadir capacidades offline mediante Service Workers y mejorar el rendimiento.
+- **Mejorar la experiencia del usuario:** Implementar un App Shell para una carga rápida y optimizada.
+- **Sistema de Feedback:** Permitir que los usuarios califiquen la experiencia del sitio.
 
-In the project directory, you can run:
+## Metodología de Trabajo
+Se utiliza la metodología **Extreme Programming (XP)** para llevar a cabo un desarrollo ágil, con ciclos cortos de desarrollo, pruebas frecuentes y retroalimentación continua.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Herramienta de Control de Versiones
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Este proyecto utiliza **Git** como sistema de control de versiones. Todo el trabajo se realiza en una rama central `main`.
 
-### `npm test`
+### Flujo de Trabajo
+- **Modelo Centralizado:** Se utiliza una única rama `main`. Los cambios se revisan antes de ser integrados.
+- **Colaboración:** Los colaboradores deben realizar commits directamente en la rama principal y asegurarse de que los cambios son revisados antes de ser fusionados.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Estrategia de Versionamiento
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Se implementa una estrategia centralizada de versionamiento:
+- **Ramas:** Solo se utiliza la rama `main` para todo el desarrollo.
+- **Revisión de Código:** Antes de fusionar, los cambios pasan por una revisión manual.
+- **Integración Continua (CI):** Se implementan pruebas automáticas y revisiones periódicas para garantizar la estabilidad del código.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Estrategia de Despliegue
 
-### `npm run eject`
+El proyecto sigue una estrategia de **Rolling Deployment** para despliegues progresivos. Los entornos definidos son:
+1. **Desarrollo**
+2. **Staging**
+3. **Producción**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### CI/CD
+Se utiliza un pipeline de CI/CD que automatiza las pruebas y el despliegue a los diferentes entornos, asegurando calidad y estabilidad en cada fase.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Instrucciones para Clonar y Ejecutar el Proyecto
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/tu-usuario/estetica-canina.git
