@@ -17,6 +17,7 @@ import ProtectorRutas from './ProtectorRutas';
 import Productos2 from './productos'; // Importa el componente Productos2
 import imagen1 from './slider/imagen fondo1.jpg';
 
+
 import Perfil from './Perfil';
 import DetalleCategoria from './DetalleCategoria';
 import HomeAdmin from './admin/HomeAdmin';
