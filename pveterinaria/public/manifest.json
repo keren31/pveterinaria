@@ -2,7 +2,7 @@
   "name": "Estética Canina Platón",
   "short_name": "Platón",
   "description": "¡Te damos la bienvenida a Estética Canina Platón, donde la pasión por el cuidado de tus mascotas se convierte en una experiencia única!",
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#FF6347",
