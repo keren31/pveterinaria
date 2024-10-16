@@ -326,7 +326,7 @@ function App() {
 
 
             <Route exact path="/" component={SplashScreen} />
-            <Route path="/inicio" element={<Inicio />} />
+            <Route path="/inicio" component={<Inicio />} />
 
             
             
