@@ -41,7 +41,7 @@ import CalcularCitas from './admin/CalcularCitas';
 import Recomendaciones from './perfil/Recomendaciones';
 
 
-import SplashScreen from './componentes/SplashScreen';
+import SplashScreen from '../public/SplashScreen';
 import Inicio from './inicio';
 
 
