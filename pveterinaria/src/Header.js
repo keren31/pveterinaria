@@ -33,9 +33,9 @@ const Header = () => {
 
     return (
         <>
-           <header className={`header ${sidebar ? 'active' : ''} ${isScrolled ? 'scrolled' : ''}`}>
+            <header className={`header ${sidebar ? 'active' : ''} ${isScrolled ? 'scrolled' : ''}`}>
   
-           <div className='header2' style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+            <div className='header2' style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
                 <div>
                   <Breadcrumbs />
                 </div>

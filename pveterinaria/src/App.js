@@ -39,6 +39,7 @@ import PreguntasFrecuentes from './PreguntasFrecuentes';
 import Bienvenida from './pantallaMultifactor';
 import CalcularCitas from './admin/CalcularCitas';
 import Recomendaciones from './perfil/Recomendaciones';
+import SplashScreen from './componentes/SplashScreen';
 
 function Inicio() {
   
@@ -52,12 +53,15 @@ function Inicio() {
           
           <p>
             <h2>
-            ¡Te damos una cálida bienvenida a Estetica Canina Platon, donde la pasión por el cuidado y la estética de tus queridas mascotas se convierte en una experiencia extraordinaria!
+            ¡Te damos una cálida bienvenida a Estetica Canina Platon, donde la pasión por el cuidado y la estética de
+            tus queridas mascotas se convierte en una experiencia extraordinaria!
             </h2>
           </p>
           <p>
             <h2>
-            En nuestro santuario dedicado a la belleza y bienestar canino, nos esforzamos por ofrecer mucho más que un simple servicio de estética. Cada corte de pelo, cada baño relajante y cada tratamiento de spa es un acto de amor hacia tus peludos compañeros.
+            En nuestro santuario dedicado a la belleza y bienestar canino, nos esforzamos por ofrecer mucho más 
+            que un simple servicio de estética.Cada corte de pelo, cada baño relajante y cada tratamiento de spa
+            es un acto de amor hacia tus peludos compañeros.
             </h2>
           </p>
         </div>
@@ -65,21 +69,13 @@ function Inicio() {
           <h1 className="titulo">Bienvenido a la Estetica Canina Platon</h1>
         </div>
       </div>
-     
-     <CardServicios/>
+      <CardServicios/>
     
       <div className='division2'></div>
-      
-      
     </div>
     </Layout>
   );
 }
-
-
-
-
-
 
 
 function QuienesSomos() {
@@ -340,19 +336,12 @@ function PoliticasDePrivacidad() {
 function App() {
 
   return (
-    
-    
-
-
     <Router>
       
       <div className="App">
         <main className="main-content" >
           
-          <Routes>
-            
-
-
+          <Routes>  
             <Route path="/" element={<Inicio/>} />
             <Route path="/Quienes-somos" element={<QuienesSomos />} />
             <Route path="/politicas-de-privacidad" element={<PoliticasDePrivacidad />} />
@@ -365,42 +354,44 @@ function App() {
             <Route path="/recuperar" element={<RecuperarContra/>} />
             <Route path='/token' element={<Token/>}></Route>
             <Route path='/actualizar' element={<Actualizar/>}></Route>
+
+            <Route exact path="/" component={SplashScreen} />
             
             
             <Route path='/admin' element={<HomeAdmin/>}/>
-             
-             <Route path="/Detallecat" element={<DetalleCategoria/>} />
-             <Route path="/CategoriasServi" element={<CategoriasServicio/>} />
-             <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
-             
-             
-             <Route element={<ProtectorRutas/>}>
-             <Route path='/recomendaciones' element={<Recomendaciones/>}></Route>
-             <Route path='/Perfil' element={<Perfil/>}/>
+
+              <Route path="/Detallecat" element={<DetalleCategoria/>} />
+              <Route path="/CategoriasServi" element={<CategoriasServicio/>} />
+              <Route path="/preguntas-frecuentes" element={<PreguntasFrecuentes />} />
+
+
+              <Route element={<ProtectorRutas/>}>
+              <Route path='/recomendaciones' element={<Recomendaciones/>}></Route>
+              <Route path='/Perfil' element={<Perfil/>}/>
               <Route path='/Citas' element={<AgendarCita/>}/>
               <Route path='/administradoradmin' element={<AgendarCita/>}/>
               <Route path='/detalleCarrito' element={<CarritoDetalle/>}/>
               <Route path='/Mis_Pedidos' element={<Pedidos/>}/>
               <Route path='/multifactor' element={<Bienvenida/>}/>
 
-             
+
               <Route path="/Direccion" element={<Direcciones/>} />
               <Route path="/CitasCalcular" element={<CalcularCitas/>} />
               <Route path="/Pedidos_admin" element={<PedidosGeneral/>} />
               <Route path="/admin-Usuario" element={<AdminUsuario/>}/>
-             <Route path="/admin-producto" element={<AdminProductos/>} />
-             <Route path="/admin-citas" element={<CitasAdmin/>} />
-             <Route path="/admin-edit-cita" element={<AdminEditCita/>} />
-             <Route path="/mis-citas" element={<VerCita/>} />
-             <Route path="/perfile" element={<CardPerfil/>} />
-             <Route path="/mis-citas" element={<VerCita/>} />
-             <Route path="/editarCita" element={<EditarCita/>} />
+              <Route path="/admin-producto" element={<AdminProductos/>} />
+              <Route path="/admin-citas" element={<CitasAdmin/>} />
+              <Route path="/admin-edit-cita" element={<AdminEditCita/>} />
+              <Route path="/mis-citas" element={<VerCita/>} />
+              <Route path="/perfile" element={<CardPerfil/>} />
+              <Route path="/mis-citas" element={<VerCita/>} />
+              <Route path="/editarCita" element={<EditarCita/>} />
 
             
             
 
 
-             </Route>
+              </Route>
 
             
           </Routes>
