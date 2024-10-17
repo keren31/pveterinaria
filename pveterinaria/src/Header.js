@@ -1,95 +1,88 @@
 import React, { useState, useEffect } from 'react';
 import logo from './img/logotipoEstetica1.png';
-import { Link,useLocation } from 'react-router-dom';
-import './css/Header.css'; // Importar archivo de estilos CSS
+import { Link, useLocation } from 'react-router-dom';
+import './css/Header.css';
 import { useUser } from './UserContext';
-import  Breadcrumbs from './Breadcrumbs';
+import Breadcrumbs from './Breadcrumbs';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import MenuIcon from '@mui/icons-material/Menu'; // Icono de tres líneas
 
 const Header = () => {
     const { user } = useUser();
-    const [sidebar, setSidebar] = useState(false);
-    const [showUserInfo, setShowUserInfo] = useState(false); // Nuevo estado para mostrar información del usuario
-    const [isScrolled, setIsScrolled] = useState(false); // Nuevo estado para controlar si se ha desplazado el encabezado
-    const location=useLocation();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const location = useLocation();
+
     useEffect(() => {
-        // Función para controlar el scroll
         const handleScroll = () => {
-            if (window.scrollY > 200) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
-            }
+            setIsScrolled(window.scrollY > 200);
         };
-
-        // Agregar el event listener para el scroll
         window.addEventListener("scroll", handleScroll);
-
-        // Limpiar el event listener cuando el componente se desmonta
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
 
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <>
-            <header className={`header ${sidebar ? 'active' : ''} ${isScrolled ? 'scrolled' : ''}`}>
-  
-            <div className='header2' style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <Breadcrumbs />
+            <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
+                <div className="header2">
+                    <Breadcrumbs />
+                    <div>
+                        {user ? (
+                            <div style={{ display: "flex", gap: "15px" }}>
+                            <li style={{ listStyle: 'none', color: '#ffffff' }} className="username">
+                                {user.Nombre}
+                            </li>
+                            <li style={{ listStyle: 'none' }}>
+                                <Link to='/Perfil' style={{ color: '#ffffff', textDecoration: 'none' }}>Perfil</Link>
+                            </li>
+                        </div>
+                        
+                        ) : (
+                          <div style={{ display: "flex", gap: "15px" }}>
+                          <li style={{ listStyle: 'none' }} className={location.pathname === '/login' ? 'active' : ''}>
+                              <Link to='/login1' style={{ color: '#ffffff', textDecoration: 'none' }}>Login</Link>
+                          </li>
+                          <li style={{ listStyle: 'none' }}>
+                              <Link to='/registro' style={{ color: '#ffffff', textDecoration: 'none' }}>Registrarse</Link>
+                          </li>
+                      </div>
+                      
+                        )}
+                    </div>
                 </div>
-                <div>
-                  {user ? (
-                    <div style={{display: "flex"}}>
-                      <li style={{listStyle:'none'}} className='username'>{user.Nombre}</li>
-                      <li style={{listStyle:'none'}}><Link to='/Perfil'>Perfil</Link></li>
-                    </div>
-                  ) : (
-                    <div style={{display: "flex"}}>
-                      <li style={{listStyle:'none'}} className={location.pathname === '/login' ? 'active' : ''}>
-                        <Link to='/login1'>Login</Link>
-                      </li>
-                      <li style={{listStyle:'none'}}><Link to='/registro'>Registrarse</Link></li>
-                    </div>
-                  )}
+                <div className="logo-nav-container">
+                <div className="">
+                    <img src={logo} alt='Estética Canina Platón' className="logo-img" />
                 </div>
-            </div>
 
-
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <div className='logo'>
-                        <img src={logo} alt='' />
-                    </div>
-                    <div className='nav' style={{display: 'flex', justifyContent: 'center', alignItems: 'center', paddingRight: '40px'}}>
-                        <ul className={sidebar ? "nav-links-sidebar" : "nav-links"} onClick={() => setSidebar(false)}>
+                    <div className="nav">
+                        <ul className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
                             <li><Link to='/'>Inicio</Link></li>
                             <li><Link to='/Quienes-Somos'>Quienes Somos</Link></li>
                             <li><Link to='/servicio'>Servicios</Link></li>
                             <li><Link to='/Productos'>Tienda</Link></li>
-                            <li style={{ listStyle: 'none', marginBottom: '8px' }}>
-                              <Link 
-                                to='/detalleCarrito' 
-                                style={{ 
-                                  display: 'flex', 
-                                  alignItems: 'center', 
-                                  textDecoration: 'none', 
-                                  color: 'inherit' // Ajusta el color según tu preferencia
-                                }}
-                              >
-                                <AddShoppingCartIcon style={{ marginRight: '8px' }} />
-                                Carrito
-                              </Link>
+                            <li style={{ listStyle: 'none' }}>
+                                <Link to='/detalleCarrito' className="flex items-center" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <AddShoppingCartIcon style={{ marginRight: '8px' }} />
+                                    Carrito
+                                </Link>
                             </li>
                             <li><Link to='/Citas'>Citas</Link></li>
-                            
-                            {/* Aquí puedes agregar tu lógica de autenticación personalizada si es necesario */}
                         </ul>
+                        <button className="menu-button" onClick={toggleMenu}>
+                            <MenuIcon />
+                        </button>
                     </div>
                 </div>
             </header>
             <div className="content-under-header">
-                {/* Aquí va tu contenido que quieres que se vea a través del encabezado */}
+                {/* Aquí va tu contenido debajo del encabezado */}
             </div>
         </>
     );
