@@ -1,4 +1,4 @@
-name:  PWA CI/CD Workflow
+name: PWA CI/CD Workflow
 
 # Disparadores para el workflow
 on:
@@ -8,7 +8,6 @@ on:
   pull_request:
     branches:
       - main   # Ejecutar las pruebas antes de fusionar a main
-
   workflow_dispatch:
 
 # Permisos para GitHub Actions
@@ -17,7 +16,6 @@ permissions:
 
 jobs:
   test:
-    #name: Run Unit Tests
     runs-on: ubuntu-latest
 
     steps:
