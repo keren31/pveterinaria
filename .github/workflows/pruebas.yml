@@ -59,7 +59,7 @@ jobs:
     name: Deploy to Production
     runs-on: ubuntu-latest
     needs: test   # Asegura que este job solo se ejecuta si 'test' ha sido exitoso
-    if: github.ref == 'refs/heads/master'  # Asegura que solo se ejecute en la rama master
+    if: github.ref == 'refs/heads/main'  # Asegura que solo se ejecute en la rama master
 
     steps:
       # 1. Checkout del repositorio
