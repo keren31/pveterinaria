@@ -6,6 +6,10 @@ module.exports = {
     transformIgnorePatterns: [
       'node_modules/(?!gapi-script)', // Mantén solo la excepción de gapi-script
     ],
+    transformIgnorePatterns: [
+      '/node_modules/',
+      '\\.(css|less|scss|sass)$'
+    ],
     moduleNameMapper: {
       '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     },
