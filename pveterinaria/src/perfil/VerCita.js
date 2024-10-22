@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import PerfilLayout from "./PerfilLayout";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useCallback } from "react";
 import Layout from "../Layout";
 import { useUser } from "../../src/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -43,12 +43,12 @@ export default function VerCita() {
     return data;
   }
 
-  function ObtenerIp() {
+  const ObtenerIp = useCallback(() =>{
     let apiKey = "8c308d0e8f217c1a489e15cb1998c34ffcd76bcead2a2851c3878299";
     json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
       setIp(data.ip);
     });
-  }
+  },[]);
 
   const CancelarReservacion = () => {
     const data = new FormData();
@@ -85,7 +85,7 @@ export default function VerCita() {
   const [dataCitas, setDataCitas] = useState([]);
 
   
-  const obtenerCitas = async () => {
+  const obtenerCitas =useCallback( async () => {
     try {
       const response = await fetch(
         `${apiurll}/api/CasaDelMarisco/ObtenerCitasCANPorId?idUsuario=${id}`,
@@ -106,7 +106,7 @@ export default function VerCita() {
     } catch (error) {
       console.error("Error al obtener datos del usuario:", error);
     }
-  };
+  });
 
   useEffect(() => {
     obtenerCitas();

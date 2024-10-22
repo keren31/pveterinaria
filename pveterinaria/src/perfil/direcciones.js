@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useCallback} from "react";
 import Swal from "sweetalert2";
 import { useUser } from "../UserContext";
 import { Button, Card, CardHeader, CardBody, Typography} from "@material-tailwind/react";
@@ -145,7 +145,7 @@ const Direcciones = () => {
   }
 
 
-  const obtenerDirecciones = async () => {
+  const obtenerDirecciones =useCallback( async () => {
 
     try {
       const response = await fetch(
@@ -169,11 +169,11 @@ const Direcciones = () => {
       setLoading(false); 
     }
 
-};
+});
 
   useEffect(() => {
     obtenerDirecciones()
-  }, [obtenerDirecciones  ]);
+  }, [obtenerDirecciones]);
 
 
 
@@ -744,7 +744,7 @@ const Direcciones = () => {
                 Referencias de apoyo:
                 {midirecciones.Referencias}
               </Typography>
-              <a href="#" style={{ display: 'inline-block' }}>
+              <a style={{ display: 'inline-block' }}>
                 <Button 
                   variant="text" 
                   style={{ 

@@ -44,7 +44,7 @@ const CarritoDetalle = () => {
     } finally {
       setLoading(false); 
     }
-  });
+  },[apiurll, user.idUsuario]);
 
   const agregarAlCarrito = async (producto) => {
     const data = new FormData();
