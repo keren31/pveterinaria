@@ -24,10 +24,9 @@ const CarritoDetalle = () => {
   };
 
   const obtenerDirecciones = async () => {
-
     try {
       const response = await fetch(
-        apiurll + `/api/CasaDelMarisco/TraerDirecciones?UsuarioID=${user.idUsuario}`,
+        `${apiurll}/api/CasaDelMarisco/TraerDirecciones?UsuarioID=${user.idUsuario}`,
         {
           method: "GET",
         }
@@ -40,13 +39,11 @@ const CarritoDetalle = () => {
         console.error("La respuesta de la API no es un array:", data);
         setDirecciones([]);
       }
-     
     } catch (error) {
       console.error("Error al obtener reservaciones:", error);
     } finally {
       setLoading(false); 
     }
-
   };
 
   const agregarAlCarrito = async (producto) => {

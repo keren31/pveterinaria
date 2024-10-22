@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import './css/DetalleCategoria.css'; // Importa el archivo de estilos CSS
 import Layout from './Layout';
 
-const DetalleCategoria = ({ volverACategoriasServicio }) => {
-  const params = useParams(); // Si necesitas los parámetros más adelante, usa 'params'
+  const DetalleCategoria = ({ volverACategoriasServicio }) => {
   const navigate = useNavigate(); // Obtiene la función navigate
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null); // Estado para la categoría seleccionada
   const [servicioSeleccionado, setServicioSeleccionado] = useState(null); // Estado para el servicio seleccionado

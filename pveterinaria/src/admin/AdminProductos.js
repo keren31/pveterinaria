@@ -298,25 +298,24 @@ const traerProducto=(idProducto)=>{
   proData.append("idProducto",idProducto);
 
   fetch(
-      apiurll + "api/CasaDelMarisco/TraerProductoCanPorID?idProducto=" +idProducto,
-      {
-          method: 'POST',
-          body: proData,
-      }
-  ) .then((res) => res.json())
-  .then((result) => {
-    
+    apiurll + "api/CasaDelMarisco/TraerProductoCanPorID?idProducto=" + idProducto,
+    {
+      method: 'POST',
+      body: proData,
+    }
+  ).then((res) => res.json())
+    .then((result) => {
       setNombre2(result.Nombre);  
       setResult(result);
-      setIdProductoModif(idProducto)
+      setIdProductoModif(idProducto);
       setDescripcion2(result.Descripcion);
       setPrecio2(result.Precio);
       setStok2(result.Stok);
       setidCategoria2(result.idCategoria);
       setEstado2(result.Estado);
       setImageURL2(result.Imagen);
-      
-  })
+    })
+  
   .catch((error) => {
       console.error('Error al realizar la solicitud:', error);
       Swal.fire({

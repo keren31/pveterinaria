@@ -31,7 +31,6 @@ const TABLE_HEAD = [
 
 export default function Citasadmin() {
   const [dataCitas, setDataCitas] = useState([]);
-  const [setTabValue] = useState("todos");
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   const [idCita, setIdCita] = useState(null);
   const [dataCitasVer, setDataCitasVer] = useState([]);
