@@ -43,7 +43,7 @@ import Recomendaciones from './perfil/Recomendaciones';
 import SplashScreen from './componentes/SplashScreen';
 import Inicio from './inicio';
 
-
+import { UserProvider } from './UserContext';
 
 
 function QuienesSomos() {
@@ -304,7 +304,8 @@ function PoliticasDePrivacidad() {
 function App() {
 
   return (
-    <Router>
+    <UserProvider>
+      <Router>
       
       <div className="App">
         <main className="main-content" >
@@ -370,6 +371,7 @@ function App() {
         
       </div>
     </Router>
+    </UserProvider>
   );
 }
 

@@ -66,7 +66,13 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.25.9",
+    "@babel/preset-env": "^7.25.9",
+    "@babel/preset-react": "^7.25.9",
+    "babel-jest": "^29.7.0",
     "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.5.1",
+    "jest-scss-transform": "^1.0.4",
     "tailwindcss": "^3.4.1"
   },
   "jest": {
@@ -75,6 +81,9 @@
     },
     "transformIgnorePatterns": [
       "node_modules/(?!gapi-script)"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    }
   }
 }
