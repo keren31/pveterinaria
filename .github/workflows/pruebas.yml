@@ -23,6 +23,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Move to project directory
+        run: cd pveterinaria
+
       # 2. Configurar Node.js (para Angular y Jest)
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -32,4 +35,4 @@ jobs:
 
       # 3. Instalación de dependencias
       - name: Install dependencies
-        run: npm install
+        run: npm installS
