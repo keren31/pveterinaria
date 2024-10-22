@@ -7,7 +7,7 @@ import PerfilLayout from "./PerfilLayout";
 const Recomendaciones = () => {
   const { user } = useUser();
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
-  const [dataCitas, setDataCitas] = useState([]);
+  const [setDataCitas] = useState([]);
   const [serviciosSeleccionados, setServiciosSeleccionados] = useState([]);
   const [recomendaciones, setRecomendaciones] = useState([]);
 

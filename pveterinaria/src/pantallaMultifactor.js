@@ -63,7 +63,6 @@ export default function Bienvenida() {
         console.log(userData);
 
         if (userData) {
-          const {} = userData;
           const idUsuario = userData.idUsuario;
           loginUser(userData, idUsuario);
           

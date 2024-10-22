@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 
 
 export default function VerCita() {
-  const [Estado, setEstado] = useState("Cancelada");
+  const [Estado] = useState("Cancelada");
   const [Ip, setIp] = useState("Cancelada");
 
   const { user } = useUser();
@@ -111,7 +111,7 @@ export default function VerCita() {
   useEffect(() => {
     obtenerCitas();
     ObtenerIp();
-  }, [ObtenerIp]);
+  }, [ObtenerIp, obtenerCitas]);
 
 
   return (
