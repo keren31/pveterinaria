@@ -27,7 +27,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' # Versión de Node.js recomendada
+          node-version: '18' # Versión de Node.js recomendada
           cache: 'npm'  # Configura el caché para npm automáticamente
 
       # 3. Instalación de dependencias
