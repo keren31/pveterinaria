@@ -1,10 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './css/App.css'; // Importa tu archivo CSS
-import Header from "./Header";
 import CategoriasServicio from './CategoriasServicio';
 import Registro from './Registro'
-import TrandingSlider from './TrandingSlider';
+
 import ServicioCard from'./servicios'
 import Error404 from './pagina_error';
 import Login from './login1'
@@ -15,7 +14,7 @@ import AgendarCita from './AgendaCita';
 
 import ProtectorRutas from './ProtectorRutas';
 import Productos2 from './productos'; // Importa el componente Productos2
-import imagen1 from './slider/imagen fondo1.jpg';
+
 
 
 import Perfil from './Perfil';
@@ -25,7 +24,7 @@ import Layout from './Layout';
 import AdminUsuario from './admin/AdminUsuario';
 import AdminProductos from './admin/AdminProductos';
 import CitasAdmin from './admin/CitasAdmin';
-import CardServicios from './componentes/CardServicios';
+
 import CardPerfil from './perfil/Profile';
 import VerCita from './perfil/VerCita';
 import EditarCita from './perfil/EditarCita';

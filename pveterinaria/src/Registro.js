@@ -9,7 +9,7 @@ import Layout from './Layout';
 
 const Registro = () => {
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
-  const navigate = useNavigate();
+  
   const [nombre, setNombre] = useState('');
   const [ApellidoP, setApellidoP] = useState('');
   const [ApellidoM, setApellidoM] = useState('');
@@ -112,14 +112,7 @@ const Registro = () => {
     }
   };
 
-  const handleClick = (e) => {
-    if (e.currentTarget) {
-      e.currentTarget.style.transform = 'scale(0.95)';
-      setTimeout(() => {
-        e.currentTarget.style.transform = 'scale(1)';
-      }, 100);
-    }
-  };
+  
   
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -129,9 +122,7 @@ const Registro = () => {
     setShowPassword2(!showPassword2);
   };
 
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
+  
 
   const validateNombre = (nombre) => {
     if (nombre === '') {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices';
+
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import AssessmentIcon from '@mui/icons-material/Assessment';
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ComputerIcon from '@mui/icons-material/Computer';
 import SearchIcon from '@mui/icons-material/Search';
@@ -120,7 +120,7 @@ class AsidePerfil extends Component {
                                     fontSize: '2rem',
                                     gap: '1rem',
                                     cursor: 'pointer',
-                                    color: 'hover:text-secondaryBlue',
+                                    hover:'text-secondaryBlue',
                                     backgroundColor: 'hover:bg-primaryBlue',
                                     borderRadius: '0.5rem',
                                     marginTop: '0.5rem'

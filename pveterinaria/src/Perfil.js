@@ -77,13 +77,13 @@ const Perfil = () => {
                         />
                         <div style={userInfoStyle}>
                             <h4>Perfil de Usuario</h4>
-                            <h4 style={{ fontSize: '0.9rem', marginBottom: '0.5rem', fontSize: '15px', }}>
+                            <h4 style={{ fontSize: '0.9rem', marginBottom: '0.5rem',  }}>
                                 Correo: {user ? user.Correo : 'Correo del Usuario'}
                             </h4>
-                            <h4 style={{ fontSize: '0.9rem', marginBottom: '0.5rem',fontSize: '15px', }}>
+                            <h4 style={{ fontSize: '0.9rem', marginBottom: '0.5rem', }}>
                                 Teléfono: {user ? user.Telefono : 'Telefono del Usuario'}
                             </h4>
-                            <h4 style={{ fontSize: '0.9rem',fontSize: '15px', }}>
+                            <h4 style={{ fontSize: '0.9rem', }}>
                                 Estado de la cuenta: {user ? user.Rol : 'Estado de la cuenta del Usuario'}
                             </h4>
                         </div>

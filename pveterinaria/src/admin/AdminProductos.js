@@ -102,15 +102,10 @@ const AdminProductos = () => {
     const [estado,setEstado]=useState();
   const [searchQuery, setSearchQuery] = useState('');
   const [productos, setProductos] = useState(initialProductos);
-  const [filteredProductos, setFilteredProductos] = useState([]);
+  const [ setFilteredProductos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const [newProduct, setNewProduct] = useState({
-    nombre: '',
-    descripcion: '',
-    precio: '',
-    imagen: ''
-  });
+  
 
   const [productData, setProductData] = useState(null);
   useEffect(() => {
@@ -155,15 +150,8 @@ const AdminProductos = () => {
     setFilteredProductos(filtered);
   };
 
-  const resetFilters = () => {
-    setSearchQuery('');
-    setFilteredProductos([]);
-  };
 
-  const cancelarProceso=()=>{
-    setImageURL(null);
-    navigate('/admin-productos');
-}
+
 const handleDrop = (e) => {
     e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
@@ -351,7 +339,7 @@ const traerProducto=(idProducto)=>{
 
 
 
-  const [EstadoProd,setEstadoProd]=useState('Inactivo');
+  const [EstadoProd]=useState('Inactivo');
   const elimnarProducto=(idProducto)=>{
     const data= new FormData();
     data.append("idProducto",idProducto);
@@ -384,9 +372,7 @@ const traerProducto=(idProducto)=>{
   }
 
 
-  const handleDeleteProduct = (id) => {
-    setProductos(productos.filter(producto => producto.id !== id));
-  };
+  
 
   return (
     <AdminLayout>

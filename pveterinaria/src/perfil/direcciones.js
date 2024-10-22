@@ -1,9 +1,8 @@
-import React, { useState, useEffect ,useRef} from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useUser } from "../UserContext";
-import { useNavigate } from "react-router-dom";
 import { Button, Card, CardHeader, CardBody, Typography} from "@material-tailwind/react";
-import { GoogleMap, useLoadScript, Autocomplete, Marker } from '@react-google-maps/api';
+import {  useLoadScript, Autocomplete } from '@react-google-maps/api';
 import PerfilLayout from "./PerfilLayout";
 import Layout from "../Layout";
 
@@ -43,9 +42,8 @@ const Direcciones = () => {
 
 
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
-  const navigate = useNavigate();
 
-  const { user, logoutUser } = useUser();
+  const { user } = useUser();
 
   const [latitud, setLatitud] = useState("");
   const [longitud, setLongitud] = useState("");
@@ -57,7 +55,7 @@ const Direcciones = () => {
   const [estado, setEsado] = useState("");
   const [cp, setCP] = useState("");
   const [InformacionAdicional, setInformacionAdicional] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [ setLoading] = useState(true);
   const [direcciones,setDirecciones]= useState([]);
 
 
@@ -73,8 +71,8 @@ const Direcciones = () => {
 
   const [place, setPlace] = useState(null);
   const [autocomplete, setAutocomplete] = useState(null);
-  const [map, setMap] = useState(null);
-  const [marker, setMarker] = useState(null);
+  const [map] = useState(null);
+  const [marker] = useState(null);
   const [formVisible, setFormVisible] = useState(false);
 
   const handleSubmit = (event) => {
@@ -99,7 +97,7 @@ const Direcciones = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-       if(result=="Exito"){
+       if(result==="Exito"){
           Swal.fire({
             icon: "success",
             title: "Accion realizado con exito",
@@ -150,12 +148,9 @@ const Direcciones = () => {
 
   useEffect(() => {
     obtenerDirecciones()
-  }, []);
+  }, [obtenerDirecciones  ]);
 
 
-  const obtenerIdUsuario = (user) => {
-    return user && user.idUsuario ? user.idUsuario : null;
-  };
 
   const obtenerDirecciones = async () => {
 
@@ -278,6 +273,9 @@ const Direcciones = () => {
             break;
           case 'administrative_area_level_1':
             setEsado(value);
+            break;
+          default:
+            // Lógica para el caso por defecto
             break;
         }
       }
@@ -714,6 +712,7 @@ const Direcciones = () => {
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29994.591853071897!2d-98.43775867731902!3d21.140299887558825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d726e6a957507f%3A0x9817745b73d7d2cd!2sHuejutla%20de%20Reyes%2C%20Hgo.%2C%20M%C3%A9xico!5e0!3m2!1ses!2sus!4v1689111604704!5m2!1ses!2sus"
                 width="100%"
                 height="100%"
+                title="sjsd"
                 style={{ border: 0 }}
                 allowFullScreen=""
                 loading="lazy"

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import reglas from './reglas';
 import { useUser } from "../../src/UserContext";
-import { useNavigate } from "react-router-dom";
 import Layout from "../Layout";
 import PerfilLayout from "./PerfilLayout";
 
@@ -9,8 +8,7 @@ const Recomendaciones = () => {
 
 
     
-    const { user, logoutUser } = useUser();
-    const navigate = useNavigate();
+    const { user } = useUser();
     const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
     const [dataCitas, setDataCitas] = useState([]);
 
@@ -46,7 +44,7 @@ const Recomendaciones = () => {
 
     useEffect(() => {
         obtenerCitas();
-      }, [serviciosSeleccionados]);
+      }, [obtenerCitas]);
 
     useEffect(() => {
        

@@ -2,18 +2,7 @@ import React, { useState ,useEffect} from 'react';
 import {
   Container,
   Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
+  
 } from '@mui/material';
 import { styled } from '@mui/system';
 import PerfilLayout from "./PerfilLayout";
@@ -28,17 +17,14 @@ const useStyles = styled({
 
 const Pedidos= () => {
 
-  const classes = useStyles();
+  
   const [isLoading, setLoading] = useState(true);
   const { user } = useUser();
   const [pedidos, setPedidos] = useState([]);
-  const [selectedPedido, setSelectedPedido] = useState(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [setSelectedPedido] = useState(null);
+  const [setDialogOpen] = useState(false);
 
-  const handleVerDetalle = (pedido) => {
-    setSelectedPedido(pedido);
-    setDialogOpen(true);
-  };
+  
 
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   

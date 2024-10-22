@@ -4,7 +4,7 @@ import imagen from './img/imagen1.jpg';
 import Layout from './Layout';
 
 export default function RecuperarContra() {
-  const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
+  
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');

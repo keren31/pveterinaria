@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { } from 'react';
 import { Card, CardActionArea, CardContent, CardMedia, Typography, Grid, Container, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Servicio1 from '../imgServicios/servicio1.jpg';

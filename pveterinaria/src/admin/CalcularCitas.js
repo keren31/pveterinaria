@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import AdminLayout from './AdminLayout';
 const CalcularCitas = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  
 
  
 

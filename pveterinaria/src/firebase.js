@@ -40,7 +40,7 @@ export async function uploadFilesUsuarios (File) {
     let filePath = `${Date.now()}_${file.name}`;
   
     try {
-      const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from('LCDM')
         .upload(filePath, file);
   

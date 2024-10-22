@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices';
+
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import AssessmentIcon from '@mui/icons-material/Assessment';
@@ -14,7 +14,7 @@ import { useUser } from '../UserContext';
 import './aside.css';
 
 const AsideAdmin = () => {
-    const { user, logoutUser } = useUser();
+    const {logoutUser } = useUser();
     const navigate = useNavigate();
     const [open, setOpen] = useState(true);
 

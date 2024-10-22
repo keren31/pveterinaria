@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SearchIcon, TrashIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/react/outline";
+import { TrashIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/react/outline";
 import { PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 import Swal from 'sweetalert2';
 
@@ -11,7 +11,6 @@ import {
   Button,
   CardBody,
   Chip,
-  CardFooter,
   Tabs,
   TabsHeader,
   Tab,
@@ -38,9 +37,9 @@ const TABS = [
 export default function AdminUsuario() {
   const [userData, setUserData] = useState([]);
   const apiurl = "https://lacasadelmariscoweb.azurewebsites.net/";
-  const [Estado, setEstado] = useState('Offline');
-  const [EstadoB, setEstadoB] = useState('Bloqueado');
-  const [EstadoC, setEstadoC] = useState('Activo');
+  const [Estado] = useState('Offline');
+  const [EstadoB] = useState('Bloqueado');
+  const [EstadoC] = useState('Activo');
 
   const estadoColor = (estado) => {
     let color = '';

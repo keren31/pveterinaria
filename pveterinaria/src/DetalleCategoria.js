@@ -6,7 +6,7 @@ import './css/DetalleCategoria.css'; // Importa el archivo de estilos CSS
 import Layout from './Layout';
 
 const DetalleCategoria = ({ volverACategoriasServicio }) => {
-  const { nombre, Duracion, nombreServicio } = useParams(); // Obtiene los parámetros de la URL
+  const {  } = useParams(); // Obtiene los parámetros de la URL
   const navigate = useNavigate(); // Obtiene la función navigate
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null); // Estado para la categoría seleccionada
   const [servicioSeleccionado, setServicioSeleccionado] = useState(null); // Estado para el servicio seleccionado

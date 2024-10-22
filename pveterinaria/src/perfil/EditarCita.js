@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PerfilLayout from "./PerfilLayout";
 import Layout from "../Layout";
-import { ChevronDownIcon, HomeIcon } from '@heroicons/react/solid';
+
 import { useLocation } from "react-router-dom";
-import { setId } from "@material-tailwind/react/components/Tabs/TabsContext";
+
 import { Button } from "@material-tailwind/react";
 import Swal from "sweetalert2";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
 
 export default function EditarCita() {
   const location = useLocation();
@@ -25,13 +22,12 @@ export default function EditarCita() {
   const [servicio, setServicio] = useState('');
   const [fechaCitaError, setFechaCitaError] = useState('');
   const [horaCitaError, setHoraCitaError] = useState('');
-  const [servicioError, setServicioError] = useState('');
+  const [servicioError] = useState('');
   const horarios = ['09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00'];
   const [horariosDisponibles, setHorariosDisponibles] = useState(horarios);
-  const [valorhora, setValorHora] = useState(true);
+  
   const [idServicio, setIdServicio] = useState();
-  const [fecha, setFecha] = useState();
-  const [hora, setHora] = useState();
+  
   const [telefono, setTelefono] = useState();
   const [dataServicio, setDataServicio] = useState([]);
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
@@ -60,16 +56,6 @@ export default function EditarCita() {
     }
   };
 
-  const validateHoraCita = (horaCita) => {
-    const selectedHour = parseInt(horaCita.split(":")[0]);
-    if (selectedHour < 9 || selectedHour > 15) {
-      setHoraCitaError('Seleccione una hora para la cita entre las 9:00 AM y las 3:00 PM.');
-      return false;
-    } else {
-      setHoraCitaError('');
-      return true;
-    }
-  };
 
   const traerDatosCita = () => {
     const proData = new FormData();
@@ -158,37 +144,11 @@ export default function EditarCita() {
       });
   };
 
-  const pasarServicio = () => {
-    if (idServicio === 1) {
-      setServicio('Corte de pelo');
-    }
-  };
+  
 
-  const tipoServicio = () => {
-    if (idServicio === 1) {
-      return 'Corte de pelo';
-    } else if (idServicio === 2) {
-      return 'Baño de Perros';
-    } else if (idServicio === 3) {
-      return 'Corte de Uñas';
-    } else if (idServicio === 4) {
-      return 'Limpieza Dental';
-    } else {
-      return 'Tipo de servicio desconocido';
-    }
-  };
+  
 
-  const validateFechaCita = (fechaCita) => {
-    const selectedDate = new Date(fechaCita);
-    const dayOfWeek = selectedDate.getDay();
-    if (dayOfWeek === 5 || dayOfWeek === 6) {
-      setFechaCitaError('La estética no abre los fines de semana, por favor seleccione un día hábil.');
-      return false;
-    } else {
-      setFechaCitaError('');
-      return true;
-    }
-  };
+  
 
   const handleFechaCitaChange = (e) => {
     const nuevaFechaCita = e.target.value;

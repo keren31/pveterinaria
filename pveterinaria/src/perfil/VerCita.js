@@ -1,22 +1,9 @@
 import {
-  MagnifyingGlassIcon,
-  ChevronUpDownIcon,
   TrashIcon,
 } from "@heroicons/react/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/solid";
+import { PencilIcon } from "@heroicons/react/solid";
 import {
-  Card,
-  CardHeader,
-  Input,
   Typography,
-  Button,
-  CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
@@ -27,26 +14,13 @@ import { useUser } from "../../src/UserContext";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
+
 
 export default function VerCita() {
   const [Estado, setEstado] = useState("Cancelada");
   const [Ip, setIp] = useState("Cancelada");
 
-  const { user, logoutUser } = useUser();
+  const { user } = useUser();
   const navigate = useNavigate();
 
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
@@ -137,7 +111,7 @@ export default function VerCita() {
   useEffect(() => {
     obtenerCitas();
     ObtenerIp();
-  }, []);
+  }, [ObtenerIp]);
 
 
   return (

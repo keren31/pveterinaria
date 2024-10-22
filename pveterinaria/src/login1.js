@@ -29,13 +29,12 @@ export default function Login() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loginAttempts, setLoginAttempts] = useState(0);
-  const [loginAttempts2, setLoginAttempts2] = useState(0);
+  const [loginAttempts2] = useState(0);
   const ClientID = "30463532374-6m31aqpp06eqco9k3325unc6n62cs8ej.apps.googleusercontent.com"
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const navigate = useNavigate();
-  const loginAttemptsRef = useRef(loginAttempts);
-  const loginAttemptsRef2 = useRef(loginAttempts2);
+  
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);

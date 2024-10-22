@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, } from 'react'
 import './TrandingSlider.css'
 import imagen from './imagenes2/Producto1.jpg';
 import imagen2 from './imagenes2/Producto2.jpg';

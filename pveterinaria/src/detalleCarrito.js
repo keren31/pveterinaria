@@ -1,5 +1,5 @@
-import { Button, Typography } from '@material-tailwind/react';
-import React, { useState, useEffect, useRef } from 'react';
+import {Typography } from '@material-tailwind/react';
+import React, { useState, useEffect } from 'react';
 import { useUser } from "./UserContext";
 import ReactDOM from 'react-dom';
 import Swal from "sweetalert2";
@@ -14,7 +14,7 @@ const CarritoDetalle = () => {
   const [carrito, setCarrito] = useState([]);
   const [direcciones,setDirecciones]= useState();
   const [total,setTotal]= useState(20);
-  const [pago,setPago]= useState(1)
+  
   const [Direccion,setDirecion]= useState();
 
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
