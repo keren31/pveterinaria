@@ -39,7 +39,6 @@ jobs:
         working-directory: ./pveterinaria
       
       # 4. Compilar el proyecto React (npm run build)
-      #- name: Build React Project
-      
-      #  run: npm run build --if-present
-       # working-directory: ./pveterinaria
+      - name: Build React Project
+        working-directory: ./pveterinaria
+        run: npm run build --if-present
