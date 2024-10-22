@@ -31,3 +31,7 @@ jobs:
         with:
           node-version: '20' # Versión de Node.js recomendada
           cache: 'npm'  # Configura el caché para npm automáticamente
+
+      # 3. Instalación de dependencias
+      - name: Install dependencies
+        run: npm install
