@@ -11,7 +11,6 @@ import { gapi } from "gapi-script";
 import GoogleLogin from "@leecheuk/react-google-login"; 
 import { useUser } from "./UserContext";
 import "./css/login.css";
-import { reactApiIP } from "./variables";
 import imagen from './img/imagen1.jpg';
 import Layout from './Layout';
 
@@ -45,9 +44,6 @@ export default function Login() {
     validatePassword(password);
   };
 
-  function json(url) {
-    return fetch(url).then((res) => res.json());
-  }
 
   //
 

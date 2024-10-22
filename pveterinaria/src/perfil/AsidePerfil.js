@@ -83,7 +83,7 @@ class AsidePerfil extends Component {
                                     fontSize: '2rem',
                                     gap: '1rem',
                                     cursor: 'pointer',
-                                    color: 'hover:text-secondaryBlue',
+                                    hover:'text-secondaryBlue',
                                     backgroundColor: 'hover:bg-primaryBlue',
                                     borderRadius: '0.5rem',
                                     marginTop: '0.5rem'
