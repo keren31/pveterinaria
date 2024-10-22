@@ -137,7 +137,7 @@ const CarritoDetalle = () => {
     } else {
       setLoading(false); // Marcar el estado de carga como falso si no hay un id válido
     }
-  });
+  }, [apiurll, user, obtenerIdUsuario]);
   
 
   const createOrder = (data, actions) => {
@@ -226,7 +226,7 @@ const CarritoDetalle = () => {
       envio: envio.toFixed(2),
       total: total.toFixed(2)
     };
-  });
+  },[carrito]);
 
 
   useEffect(() => {
