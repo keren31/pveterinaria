@@ -20,9 +20,9 @@ const CarritoDetalle = () => {
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   
   const obtenerIdUsuario = (user) => {
-    return user && user.idUsuario ? user.idUsuario : null;
+    return user?.idUsuario ?? null;
   };
-
+  
   const obtenerDirecciones = useCallback(async () => {
     try {
       const response = await fetch(
@@ -262,7 +262,7 @@ const CarritoDetalle = () => {
             <>
               <div key={carritoInfo.id} style={{ display: 'flex', borderTop: '1px solid #d1d5db', paddingTop: '12px', paddingBottom: '12px' }}>
                 <div style={{ flex: '2', display: 'flex', alignItems: 'center', padding: '16px' }}>
-                  <img src={carritoInfo.Imagen}
+                  <img src={carritoInfo.Imagen} alt='ofnd'
                     style={{ width: '160px', height: '160px', paddingLeft: '20px', borderRadius: '8px', objectFit: 'cover', marginRight: '40px' }}
                   />
                   <div style={{ display: 'flex', flexDirection: 'column' }}>

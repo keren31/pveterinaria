@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import {
   Card,
   CardActionArea,
@@ -78,7 +78,7 @@ const Productos2 = () => {
 
   };
 
-  const obtenerProductoCarrito = async () => {
+  const obtenerProductoCarrito = useCallback(async () => {
     try {
       const response = await fetch(
         apiurll + `/api/CasaDelMarisco/TraerCarritoPorUsuarioCAN?idUsuario=${user.idUsuario}`,
@@ -92,7 +92,8 @@ const Productos2 = () => {
     } catch (error) {
       console.error("Error al obtener la informacion:", error);
     }
-  }
+  }, [apiurll, user.idUsuario, setCart]);
+
   const eliminarDelCarrito = (productoAEliminar) => {
     const data = new FormData();
     data.append("idUsuario", user.idUsuario)

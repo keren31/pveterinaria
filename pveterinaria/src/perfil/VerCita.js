@@ -106,7 +106,7 @@ export default function VerCita() {
     } catch (error) {
       console.error("Error al obtener datos del usuario:", error);
     }
-  });
+  },[apiurll, id, setDataCitas]);
 
   useEffect(() => {
     obtenerCitas();

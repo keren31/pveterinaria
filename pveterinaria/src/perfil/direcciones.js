@@ -169,7 +169,7 @@ const Direcciones = () => {
       setLoading(false); 
     }
 
-});
+  },[apiurll, user.idUsuario, setDirecciones, setLoading]);
 
   useEffect(() => {
     obtenerDirecciones()
@@ -744,7 +744,7 @@ const Direcciones = () => {
                 Referencias de apoyo:
                 {midirecciones.Referencias}
               </Typography>
-              <a style={{ display: 'inline-block' }}>
+              <a href="/direcciones" style={{ display: 'inline-block' }}>
                 <Button 
                   variant="text" 
                   style={{ 
