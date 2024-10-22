@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Typography, Card, CardContent, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 import './css/DetalleCategoria.css'; // Importa el archivo de estilos CSS
