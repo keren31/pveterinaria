@@ -24,7 +24,7 @@ export default function Bienvenida() {
     }, 300000); // 5 minutos
 
     return () => clearTimeout(timer);
-  }, []); // Se ejecuta solo al montar el componente
+  }, [navigate]); // Incluye 'navigate' en el array de dependencias
 
   const handleSubmit = async (event) => {
     //  let apiKey = '8c308d0e8f217c1a489e15cb1998c34ffcd76bcead2a2851c3878299';
@@ -63,7 +63,6 @@ export default function Bienvenida() {
         console.log(userData);
 
         if (userData) {
-          const { Correo, ...userDataWithoutEmail } = userData;
           const idUsuario = userData.idUsuario;
           loginUser(userData, idUsuario);
           

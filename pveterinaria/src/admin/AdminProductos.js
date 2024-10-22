@@ -101,16 +101,11 @@ const AdminProductos = () => {
     const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
     const [estado,setEstado]=useState();
   const [searchQuery, setSearchQuery] = useState('');
-  const [productos, setProductos] = useState(initialProductos);
-  const [filteredProductos, setFilteredProductos] = useState([]);
+  const [productos] = useState(initialProductos);
+  const [ setFilteredProductos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const [newProduct, setNewProduct] = useState({
-    nombre: '',
-    descripcion: '',
-    precio: '',
-    imagen: ''
-  });
+  
 
   const [productData, setProductData] = useState(null);
   useEffect(() => {
@@ -155,15 +150,8 @@ const AdminProductos = () => {
     setFilteredProductos(filtered);
   };
 
-  const resetFilters = () => {
-    setSearchQuery('');
-    setFilteredProductos([]);
-  };
 
-  const cancelarProceso=()=>{
-    setImageURL(null);
-    navigate('/admin-productos');
-}
+
 const handleDrop = (e) => {
     e.preventDefault();
     const droppedFile = e.dataTransfer.files[0];
@@ -205,38 +193,34 @@ const handleDrop = (e) => {
     data.append("Estado",estado2);
     data.append("Imagen",imageURL2===result.Imagen? imageURL2:resultImage2);
 
-    fetch(
-        apiurll + "api/CasaDelMarisco/EditarProductoCan",
-        {
-            method: "POST",
-            body: data,
-        }
-    )
-    .then((res) => res.json())
-    .then((result) => {
-        if (result === 'Editado!!') {
-            Swal.fire({
-                icon: 'success',
-                title: 'Registro Completo',
-                text: 'Realizado con exito',
-            });
-            navigate('/admin-producto')
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Registro incompleto',
-                text: 'Ha ocurrido un error verifique los datos',
-            });
-        }
-    })
-    .catch((error) => {
-        console.error('Error al realizar la solicitud:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Ha ocurrido un error al procesar la solicitud',
-        });
-    });
+    fetch(apiurll + "api/CasaDelMarisco/EditarProductoCan", {
+      method: "POST",
+      body: data,
+  }).then((res) => res.json())
+  .then((result) => {
+      if (result === 'Editado!!') {
+          Swal.fire({
+              icon: 'success',
+              title: 'Registro Completo',
+              text: 'Realizado con exito',
+          });
+          navigate('/admin-producto');
+      } else {
+          Swal.fire({
+              icon: 'success',
+              title: 'Registro incompleto',
+              text: 'Ha ocurrido un error verifique los datos',
+          });
+      }
+  }).catch((error) => {
+      console.error('Error al realizar la solicitud:', error);
+      Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ha ocurrido un error al procesar la solicitud',
+      });
+  });
+  
     
  
 
@@ -314,25 +298,24 @@ const traerProducto=(idProducto)=>{
   proData.append("idProducto",idProducto);
 
   fetch(
-      apiurll + "api/CasaDelMarisco/TraerProductoCanPorID?idProducto=" +idProducto,
-      {
-          method: 'POST',
-          body: proData,
-      }
-  ) .then((res) => res.json())
-  .then((result) => {
-    
+    apiurll + "api/CasaDelMarisco/TraerProductoCanPorID?idProducto=" + idProducto,
+    {
+      method: 'POST',
+      body: proData,
+    }
+  ).then((res) => res.json())
+    .then((result) => {
       setNombre2(result.Nombre);  
       setResult(result);
-      setIdProductoModif(idProducto)
+      setIdProductoModif(idProducto);
       setDescripcion2(result.Descripcion);
       setPrecio2(result.Precio);
       setStok2(result.Stok);
       setidCategoria2(result.idCategoria);
       setEstado2(result.Estado);
       setImageURL2(result.Imagen);
-      
-  })
+    })
+  
   .catch((error) => {
       console.error('Error al realizar la solicitud:', error);
       Swal.fire({
@@ -351,7 +334,7 @@ const traerProducto=(idProducto)=>{
 
 
 
-  const [EstadoProd,setEstadoProd]=useState('Inactivo');
+  const [EstadoProd]=useState('Inactivo');
   const elimnarProducto=(idProducto)=>{
     const data= new FormData();
     data.append("idProducto",idProducto);
@@ -384,9 +367,7 @@ const traerProducto=(idProducto)=>{
   }
 
 
-  const handleDeleteProduct = (id) => {
-    setProductos(productos.filter(producto => producto.id !== id));
-  };
+  
 
   return (
     <AdminLayout>

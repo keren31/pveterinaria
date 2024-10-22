@@ -1,18 +1,12 @@
 import {
-  MagnifyingGlassIcon,
   ChevronDownIcon,
-  ChevronUpIcon,
   TrashIcon,
-  PencilIcon,
-  UserPlusIcon,
 } from "@heroicons/react/outline"; // Importar desde outline o solid según corresponda
 import {
   Card,
   CardHeader,
   Typography,
-  Button,
   CardBody,
-  CardFooter,
   Tabs,
   TabsHeader,
   Tab,
@@ -37,7 +31,6 @@ const TABLE_HEAD = [
 
 export default function Citasadmin() {
   const [dataCitas, setDataCitas] = useState([]);
-  const [tabValue, setTabValue] = useState("todos");
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   const [idCita, setIdCita] = useState(null);
   const [dataCitasVer, setDataCitasVer] = useState([]);
@@ -133,19 +126,7 @@ export default function Citasadmin() {
     obtenerCitas();
   }, []);
 
-  const handleTabChange = (newValue) => {
-    setTabValue(newValue);
 
-    if (newValue === "todos") {
-      setDataCitasVer(dataCitas);
-    } else if (newValue === "hoy") {
-      const data = filtrarCitasDelDia(dataCitas);
-      setDataCitasVer(data);
-    } else if (newValue === "mañana") {
-      const data = filtrarCitasDelDiaSiguiente(dataCitas);
-      setDataCitasVer(data);
-    }
-  };
 
   const VerCitaTodas = () => {
     setDataCitasVer(dataCitas);

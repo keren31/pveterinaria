@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import './css/registro.css';
 import imagen from './img/pixlr-image-generator-fd08d275-bff4-4995-bb65-c63a369e379b.png';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Layout from './Layout';
 
 const Registro = () => {
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
-  const navigate = useNavigate();
+  
   const [nombre, setNombre] = useState('');
   const [ApellidoP, setApellidoP] = useState('');
   const [ApellidoM, setApellidoM] = useState('');
@@ -28,7 +28,7 @@ const Registro = () => {
   const [apellidoMError, setApellidoMError] = useState('');
   const [apellidoPError, setApellidoPError] = useState('');
   const [fechaError, setFechaError] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
+  
 
   const [passwordStrength, setPasswordStrength] = useState(''); // Estado para la fortaleza de la contraseña
 
@@ -112,14 +112,7 @@ const Registro = () => {
     }
   };
 
-  const handleClick = (e) => {
-    if (e.currentTarget) {
-      e.currentTarget.style.transform = 'scale(0.95)';
-      setTimeout(() => {
-        e.currentTarget.style.transform = 'scale(1)';
-      }, 100);
-    }
-  };
+  
   
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -129,9 +122,7 @@ const Registro = () => {
     setShowPassword2(!showPassword2);
   };
 
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
+  
 
   const validateNombre = (nombre) => {
     if (nombre === '') {

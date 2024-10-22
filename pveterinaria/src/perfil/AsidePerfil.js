@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ComputerIcon from '@mui/icons-material/Computer';
 import SearchIcon from '@mui/icons-material/Search';
@@ -31,7 +29,7 @@ class AsidePerfil extends Component {
         const bgClass = open ? { width: '25rem' } : { width: '10rem' };
 
         const Menus = [
-            { title: "Mi Cuenta" , path: "/Perfil", icon: PersonIcon },
+            { title: "Mi Cuenta", path: "/Perfil", icon: PersonIcon },
             { title: "Mis Citas", path: "/mis-Citas", icon: TodayIcon },
             { title: "Productos", path: "/detalleCarrito", icon: AddShoppingCartIcon },
             { title: "Mis Pedidos", path: "/Mis_Pedidos", icon: SupervisedUserCircleIcon },
@@ -57,23 +55,48 @@ class AsidePerfil extends Component {
                             top: '2.25rem',
                             border: '1px solid secondaryBlue',
                             cursor: 'pointer',
-                            transform: !open && 'rotate(180deg)'
+                            transform: !open ? 'rotate(180deg)' : 'rotate(0deg)',
                         }}
                         onClick={this.toggleMenu}
                     />
                     <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                        <ComputerIcon sx={{ fontSize: 50 }} style={{ backgroundColor: 'primaryBlue', color: 'white', fontSize: '4rem', borderRadius: '50%', cursor: 'pointer', display: 'block', float: 'left', marginRight: '0.5rem', transition: 'transform 300ms', transform: open && 'rotate(360deg)' }} />
+                        <ComputerIcon
+                            sx={{ fontSize: 50 }}
+                            style={{
+                                backgroundColor: 'primaryBlue',
+                                color: 'white',
+                                fontSize: '4rem',
+                                borderRadius: '50%',
+                                cursor: 'pointer',
+                                display: 'block',
+                                float: 'left',
+                                marginRight: '0.5rem',
+                                transition: 'transform 300ms',
+                                transform: open ? 'rotate(360deg)' : 'rotate(0deg)',
+                            }}
+                        />
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <h1 style={{ color: 'white', fontWeight: 500, fontSize: '2rem', transition: 'transform 300ms', transform: !open && 'scale(0)' }}>Mi Perfil</h1>
+                            <h1 style={{ color: 'white', fontWeight: 500, fontSize: '2rem', transition: 'transform 300ms', transform: !open ? 'scale(0)' : 'scale(1)' }}>Mi Perfil</h1>
                         </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', borderRadius: '0.5rem', backgroundColor: 'lightWhite', marginTop: '1.5rem', paddingX: '1rem', paddingY: '0.5rem' }}>
-                        <SearchIcon style={{ color: 'white', fontSize: '1.25rem', display: 'block', float: 'left', cursor: 'pointer', marginRight: '0.5rem' }} />
-                        <input type='search' placeholder='Buscar...' style={{ width: '100%', fontSize: '1.5rem', backgroundColor: 'transparent', color: 'white', outline: 'none' }} />
+                    <div style={{ display: 'flex', alignItems: 'center', borderRadius: '0.5rem', backgroundColor: 'lightWhite', marginTop: '1.5rem', padding: '0.5rem' }}>
+                        <SearchIcon style={{ color: 'white', fontSize: '1.25rem', cursor: 'pointer', marginRight: '0.5rem' }} />
+                        <input
+                            type='search'
+                            placeholder='Buscar...'
+                            style={{
+                                width: '100%',
+                                fontSize: '1.5rem',
+                                backgroundColor: 'transparent',
+                                color: 'white',
+                                outline: 'none',
+                            }}
+                        />
                     </div>
                     <ul style={{ paddingTop: '0.5rem' }}>
                         {Menus.map((menu, index) => (
                             <li
+                                key={index}
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
@@ -83,26 +106,25 @@ class AsidePerfil extends Component {
                                     fontSize: '2rem',
                                     gap: '1rem',
                                     cursor: 'pointer',
-                                    color: 'hover:text-secondaryBlue',
                                     backgroundColor: 'hover:bg-primaryBlue',
                                     borderRadius: '0.5rem',
-                                    marginTop: '0.5rem'
+                                    marginTop: '0.5rem',
                                 }}
-                                key={index}
                             >
-                                <span style={{ fontSize: '2rem', display: 'block', float: 'left',color:'#fff' }}>
-                                    {React.createElement(menu.icon, null)}
+                                <span style={{ fontSize: '2rem', display: 'block', float: 'left', color: '#fff' }}>
+                                    {React.createElement(menu.icon)}
                                 </span>
-                                <Link to={menu.path}
-                                 style={{
-                                     fontSize: '2rem',
-                                     fontWeight: 500,
-                                     flex: 1,
-                                     transition: 'opacity 200ms',
-                                     paddingTop: '0.25rem',
-                                     opacity: !open ? 0 : 1,
-                                     color:'#fff'
-                                 }} >
+                                <Link
+                                    to={menu.path}
+                                    style={{
+                                        fontSize: '2rem',
+                                        fontWeight: 500,
+                                        flex: 1,
+                                        transition: 'opacity 200ms',
+                                        opacity: !open ? 0 : 1,
+                                        color: '#fff',
+                                    }}
+                                >
                                     <span>{menu.title}</span>
                                 </Link>
                             </li>
@@ -111,38 +133,39 @@ class AsidePerfil extends Component {
                     <ul style={{ marginTop: '2.5rem' }}>
                         {Menu2.map((menu, index) => (
                             <li
+                                key={index}
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     padding: '0.5rem',
-                                    color: '#ff0000 ',
+                                    color: '#ff0000',
                                     fontSize: '2rem',
                                     gap: '1rem',
                                     cursor: 'pointer',
-                                    color: 'hover:text-secondaryBlue',
                                     backgroundColor: 'hover:bg-primaryBlue',
                                     borderRadius: '0.5rem',
-                                    marginTop: '0.5rem'
+                                    marginTop: '0.5rem',
                                 }}
-                                key={index}
                             >
                                 <span style={{ fontSize: '2rem', display: 'block', float: 'left' }}>
                                     {React.createElement(menu.icon, { style: { margin: 0, padding: 0 } })}
                                 </span>
-                                <span style={{
-                                    fontSize: '2rem',
-                                    fontWeight: 500,
-                                    flex: 1,
-                                    transition: 'opacity 200ms',
-                                    paddingTop: '0.25rem',
-                                    opacity: !open ? 0 : 1
-                                }}>{menu.title}</span>
+                                <span
+                                    style={{
+                                        fontSize: '2rem',
+                                        fontWeight: 500,
+                                        flex: 1,
+                                        transition: 'opacity 200ms',
+                                        opacity: !open ? 0 : 1,
+                                    }}
+                                >
+                                    {menu.title}
+                                </span>
                             </li>
                         ))}
                     </ul>
                 </div>
-               
             </div>
         );
     }

@@ -1,14 +1,11 @@
 import React, { useState,useEffect } from 'react';
 import './css/registro.css';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import imagen from './img/imagen1.jpg'; // Ruta de la imagen que deseas utilizar
 import { useUser } from './UserContext';
 import Swal from 'sweetalert2';
 import Layout from './Layout';
 const AgendarCita = () => {
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
-  const navigate = useNavigate();
 
   useEffect(() => {
     obtenerDatosServicios();
@@ -19,12 +16,12 @@ const AgendarCita = () => {
   const [servicio, setServicio] = useState('');
   const [fechaCitaError, setFechaCitaError] = useState('');
   const [horaCitaError, setHoraCitaError] = useState('');
-  const [servicioError, setServicioError] = useState('');
+  const [setServicioError] = useState('');
   // Agregamos la definición de estado para los horarios disponibles
   const [dataServicio,setDataServicio]=useState([]);
  
 
-  const { user,logoutUser } = useUser();
+  const { user } = useUser();
 
   const obtenerIdUsuario = (user) => {
     return user && user.idUsuario ? user.idUsuario : null;
@@ -161,36 +158,7 @@ const AgendarCita = () => {
     const horarios = ['09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00','16:00:00'];
     const [horariosDisponibles, setHorariosDisponibles] = useState(horarios);
 
-    const segundoFetch=(fecha,horariosDisponiblesConEstado)=>{
-
-      const proData = new FormData();
-      proData.append("fecha", fecha);
-  
-       // Realizar la segunda llamada a la API después de marcar los horarios ocupados
-       fetch("api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=" + fecha, {
-        method: 'POST',
-        body: proData,
-    }).then((res) => res.json())
-    .then((result) => {
-          console.log(result)
-        if (result === "No hay horas") {
-            // No hay horas disponibles, usar el primer marcado
-            setHorariosDisponibles(horariosDisponiblesConEstado);
-        } else {
-          const horariosOcupados2 = result; // Suponiendo que result contiene los horarios ocupados
-
-        // Obtener solo las horas ocupadas del segundo conjunto de horarios
-        const horasOcupadas2 = horariosOcupados2.map(horario => horario.substring(0, 5)); // Extraer solo HH:mm
-
-        // Filtrar las horas ocupadas del segundo conjunto de horarios de las disponibles
-        const horariosDisponibles2 = horariosDisponiblesConEstado.filter(horario => !horasOcupadas2.includes(horario.hora.substring(0, 5)));
-
-        // Usar el segundo conjunto de horarios filtrado
-        setHorariosDisponibles(horariosDisponibles2);   
-
-        }
-    });
-    }
+    
     
     const obtenerhorariosFecha = (fecha) => {
       const proData = new FormData();

@@ -1,52 +1,26 @@
 import {
-  MagnifyingGlassIcon,
-  ChevronUpDownIcon,
   TrashIcon,
 } from "@heroicons/react/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/solid";
+import { PencilIcon } from "@heroicons/react/solid";
 import {
-  Card,
-  CardHeader,
-  Input,
   Typography,
-  Button,
-  CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
 import PerfilLayout from "./PerfilLayout";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useCallback } from "react";
 import Layout from "../Layout";
 import { useUser } from "../../src/UserContext";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
+
 
 export default function VerCita() {
-  const [Estado, setEstado] = useState("Cancelada");
+  const [Estado] = useState("Cancelada");
   const [Ip, setIp] = useState("Cancelada");
 
-  const { user, logoutUser } = useUser();
+  const { user } = useUser();
   const navigate = useNavigate();
 
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
@@ -69,12 +43,12 @@ export default function VerCita() {
     return data;
   }
 
-  function ObtenerIp() {
+  const ObtenerIp = useCallback(() =>{
     let apiKey = "8c308d0e8f217c1a489e15cb1998c34ffcd76bcead2a2851c3878299";
     json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
       setIp(data.ip);
     });
-  }
+  },[]);
 
   const CancelarReservacion = () => {
     const data = new FormData();
@@ -111,7 +85,7 @@ export default function VerCita() {
   const [dataCitas, setDataCitas] = useState([]);
 
   
-  const obtenerCitas = async () => {
+  const obtenerCitas =useCallback( async () => {
     try {
       const response = await fetch(
         `${apiurll}/api/CasaDelMarisco/ObtenerCitasCANPorId?idUsuario=${id}`,
@@ -132,12 +106,12 @@ export default function VerCita() {
     } catch (error) {
       console.error("Error al obtener datos del usuario:", error);
     }
-  };
+  },[apiurll, id, setDataCitas]);
 
   useEffect(() => {
     obtenerCitas();
     ObtenerIp();
-  }, []);
+  }, [ObtenerIp, obtenerCitas]);
 
 
   return (

@@ -1,27 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography } from '@mui/material';
-import { styled } from '@mui/system';
-import { useUser } from "../UserContext";
 import AdminLayout from './AdminLayout';
 
-const useStyles = styled({
-  root: {
-    marginTop: '20px',
-  },
-});
-
-const PedidosGeneral = () => {
-  const classes = useStyles();
+  const PedidosGeneral = () => {
   const [isLoading, setLoading] = useState(true);
-  const { user } = useUser();
   const [pedidos, setPedidos] = useState([]);
-  const [selectedPedido, setSelectedPedido] = useState(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  
+  
 
-  const handleVerDetalle = (pedido) => {
-    setSelectedPedido(pedido);
-    setDialogOpen(true);
-  };
 
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
 
@@ -53,7 +39,7 @@ const PedidosGeneral = () => {
   useEffect(() => {
     obtenerPedidos(); 
     console.log(pedidos);
-  }, []);
+  }, [pedidos]);
 
   return (
     <AdminLayout>

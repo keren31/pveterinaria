@@ -5,7 +5,7 @@ import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
-
+import { NetworkFirst } from 'workbox-strategies';
 
 
 clientsClaim();
@@ -17,6 +17,18 @@ precacheAndRoute(self.__WB_MANIFEST);
 // para más info: https://cra.link/PWA
 
 const fileExtensionRegexp = new RegExp("/[^/?]+\\.[^/]+$");
+
+
+registerRoute(
+  ({ request }) => request.mode === 'navigate',
+  new NetworkFirst({
+    cacheName: 'pages-cache',
+    plugins: [
+      new ExpirationPlugin({ maxEntries: 50 }),
+    ],
+  })
+);
+
 registerRoute(
   // Return false to exempt requests from being fulfilled by index.html.
   ({ request, url }) => {
@@ -32,7 +44,18 @@ registerRoute(
     } // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html")
+  createHandlerBoundToURL("/index.html")
+);
+
+// Cachear las respuestas de la API de productos
+registerRoute(
+  ({ url }) => url.origin === 'https://lacasadelmariscoweb.azurewebsites.net/' && url.pathname.startsWith('/api/TraerProductos'),
+  new StaleWhileRevalidate({
+    cacheName: 'api-products-cache',
+    plugins: [
+      new ExpirationPlugin({ maxEntries: 50 }),
+    ],
+  })
 );
 
 registerRoute(
@@ -40,15 +63,24 @@ registerRoute(
   ({ url }) =>
     url.origin === self.location.origin && url.pathname.endsWith(".png"), // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
-    cacheName: "images",
+    cacheName: "image",
     plugins: [
-      
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
       new ExpirationPlugin({ maxEntries: 50 }),
     ],
   })
 );
+
+registerRoute(
+  // Ruta para cachear CSS, JS e imágenes
+  ({ request }) => request.destination === 'style' || request.destination === 'script' || request.destination === 'image',
+  new StaleWhileRevalidate({
+    cacheName: 'static-resources',
+  })
+);
+
+
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();

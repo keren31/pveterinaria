@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
@@ -12,9 +11,7 @@ import { gapi } from "gapi-script";
 import GoogleLogin from "@leecheuk/react-google-login"; 
 import { useUser } from "./UserContext";
 import "./css/login.css";
-import { reactApiIP } from "./variables";
 import imagen from './img/imagen1.jpg';
-
 import Layout from './Layout';
 
 export default function Login() {
@@ -23,19 +20,17 @@ export default function Login() {
   const { loginUser } = useUser();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
-  const [ip, setIp] = useState("");
+  const [ip] = useState("788.990.899.00");
 
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loginAttempts, setLoginAttempts] = useState(0);
-  const [loginAttempts2, setLoginAttempts2] = useState(0);
   const ClientID = "30463532374-6m31aqpp06eqco9k3325unc6n62cs8ej.apps.googleusercontent.com"
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const navigate = useNavigate();
-  const loginAttemptsRef = useRef(loginAttempts);
-  const loginAttemptsRef2 = useRef(loginAttempts2);
+  
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -49,9 +44,6 @@ export default function Login() {
     validatePassword(password);
   };
 
-  function json(url) {
-    return fetch(url).then((res) => res.json());
-  }
 
   //
 
@@ -140,25 +132,18 @@ export default function Login() {
 
   function onChange(value) {
     setIsButtonDisabled(false);
-    ObtenerIp();
 
   }
-  function ObtenerIp() {
-    const apiKey = reactApiIP;
-    json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
-      setIp(data.ip);
-      //console.log(ip);
-    });
-  }
+  
   useEffect(() => {
-    ObtenerIp();
     const start = () => {
       gapi.auth2.init({
         clientId: ClientID,
       });
     };
     gapi.load("client:auth2", start);
-  }, []);
+  }, []); // Agrega 'ObtenerIp' en el array de dependencias
+  
 
   const onSuccess = async (response) => {
     const email = response.profileObj.email;
