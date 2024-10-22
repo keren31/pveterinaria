@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
@@ -14,7 +13,6 @@ import { useUser } from "./UserContext";
 import "./css/login.css";
 import { reactApiIP } from "./variables";
 import imagen from './img/imagen1.jpg';
-
 import Layout from './Layout';
 
 export default function Login() {
@@ -29,7 +27,6 @@ export default function Login() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loginAttempts, setLoginAttempts] = useState(0);
-  const [loginAttempts2] = useState(0);
   const ClientID = "30463532374-6m31aqpp06eqco9k3325unc6n62cs8ej.apps.googleusercontent.com"
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -157,7 +154,8 @@ export default function Login() {
       });
     };
     gapi.load("client:auth2", start);
-  }, []);
+  }, [ObtenerIp]); // Agrega 'ObtenerIp' en el array de dependencias
+  
 
   const onSuccess = async (response) => {
     const email = response.profileObj.email;
