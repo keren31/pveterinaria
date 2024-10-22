@@ -145,6 +145,31 @@ const Direcciones = () => {
   }
 
 
+  const obtenerDirecciones = async () => {
+
+    try {
+      const response = await fetch(
+        apiurll + `/api/CasaDelMarisco/TraerDirecciones?UsuarioID=${user.idUsuario}`,
+        {
+          method: "GET",
+        }
+      );
+      const data = await response.json();     
+      if (Array.isArray(data)) {
+        setDirecciones(data);
+        console.log("Direcciones obtenidas:", data);
+      } else {
+        console.error("La respuesta de la API no es un array:", data);
+        setDirecciones([]);
+      }
+     
+    } catch (error) {
+      console.error("Error al obtener reservaciones:", error);
+    } finally {
+      setLoading(false); 
+    }
+
+};
 
   useEffect(() => {
     obtenerDirecciones()
@@ -152,31 +177,7 @@ const Direcciones = () => {
 
 
 
-  const obtenerDirecciones = async () => {
-
-      try {
-        const response = await fetch(
-          apiurll + `/api/CasaDelMarisco/TraerDirecciones?UsuarioID=${user.idUsuario}`,
-          {
-            method: "GET",
-          }
-        );
-        const data = await response.json();     
-        if (Array.isArray(data)) {
-          setDirecciones(data);
-          console.log("Direcciones obtenidas:", data);
-        } else {
-          console.error("La respuesta de la API no es un array:", data);
-          setDirecciones([]);
-        }
-       
-      } catch (error) {
-        console.error("Error al obtener reservaciones:", error);
-      } finally {
-        setLoading(false); 
-      }
-  
-  };
+ 
 
   const actualizarDireccion = async () => {
     const data = new FormData();

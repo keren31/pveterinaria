@@ -34,7 +34,7 @@ const Recomendaciones = () => {
     } catch (error) {
       console.error("Error al obtener datos del usuario:", error);
     }
-  }, [user.idUsuario]); // Añadimos `user.idUsuario` como dependencia
+  }, [[user.idUsuario, setDataCitas]]); // Añadimos `user.idUsuario` como dependencia
 
   useEffect(() => {
     obtenerCitas();

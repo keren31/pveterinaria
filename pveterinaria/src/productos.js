@@ -148,7 +148,7 @@ const Productos2 = () => {
   useEffect(() => {
     obtenterDatosProductos();
     obtenerProductoCarrito();
-  }, [obtenerProductoCarrito]);
+  }, [setCart]);
 
   const obtenterDatosProductos = async () => {
     try {

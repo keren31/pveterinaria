@@ -1,5 +1,5 @@
 import {Typography } from '@material-tailwind/react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useCallback} from 'react';
 import { useUser } from "./UserContext";
 import ReactDOM from 'react-dom';
 import Swal from "sweetalert2";
@@ -23,7 +23,7 @@ const CarritoDetalle = () => {
     return user && user.idUsuario ? user.idUsuario : null;
   };
 
-  const obtenerDirecciones = async () => {
+  const obtenerDirecciones = useCallback(async () => {
     try {
       const response = await fetch(
         `${apiurll}/api/CasaDelMarisco/TraerDirecciones?UsuarioID=${user.idUsuario}`,
@@ -44,7 +44,7 @@ const CarritoDetalle = () => {
     } finally {
       setLoading(false); 
     }
-  };
+  });
 
   const agregarAlCarrito = async (producto) => {
     const data = new FormData();
@@ -111,7 +111,7 @@ const CarritoDetalle = () => {
     
   };
 
-  const obtenerProductoCarrito = async () => {
+  const obtenerProductoCarrito = useCallback(async () => {
     const id = obtenerIdUsuario(user);
     if (id !== null) {
       try {
@@ -137,7 +137,7 @@ const CarritoDetalle = () => {
     } else {
       setLoading(false); // Marcar el estado de carga como falso si no hay un id válido
     }
-  };
+  });
   
 
   const createOrder = (data, actions) => {
@@ -212,7 +212,7 @@ const CarritoDetalle = () => {
   };
   
 
-  const calcularTotal = () => {
+  const calcularTotal = useCallback( () => {
     if (!carrito || carrito.length === 0) return 0;
   
     const subtotal = carrito.reduce((acc, item) => acc + item.Precio, 0);
@@ -226,13 +226,13 @@ const CarritoDetalle = () => {
       envio: envio.toFixed(2),
       total: total.toFixed(2)
     };
-  };
+  });
 
 
   useEffect(() => {
     obtenerProductoCarrito();
     obtenerDirecciones();
-  }, [obtenerProductoCarrito, obtenerDirecciones]);
+  }, [obtenerProductoCarrito, obtenerDirecciones,]);
 
   // useEffect para calcular el total cuando cambia el carrito
   useEffect(() => {
