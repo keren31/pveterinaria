@@ -42,3 +42,9 @@ jobs:
       - name: Build React Project
         working-directory: ./pveterinaria
         run: npm run build --if-present
+      
+      # 5. Ejecutar pruebas unitarias con Jest
+      - name: Run Jest tests
+        working-directory: ./pveterinaria
+        run: npm run test -- --ci --watchAll=false --coverage
+        
