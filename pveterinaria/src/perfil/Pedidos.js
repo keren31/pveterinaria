@@ -38,7 +38,7 @@ const Pedidos = () => {
   useEffect(() => {
     obtenerPedidos();
     console.log(pedidos);
-  }, [obtenerPedidos]); // Incluir `obtenerPedidos` como dependencia
+  }, [obtenerPedidos,pedidos]); // Incluir `obtenerPedidos` como dependencia
 
   return (
     <Layout>

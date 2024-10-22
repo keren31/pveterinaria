@@ -1,21 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import PerfilLayout from "./PerfilLayout";
 import Layout from "../Layout";
-
 import { useLocation } from "react-router-dom";
-
 import { Button } from "@material-tailwind/react";
 import Swal from "sweetalert2";
-
 
 export default function EditarCita() {
   const location = useLocation();
   const idCita = location.state ? location.state.IdCita : null;
-
-  useEffect(() => {
-    traerDatosCita();
-    obtenerDatosServicios();
-  }, [traerDatosCita, obtenerDatosServicios]);
 
   const [fechaCita, setFechaCita] = useState('');
   const [horaCita, setHoraCita] = useState('');
@@ -25,23 +17,15 @@ export default function EditarCita() {
   const [servicioError] = useState('');
   const horarios = ['09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00'];
   const [horariosDisponibles, setHorariosDisponibles] = useState(horarios);
-  
-  
   const [telefono, setTelefono] = useState();
   const [dataServicio, setDataServicio] = useState([]);
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
 
-
-  const obtenerDatosServicios = async () => {
+  const obtenerDatosServicios = useCallback(async () => {
     try {
-      const response = await fetch(
-        apiurll +'api/CasaDelMarisco/ObtenerServiciosCAN',
-        {
-          method: 'GET',
-          // No es necesario incluir el body para una solicitud GET
-        }
-      );
-
+      const response = await fetch(apiurll + 'api/CasaDelMarisco/ObtenerServiciosCAN', {
+        method: 'GET',
+      });
 
       if (response.ok) {
         const dataService = await response.json();
@@ -53,10 +37,9 @@ export default function EditarCita() {
     } catch (error) {
       console.error('Error al obtener datos del usuario:', error);
     }
-  };
+  }, [apiurll]);
 
-
-  const traerDatosCita = () => {
+  const traerDatosCita = useCallback(() => {
     const proData = new FormData();
     proData.append("idCita", idCita);
 
@@ -66,7 +49,8 @@ export default function EditarCita() {
         method: 'POST',
         body: proData,
       }
-    ).then((res) => res.json())
+    )
+      .then((res) => res.json())
       .then((result) => {
         setServicio(result.servicio_id);
         setFechaCita(result.fecha.split('T')[0]);
@@ -76,7 +60,12 @@ export default function EditarCita() {
       .catch((error) => {
         console.error('Error al realizar la solicitud:', error);
       });
-  };
+  }, [idCita]);
+
+  useEffect(() => {
+    traerDatosCita();
+    obtenerDatosServicios();
+  }, [traerDatosCita, obtenerDatosServicios]);
 
   const obtenerhorariosFecha = (fecha) => {
     const proData = new FormData();
@@ -85,14 +74,16 @@ export default function EditarCita() {
     fetch('https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/ObtenerDiasInhabiles?fecha=' + fecha, {
       method: 'POST',
       body: proData,
-    }).then((res) => res.json())
+    })
+      .then((res) => res.json())
       .then((result) => {
         console.log(result);
         if (result === "Si hay servicio") {
           fetch('https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=' + fecha, {
             method: 'POST',
             body: proData,
-          }).then((res) => res.json())
+          })
+            .then((res) => res.json())
             .then((result) => {
               console.log(result);
               if (result === "No hay horas") {
@@ -123,7 +114,8 @@ export default function EditarCita() {
           fetch('https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/ObtenerHorasDisponibles?fecha=' + fecha, {
             method: 'POST',
             body: proData,
-          }).then((res) => res.json())
+          })
+            .then((res) => res.json())
             .then((result) => {
               console.log(result);
               if (result === "No hay horas") {
@@ -143,12 +135,6 @@ export default function EditarCita() {
       });
   };
 
-  
-
-  
-
-  
-
   const handleFechaCitaChange = (e) => {
     const nuevaFechaCita = e.target.value;
     setFechaCita(nuevaFechaCita);
@@ -163,24 +149,23 @@ export default function EditarCita() {
     data.append("Hora", horaCita);
     data.append("Telefono", telefono);
 
-    fetch('https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/EditarCita?idCita=' + idCita + "&servicio_id=" + servicio + "&Fecha=" + fechaCita + "&Hora=" + horaCita + "&Telefono=" + telefono,
-      {
-        method: "POST",
-        body: data,
-      }
-    ).then((res) => res.json())
+    fetch('https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/EditarCita?idCita=' + idCita + "&servicio_id=" + servicio + "&Fecha=" + fechaCita + "&Hora=" + horaCita + "&Telefono=" + telefono, {
+      method: "POST",
+      body: data,
+    })
+      .then((res) => res.json())
       .then((result) => {
         if (result === "Cita a sido editada exitosamente!!") {
           Swal.fire({
             icon: 'success',
-            title: 'Cita Actualiza',
+            title: 'Cita Actualizada',
             text: '¡Gracias por preferirnos!',
           });
         } else {
           Swal.fire({
-            icon: 'success',
+            icon: 'error',
             title: 'Solicitud no realizada',
-            text: 'A ocurrio un problema, por favor intenta de nuevo',
+            text: 'Ha ocurrido un problema, por favor intenta de nuevo',
           });
         }
       })
@@ -199,9 +184,7 @@ export default function EditarCita() {
                 <h1 className="text-2xl font-bold mb-4">Editar Cita</h1>
                 <form>
                   <div className="mb-4">
-                    <label className="block text-gray-700 font-bold mb-2">
-                      Servicio
-                    </label>
+                    <label className="block text-gray-700 font-bold mb-2">Servicio</label>
                     <select
                       value={servicio}
                       onChange={(e) => setServicio(e.target.value)}
@@ -214,30 +197,22 @@ export default function EditarCita() {
                         </option>
                       ))}
                     </select>
-                    {servicioError && (
-                      <p className="text-red-500 text-xs italic">{servicioError}</p>
-                    )}
+                    {servicioError && <p className="text-red-500 text-xs italic">{servicioError}</p>}
                   </div>
 
                   <div className="mb-4">
-                    <label className="block text-gray-700 font-bold mb-2">
-                      Fecha de la cita
-                    </label>
+                    <label className="block text-gray-700 font-bold mb-2">Fecha de la cita</label>
                     <input
                       type="date"
                       value={fechaCita}
                       onChange={handleFechaCitaChange}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     />
-                    {fechaCitaError && (
-                      <p className="text-red-500 text-xs italic">{fechaCitaError}</p>
-                    )}
+                    {fechaCitaError && <p className="text-red-500 text-xs italic">{fechaCitaError}</p>}
                   </div>
 
                   <div className="mb-4">
-                    <label className="block text-gray-700 font-bold mb-2">
-                      Hora de la cita
-                    </label>
+                    <label className="block text-gray-700 font-bold mb-2">Hora de la cita</label>
                     <select
                       value={horaCita}
                       onChange={(e) => setHoraCita(e.target.value)}
@@ -250,15 +225,11 @@ export default function EditarCita() {
                         </option>
                       ))}
                     </select>
-                    {horaCitaError && (
-                      <p className="text-red-500 text-xs italic">{horaCitaError}</p>
-                    )}
+                    {horaCitaError && <p className="text-red-500 text-xs italic">{horaCitaError}</p>}
                   </div>
 
                   <div className="mb-4">
-                    <label className="block text-gray-700 font-bold mb-2">
-                      Teléfono
-                    </label>
+                    <label className="block text-gray-700 font-bold mb-2">Teléfono</label>
                     <input
                       type="tel"
                       value={telefono}
