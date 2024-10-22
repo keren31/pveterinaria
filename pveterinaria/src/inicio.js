@@ -20,7 +20,7 @@ function Inicio() {
                             className="font-semibold text-white text-center leading-tight bg-blue-900 bg-opacity-70 p-5 mt-5 rounded-md"
                             style={{ fontSize: 'clamp(28px, 5vw, 56px)' }}
                         >
-                            Bienvenido a la Estética Canina Platón
+                            Estética Canina Platón
                         </h1>
                     </div>
 
