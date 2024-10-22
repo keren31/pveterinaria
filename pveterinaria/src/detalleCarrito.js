@@ -243,116 +243,100 @@ const CarritoDetalle = () => {
 
   return (
     <Layout>
-    <div style={{ marginRight: '0', marginLeft: '20px' }}>
-  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px', padding: '90px', }}>
-    <div style={{ gridColumn: 'span 3', width: '100%', paddingRight: '4px',  boxShadow: '0 0 0 2px rgba(0, 0, 255, 0.5)', borderRadius: '10px', padding: '20px', marginRight: '40px', backgroundColor: '#ffffff' }}>
-      {/* Header */}
-      <div style={{ display: 'flex', width: '100%', marginBottom: '16px', backgroundColor: '#f8f9fa', marginTop: '40px', padding: '3rem', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-        <div style={{ flex: '2', fontWeight: 'bold', padding: '8px', borderRight: '1px solid #dee2e6', textAlign: 'left', color: '#495057' }}>Producto</div>
-        <div style={{ flex: '1', fontWeight: 'bold', padding: '8px', borderRight: '1px solid #dee2e6', textAlign: 'center', color: '#495057' }}>Cantidad</div>
-        <div style={{ flex: '1', fontWeight: 'bold', padding: '8px', textAlign: 'center', color: '#495057' }}>Total</div>
-      </div>
-
-      {/* Product rows */}
-      <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: '20px', paddingRight: '20px' }}>
-        {isLoading ? (
-          <p>Cargando...</p>
-        ) : carrito != null ? (
-          carrito.map((carritoInfo) => (
-            <>
-              <div key={carritoInfo.id} style={{ display: 'flex', borderTop: '1px solid #d1d5db', paddingTop: '12px', paddingBottom: '12px' }}>
-                <div style={{ flex: '2', display: 'flex', alignItems: 'center', padding: '16px' }}>
-                  <img src={carritoInfo.Imagen} alt='ofnd'
-                    style={{ width: '160px', height: '160px', paddingLeft: '20px', borderRadius: '8px', objectFit: 'cover', marginRight: '40px' }}
-                  />
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <img src={carritoInfo.Imagen} alt={carritoInfo.Nombre || 'Producto'} style={{ maxWidth: '100%', height: 'auto' }} />
-                    <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{carritoInfo.Nombre}</Typography>
-                    <Typography style={{ fontSize: '1.25rem', color: '#4b5563', fontWeight: '600' }}>${carritoInfo.PrecioUnitario}</Typography>
+    <div style={{ marginTop: '100px' ,marginRight: '0', marginLeft: '20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', padding: '20px', maxWidth: '1200px', margin: 'auto' }}>
+        <div style={{ gridColumn: '1 / -1', padding: '20px', boxShadow: '0 0 0 2px rgba(0, 0, 255, 0.5)', borderRadius: '10px', backgroundColor: '#ffffff' }}>
+          {/* Header */}
+          <div style={{ display: 'flex', width: '100%', marginBottom: '16px', backgroundColor: '#f8f9fa', padding: '16px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+            <div style={{ flex: '2', fontWeight: 'bold', padding: '8px', borderRight: '1px solid #dee2e6', textAlign: 'left', color: '#495057' }}>Producto</div>
+            <div style={{ flex: '1', fontWeight: 'bold', padding: '8px', borderRight: '1px solid #dee2e6', textAlign: 'center', color: '#495057' }}>Cantidad</div>
+            <div style={{ flex: '1', fontWeight: 'bold', padding: '8px', textAlign: 'center', color: '#495057' }}>Total</div>
+          </div>
+  
+          {/* Product rows */}
+          <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: '20px', paddingRight: '20px' }}>
+            {isLoading ? (
+              <p>Cargando...</p>
+            ) : carrito != null ? (
+              carrito.map((carritoInfo) => (
+                <div key={carritoInfo.id} style={{ display: 'flex', flexDirection: 'column', borderTop: '1px solid #d1d5db', padding: '12px 0' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+                    <img src={carritoInfo.Imagen} alt={carritoInfo.Nombre || 'Producto'} style={{ width: '100px', height: '100px', borderRadius: '8px', objectFit: 'cover', marginRight: '16px' }} />
+                    <div style={{ display: 'flex', flexDirection: 'column', flex: '1' }}>
+                      <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{carritoInfo.Nombre}</Typography>
+                      <Typography style={{ fontSize: '1.25rem', color: '#4b5563', fontWeight: '600' }}>${carritoInfo.PrecioUnitario}</Typography>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <button style={{ padding: '8px', borderRadius: '50%' }} onClick={() => eliminarDelCarrito(carritoInfo)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" style={{ height: '24px', width: '24px', color: '#4b5563' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                        </svg>
+                      </button>
+                      <input
+                        type='number'
+                        style={{ width: '60px', textAlign: 'center', marginLeft: '8px', marginRight: '8px' }}
+                        value={carritoInfo.Cantidad}
+                        disabled={true}
+                      />
+                      <button style={{ padding: '8px', borderRadius: '50%' }} onClick={() => agregarAlCarrito(carritoInfo)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" style={{ height: '24px', width: '24px', color: '#4b5563' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                      </button>
+                    </div>
+                    <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>${carritoInfo.Precio}</Typography>
                   </div>
                 </div>
-                <div style={{ flex: '1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <button style={{ padding: '8px', borderRadius: '50%' }} onClick={() => eliminarDelCarrito(carritoInfo)}>
-                      <svg xmlns="http://www.w3.org/2000/svg" style={{ height: '24px', width: '24px', color: '#4b5563' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                      </svg>
-                    </button>
-                    <input
-                      type='number'
-                      style={{ width: '80px', textAlign: 'center', marginLeft: '8px', marginRight: '8px' }}
-                      value={carritoInfo.Cantidad}
-                      disabled={true}
-                    />
-                    <button style={{ padding: '8px', borderRadius: '50%' }} onClick={() => agregarAlCarrito(carritoInfo)}>
-                      <svg xmlns="http://www.w3.org/2000/svg" style={{ height: '24px', width: '24px', color: '#4b5563' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div style={{ flex: '1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <input value={carritoInfo.idCarrito} hidden />
-                  <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>${carritoInfo.Precio}</Typography>
-                </div>
-              </div>
-              <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '8px' }}>Elije tu direccion para la entrega de tus pedidos</Typography>
-              <select onChange={(e) => setDirecion(e.target.value)}>
-                {direcciones != null ? (
-                  direcciones.map((midirecciones) => (
-                    <>
-                      <option key={midirecciones.DireccionID} value={midirecciones.DireccionID}>
-                        calle {midirecciones.Calle}, colonia {midirecciones.Colonia}, numero interior {midirecciones.NumeroInterior}
-                      </option>
-                    </>
-                  ))
-                ) : (
-                  <p>No hay direcciones disponibles.</p>
-                )}
-              </select>
-            </>
-          ))
-        ) : (
-          <p>No hay productos en el carrito.</p>
-        )}
-      </div>
-    </div>
-
-    <div style={{ gridColumn: 'span 2', paddingTop: '20px', paddingRight: '96px', paddingLeft: '96px', height: '40rem', borderRadius: '10px', marginLeft: '40px',  boxShadow: '0 0 0 2px rgba(0, 0, 255, 0.5)' }}>
-      <div style={{ paddingTop: '16px', paddingBottom: '20px' }}>
-        <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '16px' }}>DETALLE DE LA ORDEN</Typography>
-        <div style={{ borderTop: '1px solid #d1d5db', borderBottom: '1px solid #d1d5db', paddingTop: '16px', paddingBottom: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-            <span>Subtotal</span>
-            <span>${calcularTotal().subtotal}</span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-            <span>Costo del envío</span>
-            <span>$30.00</span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-            <span>Iva</span>
-            <span>{calcularTotal().iva}</span>
+              ))
+            ) : (
+              <p>No hay productos en el carrito.</p>
+            )}
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px' }}>
-          <span style={{ fontWeight: '600' }}>Total</span>
-          <span style={{ fontWeight: '600' }}>${calcularTotal().total}</span>
-        </div>
-
-        <div style={{ position: 'relative', zIndex: '10', marginTop: '16px' }}>
+  
+        <div style={{ padding: '20px', boxShadow: '0 0 0 2px rgba(0, 0, 255, 0.5)', borderRadius: '10px', backgroundColor: '#ffffff' }}>
+          <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '16px' }}>DETALLE DE LA ORDEN</Typography>
+          <div style={{ borderTop: '1px solid #d1d5db', borderBottom: '1px solid #d1d5db', padding: '16px 0' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+              <span>Subtotal</span>
+              <span>${calcularTotal().subtotal}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+              <span>Costo del envío</span>
+              <span>$30.00</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+              <span>Iva</span>
+              <span>{calcularTotal().iva}</span>
+            </div>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px' }}>
+            <span style={{ fontWeight: '600' }}>Total</span>
+            <span style={{ fontWeight: '600' }}>${calcularTotal().total}</span>
+          </div>
+  
+          <div style={{ position: 'relative', zIndex: '10', marginTop: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
           <PayPalButton 
             createOrder={(data, actions) => createOrder(data, actions)}
             onApprove={(data, actions) => onApprove(data, actions)}                
             fundingSource="paypal" 
+            style={{
+              layout: 'horizontal', // Cambia la disposición a horizontal si es necesario
+              color: 'gold', // Cambia el color a dorado para que resalte
+              shape: 'rect', // Rectángulo para una apariencia profesional
+              label: 'checkout', // Texto personalizado en el botón
+              tagline: false, // Elimina el tagline para un diseño limpio
+            }}
           />
+        </div>
+
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-    </Layout>
+  </Layout>
+  
   );
 };
 
