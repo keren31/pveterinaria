@@ -322,7 +322,6 @@ const CarritoDetalle = () => {
         )}
       </div>
     </div>
-
     <div style={{ gridColumn: 'span 2', paddingTop: '20px', paddingRight: '96px', paddingLeft: '96px', height: '40rem', borderRadius: '10px', marginLeft: '40px',  boxShadow: '0 0 0 2px rgba(0, 0, 255, 0.5)' }}>
       <div style={{ paddingTop: '16px', paddingBottom: '20px' }}>
         <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '16px' }}>DETALLE DE LA ORDEN</Typography>
