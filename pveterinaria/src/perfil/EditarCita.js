@@ -15,18 +15,17 @@ export default function EditarCita() {
   useEffect(() => {
     traerDatosCita();
     obtenerDatosServicios();
-  }, []);
+  }, [traerDatosCita, obtenerDatosServicios]);
 
   const [fechaCita, setFechaCita] = useState('');
   const [horaCita, setHoraCita] = useState('');
   const [servicio, setServicio] = useState('');
-  const [fechaCitaError, setFechaCitaError] = useState('');
-  const [horaCitaError, setHoraCitaError] = useState('');
+  const [fechaCitaError] = useState('');
+  const [horaCitaError] = useState('');
   const [servicioError] = useState('');
   const horarios = ['09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00'];
   const [horariosDisponibles, setHorariosDisponibles] = useState(horarios);
   
-  const [idServicio, setIdServicio] = useState();
   
   const [telefono, setTelefono] = useState();
   const [dataServicio, setDataServicio] = useState([]);
