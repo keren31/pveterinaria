@@ -21,7 +21,7 @@ export default function Login() {
   const { loginUser } = useUser();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
-  const [ip, setIp] = useState("");
+  const [ip] = useState("788.990.899.00");
 
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -136,25 +136,17 @@ export default function Login() {
 
   function onChange(value) {
     setIsButtonDisabled(false);
-    ObtenerIp();
 
   }
-  function ObtenerIp() {
-    const apiKey = reactApiIP;
-    json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
-      setIp(data.ip);
-      //console.log(ip);
-    });
-  }
+  
   useEffect(() => {
-    ObtenerIp();
     const start = () => {
       gapi.auth2.init({
         clientId: ClientID,
       });
     };
     gapi.load("client:auth2", start);
-  }, [ObtenerIp]); // Agrega 'ObtenerIp' en el array de dependencias
+  }, []); // Agrega 'ObtenerIp' en el array de dependencias
   
 
   const onSuccess = async (response) => {
