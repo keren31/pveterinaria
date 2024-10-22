@@ -291,7 +291,10 @@ const CarritoDetalle = () => {
                 </div>
               ))
             ) : (
+              <>
               <p>No hay productos en el carrito.</p>
+              </>
+              
             )}
           </div>
         </div>
