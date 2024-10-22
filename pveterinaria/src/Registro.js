@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './css/registro.css';
 import imagen from './img/pixlr-image-generator-fd08d275-bff4-4995-bb65-c63a369e379b.png';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Layout from './Layout';
@@ -28,7 +28,7 @@ const Registro = () => {
   const [apellidoMError, setApellidoMError] = useState('');
   const [apellidoPError, setApellidoPError] = useState('');
   const [fechaError, setFechaError] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
+  
 
   const [passwordStrength, setPasswordStrength] = useState(''); // Estado para la fortaleza de la contraseña
 

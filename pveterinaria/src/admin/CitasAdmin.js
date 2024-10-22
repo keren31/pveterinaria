@@ -1,17 +1,12 @@
 import {
-  
   ChevronDownIcon,
-  
   TrashIcon,
-  
 } from "@heroicons/react/outline"; // Importar desde outline o solid según corresponda
 import {
   Card,
   CardHeader,
   Typography,
-  
   CardBody,
- 
   Tabs,
   TabsHeader,
   Tab,

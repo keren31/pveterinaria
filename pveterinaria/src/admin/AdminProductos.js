@@ -101,7 +101,7 @@ const AdminProductos = () => {
     const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
     const [estado,setEstado]=useState();
   const [searchQuery, setSearchQuery] = useState('');
-  const [productos, setProductos] = useState(initialProductos);
+  const [productos] = useState(initialProductos);
   const [ setFilteredProductos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
@@ -193,38 +193,34 @@ const handleDrop = (e) => {
     data.append("Estado",estado2);
     data.append("Imagen",imageURL2===result.Imagen? imageURL2:resultImage2);
 
-    fetch(
-        apiurll + "api/CasaDelMarisco/EditarProductoCan",
-        {
-            method: "POST",
-            body: data,
-        }
-    )
-    .then((res) => res.json())
-    .then((result) => {
-        if (result === 'Editado!!') {
-            Swal.fire({
-                icon: 'success',
-                title: 'Registro Completo',
-                text: 'Realizado con exito',
-            });
-            navigate('/admin-producto')
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Registro incompleto',
-                text: 'Ha ocurrido un error verifique los datos',
-            });
-        }
-    })
-    .catch((error) => {
-        console.error('Error al realizar la solicitud:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Ha ocurrido un error al procesar la solicitud',
-        });
-    });
+    fetch(apiurll + "api/CasaDelMarisco/EditarProductoCan", {
+      method: "POST",
+      body: data,
+  }).then((res) => res.json())
+  .then((result) => {
+      if (result === 'Editado!!') {
+          Swal.fire({
+              icon: 'success',
+              title: 'Registro Completo',
+              text: 'Realizado con exito',
+          });
+          navigate('/admin-producto');
+      } else {
+          Swal.fire({
+              icon: 'success',
+              title: 'Registro incompleto',
+              text: 'Ha ocurrido un error verifique los datos',
+          });
+      }
+  }).catch((error) => {
+      console.error('Error al realizar la solicitud:', error);
+      Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ha ocurrido un error al procesar la solicitud',
+      });
+  });
+  
     
  
 

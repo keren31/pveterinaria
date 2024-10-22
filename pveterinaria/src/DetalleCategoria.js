@@ -6,7 +6,7 @@ import './css/DetalleCategoria.css'; // Importa el archivo de estilos CSS
 import Layout from './Layout';
 
 const DetalleCategoria = ({ volverACategoriasServicio }) => {
-  const {  } = useParams(); // Obtiene los parámetros de la URL
+  const params = useParams(); // Si necesitas los parámetros más adelante, usa 'params'
   const navigate = useNavigate(); // Obtiene la función navigate
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null); // Estado para la categoría seleccionada
   const [servicioSeleccionado, setServicioSeleccionado] = useState(null); // Estado para el servicio seleccionado
@@ -17,7 +17,6 @@ const DetalleCategoria = ({ volverACategoriasServicio }) => {
     const servicioLocalStorage = JSON.parse(localStorage.getItem('selectedService'));
     setCategoriaSeleccionada(categoriaLocalStorage);
     setServicioSeleccionado(servicioLocalStorage);
-
   }, []);
 
   const Volver = () => {
@@ -31,29 +30,29 @@ const DetalleCategoria = ({ volverACategoriasServicio }) => {
   return (
     <Layout>
       <Card className="detalle-categoria-card">
-      <CardContent>
-        <Typography variant="h5" component="h2">
-        Selección del servicio: {servicioSeleccionado ? servicioSeleccionado.nombre : ''}
-        </Typography>
-        <Typography color="textSecondary" gutterBottom>
-          Categoría: {categoriaSeleccionada ? categoriaSeleccionada.nombre : ''}
-        </Typography>
-        <Typography color="textSecondary" gutterBottom>
-          Duración del servicio: {categoriaSeleccionada ? categoriaSeleccionada.Duracion:''} minutos
-        </Typography>
-        
-        <Box mt={2}> {/* Añade un espacio en la parte superior */}
-          <Button onClick={Volver} variant="outlined">
-            Volver a Categorías de Servicio
-          </Button>
-          <Button onClick={handleAgendarCitaClick} variant="outlined">
-            Agendar Cita
-          </Button>
-        </Box>
-      </CardContent>
-    </Card>
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            Selección del servicio: {servicioSeleccionado ? servicioSeleccionado.nombre : ''}
+          </Typography>
+          <Typography color="textSecondary" gutterBottom>
+            Categoría: {categoriaSeleccionada ? categoriaSeleccionada.nombre : ''}
+          </Typography>
+          <Typography color="textSecondary" gutterBottom>
+            Duración del servicio: {categoriaSeleccionada ? categoriaSeleccionada.Duracion : ''} minutos
+          </Typography>
+          <Box mt={2}>
+            <Button onClick={Volver} variant="outlined">
+              Volver a Categorías de Servicio
+            </Button>
+            <Button onClick={handleAgendarCitaClick} variant="outlined">
+              Agendar Cita
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
     </Layout>
   );
 };
 
 export default DetalleCategoria;
+

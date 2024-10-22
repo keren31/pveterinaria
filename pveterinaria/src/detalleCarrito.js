@@ -233,18 +233,15 @@ const CarritoDetalle = () => {
 
 
   useEffect(() => {
-    obtenerProductoCarrito(); 
-    obtenerProductoCarrito(); 
-    obtenerProductoCarrito(); 
-
+    obtenerProductoCarrito();
     obtenerDirecciones();
-    
-  }, []);
+  }, [obtenerProductoCarrito, obtenerDirecciones]);
 
+  // useEffect para calcular el total cuando cambia el carrito
   useEffect(() => {
     const totales = calcularTotal();
     setTotal(parseFloat(totales.total));
-  }, [carrito]);
+  }, [carrito, calcularTotal]);
 
 
   return (
@@ -272,6 +269,7 @@ const CarritoDetalle = () => {
                     style={{ width: '160px', height: '160px', paddingLeft: '20px', borderRadius: '8px', objectFit: 'cover', marginRight: '40px' }}
                   />
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <img src={carritoInfo.Imagen} alt={carritoInfo.Nombre || 'Producto'} style={{ maxWidth: '100%', height: 'auto' }} />
                     <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{carritoInfo.Nombre}</Typography>
                     <Typography style={{ fontSize: '1.25rem', color: '#4b5563', fontWeight: '600' }}>${carritoInfo.PrecioUnitario}</Typography>
                   </div>
