@@ -19,9 +19,9 @@ const CarritoDetalle = () => {
 
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   
-  const obtenerIdUsuario = (user) => {
+  const obtenerIdUsuario = useCallback((user) => {
     return user?.idUsuario ?? null;
-  };
+  }, []);
   
   const obtenerDirecciones = useCallback(async () => {
     try {
