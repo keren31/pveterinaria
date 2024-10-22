@@ -26,7 +26,7 @@ jobs:
       - name: Move to project directory
         run: cd pveterinaria
 
-      # 2. Configurar Node.js (para Angular y Jest)
+      # 2. Configurar Node.js (para recat y Jest)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -47,4 +47,11 @@ jobs:
       - name: Run Jest tests
         working-directory: ./pveterinaria
         run: npm run test -- --ci --watchAll=false --coverage
+      
+       # 6. Almacenar el informe de cobertura (siempre)
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: ./pveterinaria/coverage/ # Ajusta esta ruta si tu informe de cobertura se genera en un lugar diferente
         
