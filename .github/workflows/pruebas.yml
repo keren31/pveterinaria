@@ -35,4 +35,4 @@ jobs:
 
       # 3. Instalación de dependencias
       - name: Install dependencies
-        run: npm installS
+        run: npm install
