@@ -257,7 +257,7 @@ export default function Login() {
 
 
         <form onSubmit={handleSubmit}>
-          <label htmlFor="nombre" className="loginLabel"
+          <label htmlFor="email" className="loginLabel"
           style={{
             color: '#555', 
             fontSize: '18px', 
@@ -283,7 +283,7 @@ export default function Login() {
 
           {emailError && <p className="error-message">{emailError}</p>}
 
-          <label htmlFor="email" className="loginLabel"style={{
+          <label htmlFor="password" className="loginLabel"style={{
             color: '#555', 
             fontSize: '18px', 
             fontWeight: 'bold', 
