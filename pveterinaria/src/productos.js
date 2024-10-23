@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Card,
   CardActionArea,
@@ -18,9 +18,6 @@ import Layout from './Layout';
 import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom';
 
-
-
-
 const Productos2 = () => {
   const navigate = useNavigate();
   const { user } = useUser();
@@ -35,7 +32,6 @@ const Productos2 = () => {
 
   // Load cart from localStorage on component mount
   useEffect(() => {
-
     const savedCart = localStorage.getItem('carrito');
     if (savedCart) {
       setCarrito(JSON.parse(savedCart));
@@ -44,22 +40,26 @@ const Productos2 = () => {
 
   const [cart, setCart] = useState([]);
 
-
   const agregarAlCarrito = async (producto) => {
-    const data = new FormData();
-    data.append("idUsuario", user.idUsuario)
-    data.append("idProducto", producto.idProducto)
+    if (!user || !user.idUsuario) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Inicia sesión',
+        text: 'Por favor, inicia sesión para agregar productos al carrito.',
+      });
+      return;
+    }
 
-    fetch(
-      apiurll + "/api/CasaDelMarisco/AgregarProductosCarritoCAN",
-      {
-        method: "POST",
-        body: data,
-      }
-    )
+    const data = new FormData();
+    data.append("idUsuario", user.idUsuario);
+    data.append("idProducto", producto.idProducto);
+
+    fetch(apiurll + "/api/CasaDelMarisco/AgregarProductosCarritoCAN", {
+      method: "POST",
+      body: data,
+    })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result)
         if (result === 'Exito') {
           obtenerProductoCarrito();
           setIsCartOpen(true);
@@ -75,43 +75,38 @@ const Productos2 = () => {
           text: 'Ha ocurrido un error al procesar la solicitud',
         });
       });
-
   };
 
   const obtenerProductoCarrito = useCallback(async () => {
+    if (!user || !user.idUsuario) return;
+    
     try {
       const response = await fetch(
         apiurll + `/api/CasaDelMarisco/TraerCarritoPorUsuarioCAN?idUsuario=${user.idUsuario}`,
-        {
-          method: "GET",
-        }
+        { method: "GET" }
       );
       const data = await response.json();
-      console.log(data)
-      setCart(data)
+      setCart(data);
     } catch (error) {
-      console.error("Error al obtener la informacion:", error);
+      console.error("Error al obtener la información:", error);
     }
-  }, [apiurll, user.idUsuario, setCart]);
+  }, [apiurll, user]);
 
   const eliminarDelCarrito = (productoAEliminar) => {
-    const data = new FormData();
-    data.append("idUsuario", user.idUsuario)
-    data.append("idProducto", productoAEliminar.idProducto)
-    data.append("idCarritoProductos", productoAEliminar.idCarritoProductos)
+    if (!user || !user.idUsuario) return;
 
-    fetch(
-      apiurll + "/api/CasaDelMarisco/QuitarProductosCarritoCAN",
-      {
-        method: "POST",
-        body: data,
-      }
-    )
+    const data = new FormData();
+    data.append("idUsuario", user.idUsuario);
+    data.append("idProducto", productoAEliminar.idProducto);
+    data.append("idCarritoProductos", productoAEliminar.idCarritoProductos);
+
+    fetch(apiurll + "/api/CasaDelMarisco/QuitarProductosCarritoCAN", {
+      method: "POST",
+      body: data,
+    })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result)
         if (result === 'Exito') {
-
           obtenerProductoCarrito();
           setIsCartOpen(true);
         } else {
@@ -126,9 +121,7 @@ const Productos2 = () => {
           text: 'Ha ocurrido un error al procesar la solicitud',
         });
       });
-
   };
-
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
@@ -143,9 +136,6 @@ const Productos2 = () => {
     setMaxPrice(event.target.value);
   };
 
-
-
-
   useEffect(() => {
     obtenterDatosProductos();
     obtenerProductoCarrito();
@@ -153,20 +143,12 @@ const Productos2 = () => {
 
   const obtenterDatosProductos = async () => {
     try {
-      const response = await fetch(
-        `${apiurll}/api/CasaDelMarisco/TraerProductosCan`,
-        {
-          method: 'GET',
-          // No es necesario incluir el body para una solicitud GET
-        }
-      );
-
+      const response = await fetch(`${apiurll}/api/CasaDelMarisco/TraerProductosCan`, { method: 'GET' });
       if (response.ok) {
         const product1Data = await response.json();
         setProductData(product1Data);
-        console.log(product1Data)
       } else {
-        console.error('Error al obtener datos de los usuarios:', response.statusText);
+        console.error('Error al obtener datos de los productos:', response.statusText);
       }
     } catch (error) {
       console.error('Error al obtener datos del usuario:', error);
@@ -179,7 +161,6 @@ const Productos2 = () => {
         producto.nombre.toLowerCase().includes(searchQuery) &&
         (maxPrice === '' || parseFloat(producto.precio.substr(1)) <= parseFloat(maxPrice))
     );
-
     setFilteredProductos(filtered);
   };
 
@@ -189,8 +170,6 @@ const Productos2 = () => {
     setFilteredProductos([]);
   };
 
-
-
   const openCart = () => {
     setIsCartOpen(true);
   };
@@ -198,8 +177,6 @@ const Productos2 = () => {
   const closeCart = () => {
     setIsCartOpen(false);
   };
-
-
 
   return (
     <Layout>
@@ -234,9 +211,7 @@ const Productos2 = () => {
           {(filteredProductos.length > 0 ? filteredProductos : productData).map((producto) => (
             <Grid item key={producto.idProducto} xs={20} sm={6} md={4}>
               <Card>
-                <CardActionArea
-                  style={{ display: 'flex', flexDirection: 'column', background: 'transparent' }}
-                >
+                <CardActionArea style={{ display: 'flex', flexDirection: 'column', background: 'transparent' }}>
                   <CardMedia
                     component="img"
                     image={producto.Imagen}
@@ -247,16 +222,17 @@ const Productos2 = () => {
                   <CardContent style={{ flex: '1' }}>
                     <Typography variant="h6" component="div">
                       {producto.Nombre}
-                      <Button onClick={() => agregarAlCarrito(producto)}
+                      <Button
+                        onClick={() => agregarAlCarrito(producto)}
                         size="small"
                         style={{ marginLeft: '37%', margin: '10px', backgroundColor: 'orange', color: 'white' }}
-
                       >
                         Carrito
-                      </Button >
-                      <Badge badgeContent={carrito.filter(item => item.id === producto.id).reduce((acc, item) => acc + item.cantidad, 0)} color="primary">
-
-                      </Badge>
+                      </Button>
+                      <Badge
+                        badgeContent={carrito.filter(item => item.id === producto.id).reduce((acc, item) => acc + item.cantidad, 0)}
+                        color="primary"
+                      />
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       {producto.Descripcion}
@@ -272,11 +248,7 @@ const Productos2 = () => {
         </Grid>
 
         {/* Drawer del carrito */}
-        <Drawer
-          anchor="right"
-          open={isCartOpen}
-          onClose={closeCart}
-        >
+        <Drawer anchor="right" open={isCartOpen} onClose={closeCart}>
           <Container maxWidth="sm" style={{ marginTop: '60px', marginBottom: '20px', padding: '20px' }}>
             <Typography variant="h4" component="div" gutterBottom>
               Carrito de compras
@@ -292,7 +264,6 @@ const Productos2 = () => {
                     </div>
                   </div>
                   <div className='flex flex-wrap gap-2'>
-
                     <button
                       type="button"
                       className="text-xl text-indigo-600 hover:text-indigo-500 p-1"
@@ -302,9 +273,7 @@ const Productos2 = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                       </svg>
                     </button>
-
                     <span className="mx-2 text-xl">{item.Cantidad}</span>
-
                     <button
                       type="button"
                       className="text-xl text-indigo-600 hover:text-indigo-500 p-1"
@@ -314,8 +283,6 @@ const Productos2 = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                       </svg>
                     </button>
-
-
                   </div>
                 </div>
               ))
@@ -338,7 +305,6 @@ const Productos2 = () => {
                 fontSize: '16px',
                 transition: 'background-color 0.3s, transform 0.3s',
                 marginRight: '50px',
-                marginTop: ''
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.backgroundColor = 'darkblue';
@@ -347,7 +313,8 @@ const Productos2 = () => {
               onMouseOut={(e) => {
                 e.currentTarget.style.backgroundColor = 'blue';
                 e.currentTarget.style.transform = 'scale(1)';
-              }}>
+              }}
+            >
               Comprar
             </Button>
             <Button
@@ -370,10 +337,10 @@ const Productos2 = () => {
               onMouseOut={(e) => {
                 e.currentTarget.style.backgroundColor = 'red';
                 e.currentTarget.style.transform = 'scale(1)';
-              }}>
+              }}
+            >
               Cerrar
             </Button>
-
           </Container>
         </Drawer>
       </Container>
