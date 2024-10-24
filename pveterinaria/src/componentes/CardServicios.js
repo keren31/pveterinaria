@@ -114,12 +114,12 @@ const CardServicios = () => {
   return (
    
       <Container className="servicio-container">
-      <div className="titulo-container">
-        <Typography variant="h3" component="h1" padding={'50px'} justifyContent={'center'} gutterBottom>
-          Servicios de la Estetica Canina Platon
+      <div className="titulo-container max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl mx-auto">
+        <Typography variant="h3" component="h1" className="mt-5 px-4 text-center   xl:text-6xl" gutterBottom>
+          Servicios 
         </Typography>
       </div>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} className='mt-2'>
         {productos.map((producto, index) => (
           <Grid item key={producto.id} xs={12} sm={6} md={4}>
             <Card>
