@@ -1,6 +1,6 @@
 name: PWA CI/CD Workflow
 
-# Disparadores para el workflow
+# Disparadores para el workflow pruebas en la rama de pruebas 
 on:
   push:
     branches:
