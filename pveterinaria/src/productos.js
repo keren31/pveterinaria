@@ -180,7 +180,7 @@ const Productos2 = () => {
 
   return (
     <Layout>
-      <Container maxWidth="md" style={{ marginTop: '60px', marginBottom: '20px' }}>
+      <Container maxWidth="md" style={{ marginTop: '100px', marginBottom: '20px' }}>
         <div style={{ marginBottom: '20px', textAlign: 'center' }}>
           <TextField
             label="Buscar productos"
