@@ -225,194 +225,185 @@ export default function Login() {
   
   return (
     <Layout>
-      <div className="registro-form-containerLogin flex flex-col lg:flex-row items-center lg:items-start justify-center min-h-screen p-4 lg:p-10">
-        {/* Contenedor de la Imagen */}
-        <div className="registro-image-containerLogin w-full lg:w-1/2 flex justify-center lg:justify-end mb-6 lg:mb-0">
-          <img
-            src={imagen}
-            alt="Registro"
-            className="registro-imageLogin w-full max-w-xs lg:max-w-md h-auto object-cover rounded-lg shadow-lg"
-          />
-        </div>
-  
-        {/* Formulario de Login */}
-        <div className="registro-formLogin w-full lg:w-1/2 bg-white rounded-lg shadow-lg p-6">
-          <p
-            className="loginTitulo"
-            style={{
-              color: '#fff',
-              fontSize: '26px',
-              fontWeight: 'bold',
-              textAlign: 'center',
-              margin: '20px 0',
-              padding: '10px',
-              backgroundColor: '#0055A5',
-              borderRadius: '10px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            }}
-          >
-            Login <LoginIcon />
-          </p>
-  
-          <label
-            className="loginText"
-            style={{
-              color: '#555',
-              fontSize: '18px',
-              fontWeight: 'bold',
-              textAlign: 'center',
-              margin: '5px 0',
-              padding: '5px',
-              lineHeight: '1.5',
-            }}
-          >
-            Inicia sesión para obtener nuevos permisos y opciones dentro del sitio web
+      <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen p-4 lg:p-10"
+       style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+      }}>
+    <div
+  className="registro-form-containerLogin "
+
+>
+    <div className="registro-image-containerLogin  w-full lg:w-1/2 flex justify-center lg:justify-end">
+        <img
+          src={imagen}
+          alt="Registro"
+          className="registro-imageLogin w-full max-w-xs lg:max-w-md h-auto"
+        />
+      </div>
+
+      {/* Formulario de Login */}
+      <div className="registro-formLogin w-full lg:w-1/2">
+        <p className="loginTitulo" style={{
+          color: '#fff', 
+          fontSize: '26px', 
+          fontWeight: 'bold', 
+          textAlign: 'center', 
+          margin: '20px 0', 
+          padding: '10px', 
+          backgroundColor: '#0055A5', 
+          borderRadius: '10px', 
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+        }}>
+          Login <LoginIcon />
+        </p>
+
+        <label className="loginText" style={{
+          color: '#555', 
+          fontSize: '18px', 
+          fontWeight: 'bold',  
+          textAlign: 'center', 
+          margin: '5px 0', 
+          padding: '5px', 
+          lineHeight: '1.5'
+        }}>
+          Inicia sesión para obtener nuevos permisos y opciones dentro del sitio web
+        </label>
+
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="nombre" className="loginLabel" style={{
+            color: '#555', 
+            fontSize: '18px', 
+            fontWeight: 'bold', 
+            margin: '5px 0', 
+            padding: '5px', 
+            lineHeight: '1.5'
+          }}>
+            Correo electrónico :
           </label>
-  
-          <form onSubmit={handleSubmit}>
-            <label
-              htmlFor="nombre"
-              className="loginLabel"
-              style={{
-                color: '#555',
-                fontSize: '18px',
-                fontWeight: 'bold',
-                margin: '5px 0',
-                padding: '5px',
-                lineHeight: '1.5',
-              }}
-            >
-              Correo electrónico:
-            </label>
-  
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={() => validateEmail(email)}
+            className={emailError ? "input-error" : ""}
+            required
+          />
+          {emailError && <p className="error-message">{emailError}</p>}
+
+          <label htmlFor="email" className="loginLabel" style={{
+            color: '#555', 
+            fontSize: '18px', 
+            fontWeight: 'bold', 
+            margin: '5px 0', 
+            padding: '5px', 
+            lineHeight: '1.5'
+          }}>
+            Contraseña :
+          </label>
+
+          <div className="password-input-container">
             <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onBlur={() => validateEmail(email)}
-              className={emailError ? 'input-error' : ''}
+              type={passwordVisible ? "text" : "password"}
+              id="password"
+              name="password"
+              value={password}
               required
+              size={37}
+              onChange={handlePasswordChange}
+              onBlur={handleBlur}
+              className={passwordError ? "input-error" : ""}
             />
-            {emailError && <p className="error-message">{emailError}</p>}
-  
-            <label
-              htmlFor="password"
-              className="loginLabel"
-              style={{
-                color: '#555',
-                fontSize: '18px',
-                fontWeight: 'bold',
-                margin: '5px 0',
-                padding: '5px',
-                lineHeight: '1.5',
-              }}
-            >
-              Contraseña:
-            </label>
-  
-            <div className="password-input-container">
-              <input
-                type={passwordVisible ? 'text' : 'password'}
-                id="password"
-                name="password"
-                value={password}
-                required
-                onChange={handlePasswordChange}
-                onBlur={handleBlur}
-                className={passwordError ? 'input-error' : ''}
-              />
-              <button
-                type="button"
-                onClick={togglePasswordVisibility}
-                className="btn btn-light"
-              >
-                {passwordVisible ? (
-                  <VisibilityOutlinedIcon fontSize="small" />
-                ) : (
-                  <VisibilityOffOutlinedIcon fontSize="small" />
-                )}
-              </button>
-            </div>
-            {passwordError && <p className="error-message">{passwordError}</p>}
-  
-            <label className="recuerdame">
-              <input
-                type="checkbox"
-                className="cuadro"
-                style={{
-                  color: '#555',
-                  fontSize: '18px',
-                  fontWeight: 'bold',
-                  margin: '5px 0',
-                  padding: '5px',
-                  lineHeight: '1.5',
-                }}
-              />
-              Recuérdame
-            </label>
-  
-            <GoogleLogin
-              clientId={ClientID}
-              onSuccess={onSuccess}
-              onFailure={onFailure}
-              cookiePolicy={'single_host_policy'}
-              className="google-login-button"
-            />
-  
-            <div
-              className="recaptcha"
-              style={{
-                margin: '10px 0',
-                padding: '10px',
-              }}
-            >
-              <ReCAPTCHA
-                className="recaptch"
-                sitekey="6Lc_AHkpAAAAAPklyV-VTMQlYLL1tC0Z_P8Sc1O-"
-                onChange={onChange}
-              />
-            </div>
-  
             <button
-              className="btn btn-warning text2"
-              type="submit"
-              disabled={isButtonDisabled}
-              style={{
-                backgroundColor: 'orange',
-                color: 'white',
-                padding: '10px 20px',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
-                fontSize: '16px',
-                transition: 'background-color 0.3s, transform 0.3s',
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = 'darkorange';
-                e.currentTarget.style.transform = 'scale(1.05)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = 'orange';
-                e.currentTarget.style.transform = 'scale(1)';
-              }}
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="btn btn-light"
             >
-              Entrar
+              {passwordVisible ? (
+                <VisibilityOutlinedIcon fontSize="small" />
+              ) : (
+                <VisibilityOffOutlinedIcon fontSize="small" />
+              )}
             </button>
-          </form>
-  
-          <div className="container">
-            <Link to="/recuperar" className="singText">
-              ¿Olvidaste tu password?
-            </Link>
-            <Link to="/registro" className="singText ms-3">
-              ¿Sin cuenta? Regístrate
-            </Link>
           </div>
+          {passwordError && <p className="error-message">{passwordError}</p>}
+
+          <label className="recuerdame">
+            <input
+              type="checkbox"
+              className="cuadro"
+              style={{
+                color: '#555', 
+                fontSize: '18px', 
+                fontWeight: 'bold', 
+                margin: '5px 0', 
+                padding: '5px', 
+                lineHeight: '1.5'
+              }}
+            />
+            Recuérdame
+          </label>
+
+          <GoogleLogin
+            clientId={ClientID}
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            cookiePolicy={"single_host_policy"}
+            className="google-login-button"
+          />
+
+          <div className="recaptcha" style={{
+            margin: '10px 0', 
+            padding: '10px',
+          }}>
+            <ReCAPTCHA
+              className="recaptch"
+              sitekey="6Lc_AHkpAAAAAPklyV-VTMQlYLL1tC0Z_P8Sc1O-"
+              onChange={onChange}
+            />
+          </div>
+
+          <button
+            className="btn btn-warning text2"
+            type="submit"
+            disabled={isButtonDisabled}
+            style={{
+              backgroundColor: 'orange',
+              color: 'white',
+              padding: '10px 20px',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              transition: 'background-color 0.3s, transform 0.3s',
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = 'darkorange';
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = 'orange';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+          >
+            Entrar
+          </button>
+        </form>
+
+        <div className="container">
+          <Link to="/recuperar" className="singText">
+            ¿Olvidaste tu password?
+          </Link>
+          <Link to="/registro" className="singText ms-3">
+            ¿Sin cuenta? Registrate
+          </Link>
         </div>
       </div>
+    </div>
+    </div>
     </Layout>
   );
-  
 }
