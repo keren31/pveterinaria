@@ -207,7 +207,7 @@ const Productos2 = () => {
             Ver carrito <ShoppingCartIcon />
           </Button>
         </div>
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           {(filteredProductos.length > 0 ? filteredProductos : productData).map((producto) => (
             <Grid item key={producto.idProducto} xs={20} sm={6} md={4}>
               <Card>
