@@ -114,7 +114,7 @@ const ServicioCard = () => {
     <Layout>
       <Container className="servicio-container">
       <div className="titulo-container text-center">
-        <Typography variant="h3" marginTop={'35px'} component="h1" padding={'35px'} justifyContent={'center'} gutterBottom>
+        <Typography variant="h3" marginTop={'70px'} component="h1" padding={'35px'} justifyContent={'center'} gutterBottom>
           Servicios 
         </Typography>
       </div>
