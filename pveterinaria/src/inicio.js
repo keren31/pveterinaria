@@ -15,17 +15,17 @@ function Inicio() {
                     />
 
                     {/* Texto de Bienvenida sobre la imagen */}
-                    <div className="absolute top-0 left-0 right-0 flex items-start justify-center mt-5 pt-5">
+                    <div className="absolute top-0 left-0 right-0 flex items-start justify-center mt-2">
                         <h1 
                             className="font-semibold text-white text-center leading-tight bg-blue-900 bg-opacity-70 p-5 mt-5 rounded-md"
                             style={{ fontSize: 'clamp(28px, 5vw, 56px)' }}
                         >
-                            Estética Canina Platón keren 
+                            Estética Canina Platón
                         </h1>
                     </div>
 
                     {/* Contenido del Texto principal */}
-                    <div className="division p-8 md:p-16 lg:p-20 text-white max-w-5xl mx-auto bg-blue-800 rounded-md min-h-[300px] mt-12">
+                    <div className="division p-8 md:p-16 lg:p-20 text-white max-w-5xl mx-auto bg-blue-800 rounded-md h-auto mt-12">
                         <h2 
                             className="font-bold text-center leading-tight" 
                             style={{ fontSize: 'clamp(24px, 4vw, 30px)' }}
@@ -47,7 +47,7 @@ function Inicio() {
                     </div>
                 </div>
 
-                <div className="mt-8 px-4 md:px-12 lg:px-24">
+                <div className="mt-8 px-2 md:px-12 lg:px-24 ">
                     <CardServicios />
                 </div>
                 <div className="division2 mt-8"></div>

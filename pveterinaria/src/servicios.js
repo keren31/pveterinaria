@@ -113,12 +113,12 @@ const ServicioCard = () => {
   return (
     <Layout>
       <Container className="servicio-container">
-      <div className="titulo-container">
-        <Typography variant="h3" marginTop={'35px'} component="h1" padding={'50px'} justifyContent={'center'} gutterBottom>
-          Servicios de la Estetica Canina Platon
+      <div className="titulo-container text-center">
+        <Typography variant="h3" marginTop={'70px'} component="h1" padding={'35px'} justifyContent={'center'} gutterBottom>
+          Servicios 
         </Typography>
       </div>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} className=''>
         {productos.map((producto, index) => (
           <Grid item key={producto.id} xs={12} sm={6} md={4}>
             <Card>
