@@ -14,16 +14,16 @@
 .registro-image-containerLogin {
   flex: 1;
   display: flex;
-  justify-content: center;
-  text-align: center;
+  height: 700px; /* Ajusta la altura para pantallas grandes */
+  overflow: hidden; /* Oculta cualquier parte de la imagen que sobresalga */
+  border-radius: 5px;
 }
 
 .registro-imageLogin {
   width: 100%;
-  max-width: 400px;
-  height: auto;
-  object-fit: cover;
-  border-radius: 0px;
+  height: 700px; /* Ajusta la altura de la imagen automáticamente */
+  object-fit: cover; /* Cubre el espacio del contenedor manteniendo la proporción */
+  border-radius: 5px;
 }
 
 .registro-formLogin {
@@ -135,7 +135,6 @@ input {
   line-height: 1; /* Asegura que el texto esté alineado con el checkbox */
 }
 
-
 .recaptcha {
   margin: 10px 0;
   padding: 10px;
@@ -184,7 +183,7 @@ input {
   }
 
   .registro-image-containerLogin {
-    display: none; /* Oculta la imagen en dispositivos móviles */
+    display: none !important; /* Oculta la imagen en dispositivos móviles */
   }
 
   .registro-formLogin {
