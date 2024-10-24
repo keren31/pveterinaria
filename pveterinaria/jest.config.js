@@ -1,4 +1,6 @@
 module.exports = {
+    testEnvironment: "jsdom",
+    moduleFileExtensions: ["js", "jsx"],
     transform: {
       '^.+\\.jsx?$': 'babel-jest',
       "^.+\\.scss$": "jest-scss-transform" // Eliminar si no usas SCSS

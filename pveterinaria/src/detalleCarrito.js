@@ -289,11 +289,14 @@ const CarritoDetalle = () => {
                       <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>${carritoInfo.Precio}</Typography>
                     </div>
                   </div>
-                ))
+
+                </div>
+              ))
               ) : (
                 <p>No hay productos en el carrito</p>
               )}
             </div>
+
           </div>
   
           {/* Order details */}
