@@ -261,249 +261,155 @@ const Registro = () => {
   
 
   return (
-    <Layout><div className="registro-form-containerRegistro">
-    <div className="registro-image-containerRegistro">
-      <img src={imagen} alt="Registro" className="registro-imageRegistro" />
-    </div>
-    <div className="registro-formRegistro">
-      <p className="loginTitulo" style={{
-    color: '#fff', 
-    fontSize: '24px', 
-    fontWeight: 'bold', 
-    textAlign: 'center', 
-    margin: '20px 0', 
-    padding: '10px', 
-    backgroundColor: '#0055A5',
-    borderRadius: '8px'
-  }}>Crear Cuenta/Registrarse</p>
-      <label 
-  className="loginText" 
-  style={{
-    color: '#333', 
-    fontSize: '20px', 
-    fontWeight: '300', 
-    textAlign: 'center', 
-    margin: '20px 0', 
-    padding: '20px', 
-    backgroundColor: '#f0f0f0', 
-    borderRadius: '12px', 
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
-    display: 'block',
-    lineHeight: '1.6'
-  }}
->
-  Bienvenidos a la Estética Canina Platon, ingresa los datos para crear una cuenta con nosotros.
-</label>
-
-      <form onSubmit={handleSubmit} className="formulario">
-        <div>
-          <label htmlFor="nombre" className="RegistroLabel">
-            Nombre* :
-          </label>
-          <input
-            id="nombre"
-            name="nombre"
-            value={nombre}
-            onChange={(e) => {
-              setNombre(e.target.value);
-              validateNombre(e.target.value);
-            }}
-            onBlur={() => validateNombre(nombre)}
-            className={nombreError ? 'input-error' : ''}
-            required
-          />
-          {nombreError && <p className="error-message">{nombreError}</p>}
+    <Layout>
+      <div className="registro-form-containerRegistro">
+        <div className="registro-image-containerRegistro">
+          <img src={imagen} alt="Registro" className="registro-imageRegistro" />
+          
         </div>
-
-        <div>
-          <label htmlFor="apellidoP" className="RegistroLabel">
-            Apellido Paterno :
-          </label>
-          <input
-            required
-            id="apellidoP"
-            name="apellidoP"
-            value={ApellidoP}
-            onChange={(e) => {
-              setApellidoP(e.target.value);
-              validateApellidoP(ApellidoP);
-            }}
-            onBlur={() => validateApellidoP(ApellidoP)}
-            className={apellidoPError ? 'input-error' : ''}
-          />
-          {apellidoPError && <p className="error-message">{apellidoPError}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="apellidoM" className="RegistroLabel">
-            Apellido Materno :
-          </label>
-          <input
-            required
-            id="apellidoM"
-            name="apellidoM"
-            value={ApellidoM}
-            onChange={(e) => {
-              setApellidoM(e.target.value);
-              validateApellidoM(ApellidoM);
-            }}
-            onBlur={() => validateApellidoM(ApellidoM)}
-            className={apellidoMError ? 'input-error' : ''}
-          />
-          {apellidoMError && <p className="error-message">{apellidoMError}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="email" className="RegistroLabel">
-            Correo* :
-          </label>
-          <input
-            required
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              validateEmail(email);
-            }}
-            onBlur={() => validateEmail(email)}
-            className={emailError ? 'input-error' : ''}
-          />
-          {emailError && <p className="error-message">{emailError}</p>}
-        </div>
-
-        <div style={{ display: 'inline-block' }}>
-          <div className="nivel">
-            <label htmlFor="password" className="RegistroLabel">
-              Contraseña :
-            </label>
-            {passwordStrength && <p className="password-strength">{`${passwordStrength}`}</p>}
-          </div>
-          <div style={{ display: 'inline-block', verticalAlign: 'top' }}>
-            <div className="password-input">
+        <div className="registro-formRegistro">
+          <p className="loginTitulo" style={{
+            color: '#fff',
+            fontSize: '24px',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            margin: '20px 0',
+            padding: '10px',
+            backgroundColor: '#0055A5',
+            borderRadius: '8px'
+          }}>
+            Crear Cuenta/Registrarse
+          </p>
+          <form onSubmit={handleSubmit} className="formulario">
+            <div>
+              <label htmlFor="nombre" className="RegistroLabel">Nombre* :</label>
               <input
-                type={showPassword ? 'text' : 'password'}
+                id="nombre"
+                name="nombre"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                className={nombreError ? 'input-error' : ''}
                 required
-                id="password"
-                name="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value); // Actualiza el estado de la contraseña
-                  validatePassword(e.target.value); // Valida la contraseña conforme el usuario escribe
-                }}
-                onBlur={() => validatePassword(password)} // Esta línea aún es necesaria para validar cuando el usuario sale del campo
-                className={passwordError ? 'input-error' : ''}
               />
-              <FontAwesomeIcon
-                icon={showPassword ? faEyeSlash : faEye}
-                className="password-icon"
-                onClick={togglePasswordVisibility}
-              />
+              {nombreError && <p className="error-message">{nombreError}</p>}
             </div>
-            {passwordError && <p className="error-message">{passwordError}</p>}
-          </div>
+            <div>
+              <label htmlFor="apellidoP" className="RegistroLabel">Apellido Paterno* :</label>
+              <input
+                id="apellidoP"
+                name="apellidoP"
+                value={ApellidoP}
+                onChange={(e) => setApellidoP(e.target.value)}
+                className={apellidoPError ? 'input-error' : ''}
+                required
+              />
+              {apellidoPError && <p className="error-message">{apellidoPError}</p>}
+            </div>
+            <div>
+              <label htmlFor="apellidoM" className="RegistroLabel">Apellido Materno* :</label>
+              <input
+                id="apellidoM"
+                name="apellidoM"
+                value={ApellidoM}
+                onChange={(e) => setApellidoM(e.target.value)}
+                className={apellidoMError ? 'input-error' : ''}
+                required
+              />
+              {apellidoMError && <p className="error-message">{apellidoMError}</p>}
+            </div>
+            <div>
+              <label htmlFor="email" className="RegistroLabel">Correo* :</label>
+              <input
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={emailError ? 'input-error' : ''}
+                required
+              />
+              {emailError && <p className="error-message">{emailError}</p>}
+            </div>
+            <div className="password-input">
+              <label htmlFor="password" className="RegistroLabel">Contraseña* :</label>
+              <div className="input-wrapper">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className={passwordError ? 'input-error' : ''}
+                  required
+                />
+                <FontAwesomeIcon
+                  icon={showPassword ? faEyeSlash : faEye}
+                  className="password-icon"
+                  onClick={togglePasswordVisibility}
+                />
+              </div>
+              {passwordError && <p className="error-message">{passwordError}</p>}
+            </div>
+            <div className="password-input">
+              <label htmlFor="password2" className="RegistroLabel">Repetir Contraseña* :</label>
+              <div className="input-wrapper">
+                <input
+                  type={showPassword2 ? 'text' : 'password'}
+                  id="password2"
+                  name="password2"
+                  value={password2}
+                  onChange={(e) => setPassword2(e.target.value)}
+                  className={passwordError2 ? 'input-error' : ''}
+                  required
+                />
+                <FontAwesomeIcon
+                  icon={showPassword2 ? faEyeSlash : faEye}
+                  className="password-icon"
+                  onClick={togglePasswordVisibility2}
+                />
+              </div>
+              {passwordError2 && <p className="error-message">{passwordError2}</p>}
+            </div>
+            <div>
+              <label htmlFor="telefono" className="RegistroLabel">Teléfono* :</label>
+              <input
+                type="tel"
+                id="telefono"
+                name="telefono"
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+                className={telefonoError ? 'input-error' : ''}
+                required
+              />
+              {telefonoError && <p className="error-message">{telefonoError}</p>}
+            </div>
+            <div>
+              <label htmlFor="fecha" className="RegistroLabel">Fecha de Nacimiento:</label>
+              <input
+                type="date"
+                id="fecha"
+                name="fecha"
+                value={fechaNac}
+                onChange={(e) => setFechaNac(e.target.value)}
+                className={fechaError ? 'input-error' : ''}
+                required
+              />
+              {fechaError && <p className="error-message">{fechaError}</p>}
+            </div>
+            <div className="recuerdame">
+              <input type="checkbox" className="cuadro" required />
+              <span>
+                Acepta los <Link to="/politicas-de-privacidad">términos y condiciones</Link>
+              </span>
+            </div>
+            <button className="btn" type="submit">
+              Registro
+            </button>
+          </form>
         </div>
-
-        <div>
-          <label htmlFor="password2" className="RegistroLabel">
-            Repetir contraseña :
-          </label>
-          <div className="password-input">
-            <input
-              type={showPassword2 ? 'text' : 'password'}
-              id="password2"
-              name="password2"
-              value={password2}
-              required
-              onChange={(e) => setPassword2(e.target.value)}
-              onBlur={() => validatePassword2(password2)}
-              className={passwordError2 ? 'input-error' : ''}
-            />
-            <FontAwesomeIcon
-              icon={showPassword2 ? faEyeSlash : faEye}
-              className="password-icon"
-              onClick={togglePasswordVisibility2}
-            />
-          </div>
-          {passwordError2 && <p className="error-message">{passwordError2}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="telefono" className="RegistroLabel">
-            Telefono* :
-          </label>
-          <input
-            type="tel"
-            id="telefono"
-            name="telefono"
-            value={telefono}
-            required
-            onChange={(e) => {
-              setTelefono(e.target.value);
-              validateTelefono(telefono);
-            }}
-            onBlur={() => validateTelefono(telefono)}
-            className={telefonoError ? 'input-error' : ''}
-          />
-          {telefonoError && <p className="error-message">{telefonoError}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="fecha" className="RegistroLabel">
-            Fecha de nacimiento :
-          </label>
-          <input
-            type="date"
-            id="fecha"
-            name="fecha"
-            required
-            value={fechaNac}
-            onBlur={() => validateFecha(fechaNac)}
-            onChange={(e) => {
-              setFechaNac(e.target.value);
-              validateFecha(fechaNac);
-            }}
-            className={fechaError ? 'input-error' : ''}
-          />
-          {fechaError && <p className="error-message">{fechaError}</p>}
-        </div>
-
-        <label to="/terminos" className="recuerdame">
-          <input type="checkbox" className="cuadro" />
-          <Link to="/politicas-de-privacidad"> Acepta los términos y condiciones</Link>
-        </label>
-
-        <button
-  className="btn btn-warning text2"
-  type="submit"
-  style={{
-    backgroundColor: 'orange',
-    color: 'white',
-    padding: '10px 20px',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontSize: '16px',
-    transition: 'background-color 0.3s, transform 0.3s',
-  }}
-  onMouseOver={(e) => {
-    e.currentTarget.style.backgroundColor = 'darkorange';
-    e.currentTarget.style.transform = 'scale(1.05)';
-  }}
-  onMouseOut={(e) => {
-    e.currentTarget.style.backgroundColor = 'orange';
-    e.currentTarget.style.transform = 'scale(1)';
-  }}
-  
->
-  Registro
-</button>
-        <br />
-      </form>
-    </div>
-  </div>
-  </Layout>
+      </div>
+    </Layout>
   );
+  
 };
 
 export default Registro;
