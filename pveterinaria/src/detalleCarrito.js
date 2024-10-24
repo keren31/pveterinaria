@@ -97,7 +97,7 @@ const CarritoDetalle = () => {
       if (result === 'Exito') {
         obtenerProductoCarrito();
       } else {
-         
+      
       }
       })
       .catch((error) => {
@@ -169,7 +169,7 @@ const CarritoDetalle = () => {
       console.log(total)
       console.log(Direccion)
     try {
-     
+    
       const data= new FormData();
       data.append("idTipoPago",1)
       data.append("idUsuario",user.idUsuario)
@@ -211,7 +211,6 @@ const CarritoDetalle = () => {
     }
   };
   
-
   const calcularTotal = useCallback( () => {
     if (!carrito || carrito.length === 0) return 0;
   

@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import './css/registro.css';
+import './css/agendarCitas.css';
 import imagen from './img/imagen1.jpg'; // Ruta de la imagen que deseas utilizar
 import { useUser } from './UserContext';
 import Swal from 'sweetalert2';
@@ -263,170 +263,109 @@ const AgendarCita = () => {
     </div>
     <div className="registro-formRegistro">
       <p className='loginTitulo'>Agendar Cita</p>
-      <form onSubmit={handleSubmit} className='formulario'>
-        <div>
-          <label htmlFor="nombre" className='RegistroLabel'>Nombre* :</label>
-          <input
-            id="nombre"
-            name="nombre"
-            value={nombreUser}
-            
-          />
+      <form onSubmit={handleSubmit} className="formulario">
+  <div>
+    <label htmlFor="nombre" className="RegistroLabel">Nombre* :</label>
+    <input id="nombre" name="nombre" value={nombreUser} />
+  </div>
+  <div>
+    <label htmlFor="apellidoP" className="RegistroLabel">Apellido Paterno* :</label>
+    <input id="apellidoP" name="apellidoP" value={ApellidoPa} />
+  </div>
+  <div>
+    <label htmlFor="apellidoM" className="RegistroLabel">Apellido Materno* :</label>
+    <input id="apellidoM" name="apellidoM" value={ApellidoMa} />
+  </div>
+  <div>
+    <label htmlFor="email" className="RegistroLabel">Correo* :</label>
+    <input id="email" name="email" value={CorreUser} />
+  </div>
+  <div>
+    <label htmlFor="telefono" className="RegistroLabel">Teléfono* :</label>
+    <input type="tel" id="telefono" name="telefono" value={Tel} />
+  </div>
+  <div>
+    <label htmlFor="fechaCita" className="RegistroLabel">Fecha de Cita* :</label>
+    <input
+      type="date"
+      id="fechaCita"
+      name="fechaCita"
+      value={fechaCita}
+      onChange={handleFechaCitaChange}
+      onBlur={() => validateFechaCita(fechaCita)}
+      className={fechaCitaError ? 'input-error' : ''}
+      required
+    />
+    {fechaCitaError && <p className="error-message">{fechaCitaError}</p>}
+  </div>
+  
+  <div className="horario-container">
+    <button
+      className="btn"
+      onClick={() => setValorHora(false)}
+      style={{ marginRight: '10px' }}
+    >
+      Ver Horarios
+    </button>
+    
+  
+  </div>
 
-          
-         
-        </div>
-        <div>
-          <label htmlFor="apellidoP" className='RegistroLabel'>Apellido Paterno* :</label>
-          <input
-            id="apellidoP"
-            name="apellidoP"
-            value={ApellidoPa}
-           
-          />
 
-        </div>
-        <div>
-          <label htmlFor="apellidoM" className='RegistroLabel'>Apellido Materno* :</label>
-          <input
-            id="apellidoM"
-            name="apellidoM"
-            value={ApellidoMa}
-           
-          />
-          
-        </div>
-        <div>
-          <label htmlFor="email" className='RegistroLabel'>Correo* :</label>
-          <input
-            id="email"
-            name="email"
-            value={CorreUser}
-           
-          />
-         
-        </div>
-        <div>
-          <label htmlFor="telefono" className='RegistroLabel'>Teléfono* :</label>
-          <input
-            type="tel"
-            id="telefono"
-            name="telefono"
-            value={Tel}
-           
-          />
-         
-        </div>
-        <div>
-          <label htmlFor="fechaCita" className='RegistroLabel'>Fecha de Cita* :</label>
-            <div className='flex'>
-              <input
-              type="date"
-              id="fechaCita"
-              name="fechaCita"
-              value={fechaCita}
-              onChange={handleFechaCitaChange}
-              onBlur={() => validateFechaCita(fechaCita)}
-              className={fechaCitaError ? 'input-error' : ''}
-              required
-              />
-              {fechaCitaError && <p className="error-message">{fechaCitaError}</p>}
-              <button
-          className='btn btn-warning ml-3'
-          onClick={() => setValorHora(false)}
-          style={{
-            backgroundColor: 'orange',
-            color: 'white',
-            padding: '10px 20px',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            transition: 'background-color 0.3s, transform 0.3s',
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.backgroundColor = 'darkorange';
-            e.currentTarget.style.transform = 'scale(1.05)';
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.backgroundColor = 'orange';
-            e.currentTarget.style.transform = 'scale(1)';
-          }}
-        >
-          Ver Horarios
-        </button>
-            </div>
-        </div>
-        <div>
-  <label htmlFor="horaCita" className='RegistroLabel'>Hora de Cita* :</label>
-  <select
-    id="horaCita"
-    name="horaCita"
-    disabled={valorhora}
-    value={horaCita}
-    onChange={(e) => setHoraCita(e.target.value)}
-    onBlur={() => validateHoraCita(horaCita)}
-    className={horaCitaError ? 'input-error' : ''}
-  >
-    <option value="">Seleccionar horario</option>
-    {horariosDisponibles.map((horario, index) => (
-      <option
-        key={index}
-        value={horario.hora}
-        disabled={horario.ocupada} // Desactivar opciones ocupadas
-        style={{
-          backgroundColor: horario.ocupada ? 'lightgray' : 'white',
-          color: horario.ocupada ? 'gray' : 'black'
-        }}
+  <div>
+      <label htmlFor="horaCita" className="RegistroLabel">Hora de Cita* :</label>
+      <select
+        id="horaCita"
+        name="horaCita"
+        disabled={valorhora}
+        value={horaCita}
+        onChange={(e) => setHoraCita(e.target.value)}
+        onBlur={() => validateHoraCita(horaCita)}
+        className={horaCitaError ? 'input-error' : ''}
       >
-        {horario.hora} {horario.ocupada && "(Ocupada)"}
-      </option>
-    ))}
-  </select>
-  {horaCitaError && <p className="error-message">{horaCitaError}</p>}
-</div>
-
-
-        <div>
-          <label htmlFor="servicio" className='RegistroLabel'>Servicio* :</label>
-          <select
-           value={servicio}
-           onChange={(e) => setServicio(e.target.value)}
+        <option value="">Seleccionar horario</option>
+        {horariosDisponibles.map((horario, index) => (
+          <option
+            key={index}
+            value={horario.hora}
+            disabled={horario.ocupada}
+            style={{
+              backgroundColor: horario.ocupada ? 'lightgray' : 'white',
+              color: horario.ocupada ? 'gray' : 'black'
+            }}
           >
-            <option value="">Selecciona un servicio</option>
-            {dataServicio.map(servicio1 => (
-              <option key={servicio1.idServicio} value={servicio1.idServicio}>
-                {servicio1.nombre}
-              </option>
-            ))}
-          </select>
-        </div>
+            {horario.hora} {horario.ocupada && "(Ocupada)"}
+          </option>
+        ))}
+      </select>
+      {horaCitaError && <p className="error-message">{horaCitaError}</p>}
+    </div>
 
-        <button
-  className='btn btn-warning text2'
-  type="submit"
-  style={{
-    backgroundColor: 'orange',
-    color: 'white',
-    padding: '10px 20px',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontSize: '16px',
-    transition: 'background-color 0.3s, transform 0.3s',
-  }}
-  onMouseOver={(e) => {
-    e.currentTarget.style.backgroundColor = 'darkorange';
-    e.currentTarget.style.transform = 'scale(1.05)';
-  }}
-  onMouseOut={(e) => {
-    e.currentTarget.style.backgroundColor = 'orange';
-    e.currentTarget.style.transform = 'scale(1)';
-  }}
->
-  Agendar Cita
-</button>
-      </form>
+
+
+
+  <div>
+    
+    <label htmlFor="servicio" className="RegistroLabel">Servicio* :</label>
+    <select
+      id="servicio"
+      name="servicio"
+      value={servicio}
+      onChange={(e) => setServicio(e.target.value)}
+    >
+      <option value="">Selecciona un servicio</option>
+      {dataServicio.map(servicio1 => (
+        <option key={servicio1.idServicio} value={servicio1.idServicio}>
+          {servicio1.nombre}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  <button className="btn text2" type="submit">
+    Agendar Cita
+  </button>
+</form>
     </div>
   </div>
   </Layout>
