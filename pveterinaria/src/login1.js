@@ -288,10 +288,12 @@ export default function Login() {
 </div>
             {passwordError && <p className="error-message">{passwordError}</p>}
 
+
             <div className="recuerdame">
   <input type="checkbox" id="rememberMe" className="cuadro" />
   <label htmlFor="rememberMe">Recuérdame</label>
 </div>
+
 
             <GoogleLogin
               clientId={ClientID}
