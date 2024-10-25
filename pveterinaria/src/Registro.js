@@ -30,7 +30,7 @@ const Registro = () => {
   const [fechaError, setFechaError] = useState('');
   
 
-  const [passwordStrength, setPasswordStrength] = useState(''); // Estado para la fortaleza de la contraseña
+  const [setPasswordStrength] = useState(''); // Estado para la fortaleza de la contraseña
 
 
   
@@ -100,7 +100,7 @@ const Registro = () => {
                 }
               )
                 .then((res) => res.json())
-                .then((result) => {
+                .then(() => {
                   window.location.href='/login1'
                 }); 
             }

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
 
 const UserContext = createContext();
@@ -51,6 +52,11 @@ export const UserProvider = ({ children }) => {
         {children}
     </UserContext.Provider>
   );
+};
+
+// Agrega la validación de las props
+UserProvider.propTypes = {
+  children: PropTypes.node.isRequired, // 'children' es un nodo de React y es requerido
 };
 
 export const useUser = () => {
