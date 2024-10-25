@@ -1,10 +1,10 @@
 // index.test.js
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+//import ReactDOM from 'react-dom/client';
 import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
 import App from '../App';
 import { UserProvider } from '../UserContext';
-import { render,waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 jest.mock('../serviceWorkerRegistration', () => ({
   register: jest.fn(),

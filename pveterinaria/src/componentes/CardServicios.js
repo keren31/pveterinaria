@@ -120,7 +120,7 @@ const CardServicios = () => {
         </Typography>
       </div>
       <Grid container spacing={3} className='mt-2'>
-        {productos.map((producto, index) => (
+        {productos.map((producto) => (
           <Grid item key={producto.id} xs={12} sm={6} md={4}>
             <Card>
               <CardActionArea

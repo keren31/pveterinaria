@@ -458,10 +458,10 @@ const traerProducto=(idProducto)=>{
                     key === productData.length - 1
                       ? ""
                       : "border-b border-blue-gray-50"
-                  }`;
+                  }`;   
 
                   return (
-                    <tr>
+                    <tr key={idProducto}>
                         <td className={className}>
                       <Typography
                               variant="h5"

@@ -244,7 +244,7 @@ export default function AdminUsuario() {
               </tr>
             </thead>
             <tbody>
-              {userData !== null && userData.map(({ idUsuario, Icono, Nombre, Correo, Telefono, EstadoCuenta, Rol, Token }, key) => {
+              {userData !== null && userData.map(({ idUsuario, Icono, Nombre, Correo, Telefono, EstadoCuenta, Rol }, key) => {
                 const className = `py-3 px-5 ${
                   key === userData.length - 1
                     ? ""
