@@ -39,14 +39,14 @@ jobs:
         working-directory: ./pveterinaria
       
       # 4. Levantar la aplicación de React
-      - name: Start React App
-        run: npm start
-        env:
-          CI: true
+      #- name: Start React App
+        #run: npm start
+        #env:
+          #CI: true
 
       # 5. Esperar a que el servidor esté arriba
-      - name: Wait for React App to be available
-        run: npx wait-on http://localhost:3000
+      #- name: Wait for React App to be available
+        #run: npx wait-on http://localhost:3000
 
 
       #analizar el código con ESLint o TSLint
