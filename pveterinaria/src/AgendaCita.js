@@ -102,7 +102,7 @@ const AgendarCita = () => {
           }
         )
           .then((res) => res.json())
-          .then((result) => {
+          .then(() => {
             Swal.fire({
               icon: 'success',
               title: 'Cita Registrada',

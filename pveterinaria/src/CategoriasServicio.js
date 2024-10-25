@@ -5,7 +5,7 @@ import Layout from './Layout';
 
 const CategoriasServicio = () => {
   const [categorias, setCategorias] = useState([]);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null); // Estado para la categoría seleccionada
+  const [setCategoriaSeleccionada] = useState(null); // Estado para la categoría seleccionada
   const navigate = useNavigate();
 
   useEffect(() => {
