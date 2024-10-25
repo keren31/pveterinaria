@@ -37,6 +37,17 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: ./pveterinaria
+      
+      # 4. Levantar la aplicación de React
+      - name: Start React App
+        run: npm run start &
+        env:
+          CI: true
+
+      # 5. Esperar a que el servidor esté arriba
+      - name: Wait for React App to be available
+        run: npx wait-on http://localhost:3000
+
 
       #analizar el código con ESLint o TSLint
       - name: Run linter (ESLint/TSLint)
@@ -52,8 +63,15 @@ jobs:
       - name: Run unit test Jest tests
         working-directory: ./pveterinaria
         run: npm run test -- --ci --watchAll=false --coverage
+
       
-       # 6. Almacenar el informe de cobertura (siempre)
+
+      # 6. Ejecutar pruebas e2e con cypress
+      - name: e2e cypress
+        working-directory: ./pveterinaria
+        run: npx cypress run
+      
+       # 7. Almacenar el informe de cobertura (siempre)
       - name: Upload coverage report
         if: success()
         uses: actions/upload-artifact@v3
