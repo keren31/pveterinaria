@@ -40,7 +40,7 @@ jobs:
       
       # 4. Levantar la aplicación de React
       - name: Start React App
-        run: npm run start &
+        run: npm start
         env:
           CI: true
 
