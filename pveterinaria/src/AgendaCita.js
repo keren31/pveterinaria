@@ -122,7 +122,7 @@ const AgendarCita = () => {
     const selectedDate = new Date(fechaCita);
     const dayOfWeek = selectedDate.getDay();
     if (dayOfWeek === 5 || dayOfWeek === 6) {
-      setFechaCitaError('No abre los fines de semana eliga otro dia porfavor');
+      setFechaCitaError('No abre los fines de semana');
       return false;
     } else {
       setFechaCitaError('');
@@ -161,6 +161,7 @@ const AgendarCita = () => {
     
     
     const obtenerhorariosFecha = (fecha) => {
+      setValorHora(false)
       const proData = new FormData();
       proData.append("fecha", fecha);
   
@@ -248,9 +249,7 @@ const AgendarCita = () => {
   const handleFechaCitaChange = (e) => {
     const nuevaFechaCita = e.target.value;
     setFechaCita(nuevaFechaCita);
-   
-      obtenerhorariosFecha(nuevaFechaCita);
-   
+    validateFechaCita(nuevaFechaCita)   
   };
 
   const [valorhora,setValorHora]=useState(true)
@@ -270,11 +269,7 @@ const AgendarCita = () => {
             id="nombre"
             name="nombre"
             value={nombreUser}
-            
-          />
-
-          
-         
+          />   
         </div>
         <div>
           <label htmlFor="apellidoP" className='RegistroLabel'>Apellido Paterno* :</label>
@@ -284,7 +279,6 @@ const AgendarCita = () => {
             value={ApellidoPa}
            
           />
-
         </div>
         <div>
           <label htmlFor="apellidoM" className='RegistroLabel'>Apellido Materno* :</label>
@@ -294,7 +288,6 @@ const AgendarCita = () => {
             value={ApellidoMa}
            
           />
-          
         </div>
         <div>
           <label htmlFor="email" className='RegistroLabel'>Correo* :</label>
@@ -318,7 +311,7 @@ const AgendarCita = () => {
          
         </div>
         <div>
-          <label htmlFor="fechaCita" className='RegistroLabel'>Fecha de Cita* :</label>
+          <label htmlFor="fechaCita" className='RegistroLabel'>Fecha de Cita</label>
             <div className='flex'>
               <input
               type="date"
@@ -326,14 +319,13 @@ const AgendarCita = () => {
               name="fechaCita"
               value={fechaCita}
               onChange={handleFechaCitaChange}
-              onBlur={() => validateFechaCita(fechaCita)}
               className={fechaCitaError ? 'input-error' : ''}
               required
               />
               {fechaCitaError && <p className="error-message">{fechaCitaError}</p>}
               <button
           className='btn btn-warning ml-3'
-          onClick={() => setValorHora(false)}
+          onClick={() => obtenerhorariosFecha(fechaCita)}
           style={{
             backgroundColor: 'orange',
             color: 'white',

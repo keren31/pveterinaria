@@ -330,14 +330,17 @@ const Registro = () => {
               {emailError && <p className="error-message">{emailError}</p>}
             </div>
             <div className="password-input">
-              <label htmlFor="password" className="RegistroLabel">Contraseña* :</label>
+              <label htmlFor="password" className="RegistroLabel">Contraseña</label>
               <div className="input-wrapper">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   id="password"
                   name="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    validatePassword(e.target.value);
+                  }}
                   className={passwordError ? 'input-error' : ''}
                   required
                 />
@@ -350,14 +353,17 @@ const Registro = () => {
               {passwordError && <p className="error-message">{passwordError}</p>}
             </div>
             <div className="password-input">
-              <label htmlFor="password2" className="RegistroLabel">Repetir Contraseña* :</label>
+              <label htmlFor="password2" className="RegistroLabel">Repetir Contraseña</label>
               <div className="input-wrapper">
                 <input
                   type={showPassword2 ? 'text' : 'password'}
                   id="password2"
                   name="password2"
                   value={password2}
-                  onChange={(e) => setPassword2(e.target.value)}
+                  onChange={(e) => {
+                    setPassword2(e.target.value);
+                    validatePassword2(e.target.value);
+                  }}
                   className={passwordError2 ? 'input-error' : ''}
                   required
                 />
@@ -370,13 +376,16 @@ const Registro = () => {
               {passwordError2 && <p className="error-message">{passwordError2}</p>}
             </div>
             <div>
-              <label htmlFor="telefono" className="RegistroLabel">Teléfono* :</label>
+              <label htmlFor="telefono" className="RegistroLabel">Teléfono</label>
               <input
                 type="tel"
                 id="telefono"
                 name="telefono"
                 value={telefono}
-                onChange={(e) => setTelefono(e.target.value)}
+                onChange={(e) => {
+                  setTelefono(e.target.value);
+                  validateTelefono(e.target.value)
+                }}
                 className={telefonoError ? 'input-error' : ''}
                 required
               />

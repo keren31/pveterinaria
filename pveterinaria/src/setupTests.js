@@ -3,7 +3,16 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+
+// Configuración de jest-fetch-mock
 // src/setupTests.js
+import 'jest-fetch-mock';
+
+global.fetch = require('jest-fetch-mock');
+fetch.enableMocks();
+
+
+// Configuración de TextEncoder y TextDecoder
 global.TextDecoder = global.TextDecoder || require('util').TextDecoder;
 global.TextEncoder = global.TextEncoder || require('util').TextEncoder;
 
@@ -19,8 +28,9 @@ global.window.paypal = {
   },
 };
 
+// Mock de Material Tailwind
 jest.mock('@material-tailwind/react', () => ({
-    ...jest.requireActual('@material-tailwind/react'),
-    Button: (props) => <button {...props} />,
-    Typography: (props) => <p {...props} />,
-  }));
+  ...jest.requireActual('@material-tailwind/react'),
+  Button: (props) => <button {...props} />,
+  Typography: (props) => <p {...props} />,
+}));

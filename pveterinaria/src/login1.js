@@ -244,7 +244,7 @@ export default function Login() {
           </label>
 
           <form onSubmit={handleSubmit}>
-            <label htmlFor="nombre" className="loginLabel">
+            <label htmlFor="email" className="loginLabel">
               Correo electrónico :
             </label>
             <input

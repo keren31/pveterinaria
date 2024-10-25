@@ -12,5 +12,7 @@ module.exports = {
       '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     },
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'], // Solo una referencia a jest.setup.js si necesitas configuraciones adicionales
+    setupFiles: ["<rootDir>/jest.setup.js"],
     
-  };
+    
+  };  

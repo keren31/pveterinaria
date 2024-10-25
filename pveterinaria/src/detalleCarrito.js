@@ -26,7 +26,7 @@ const CarritoDetalle = () => {
   const obtenerDirecciones = useCallback(async () => {
     try {
       const response = await fetch(
-        `${apiurll}/api/CasaDelMarisco/TraerDirecciones?UsuarioID=${user.idUsuario}`,
+       `${apiurll}/api/CasaDelMarisco/TraerDirecciones?UsuarioID=${user.idUsuario}`,
         {
           method: "GET",
         }
@@ -97,7 +97,7 @@ const CarritoDetalle = () => {
       if (result === 'Exito') {
         obtenerProductoCarrito();
       } else {
-         
+      
       }
       })
       .catch((error) => {
@@ -169,7 +169,7 @@ const CarritoDetalle = () => {
       console.log(total)
       console.log(Direccion)
     try {
-     
+    
       const data= new FormData();
       data.append("idTipoPago",1)
       data.append("idUsuario",user.idUsuario)
@@ -206,12 +206,11 @@ const CarritoDetalle = () => {
     
     } catch (error) {
       console.error('Error al capturar la orden:', error);
-      alert(`Error al completar el pago: ${error.message}`);
+      alert(`Error al completar el pago:' ${error.message}`);
       throw error;
     }
   };
   
-
   const calcularTotal = useCallback( () => {
     if (!carrito || carrito.length === 0) return 0;
   
@@ -289,14 +288,11 @@ const CarritoDetalle = () => {
                       <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>${carritoInfo.Precio}</Typography>
                     </div>
                   </div>
-
-                </div>
-              ))
+                ))
               ) : (
                 <p>No hay productos en el carrito</p>
               )}
             </div>
-
           </div>
   
           {/* Order details */}

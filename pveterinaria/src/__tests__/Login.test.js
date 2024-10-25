@@ -2,7 +2,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import Login from '../login1'; // Asegúrate de que la ruta sea correcta
+import Login from '../login1';
 import { UserProvider } from '../UserContext';
 
 describe('Login Component', () => {
@@ -35,6 +35,8 @@ describe('Login Component', () => {
     );
 
     const emailInput = screen.getByLabelText(/Correo electrónico/i);
+    const submitButton = screen.getByRole('button', { name: /Entrar/i });
+
     fireEvent.change(emailInput, { target: { value: 'invalidemail' } });
     fireEvent.blur(emailInput);
 

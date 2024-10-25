@@ -37,6 +37,10 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: ./pveterinaria
+
+      #analizar el código con ESLint o TSLint
+      - name: Run linter (ESLint/TSLint)
+        run: npm run lint
       
       # 4. Compilar el proyecto React (npm run build)
       - name: Build React Project
@@ -44,12 +48,13 @@ jobs:
         run: npm run build --if-present
       
       # 5. Ejecutar pruebas unitarias con Jest
-      - name: Run Jest tests
+      - name: Run unit test Jest tests
         working-directory: ./pveterinaria
         run: npm run test -- --ci --watchAll=false --coverage
       
        # 6. Almacenar el informe de cobertura (siempre)
       - name: Upload coverage report
+        if: success()
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report
