@@ -39,7 +39,7 @@ jobs:
         working-directory: ./pveterinaria
       
       - name: List files in working directory
-        run: ls -la ./pvetenaria
+        run: ls -la
 
       #analizar el código con ESLint o TSLint
       - name: Run linter (ESLint/TSLint)
