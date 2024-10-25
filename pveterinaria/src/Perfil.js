@@ -15,86 +15,107 @@ const Perfil = () => {
         Swal.fire({
             icon: 'warning',
             title: 'Nos vemos pronto',
-            text: 'Cerraste sesión, nos vemos Regresa cuando quieras embellecer a tu mejor amigo',
+            text: 'Cerraste sesión, nos vemos. Regresa cuando quieras embellecer a tu mejor amigo.',
         });
-    };
-
-    const cardStyle = {
-        backgroundColor: '#fff',
-        borderRadius: '80px',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-        padding: '2rem',
-       
-        margin: '2rem auto',
-        height: '270px'
-    };
-
-    const headerStyle = {
-        display: 'flex',
-        alignItems: 'center',
-        marginBottom: '2rem',
-        
-    };
-
-    const avatarStyle = {
-        width: '80px',
-        height: '80px',
-        borderRadius: '50%',
-        marginRight: '1rem',
-        
-    };
-
-    const userInfoStyle = {
-        textAlign: 'left',
-        fontSize: '30px',
-        
-    };
-
-    const optionsStyle = {
-        marginTop: '2rem',
-        
-    };
-
-    const buttonStyle = {
-        padding: '0.5rem 1rem',
-        backgroundColor: '#007bff',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '0.25rem',
-        marginRight: '0.5rem',
-        cursor: 'pointer',
     };
 
     return (
         <Layout>
             <PerfilLayout>
-                <div style={cardStyle}>
-                    <div style={headerStyle}>
+                <div style={{
+                  
+                   
+                    padding: '50px',
+                    width: '600px',
+                    margin: '50px auto',
+                    textAlign: 'center',
+                }}>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        marginBottom: '20px',
+                    }}>
                         <img
-                            src="https://via.placeholder.com/80"
+                            src={user?.Icono || "https://via.placeholder.com/150"}
                             alt="Avatar"
-                            style={avatarStyle}
+                            style={{
+                                width: '120px',
+                                height: '120px',
+                                borderRadius: '50%',
+                                objectFit: 'cover',
+                                border: '4px solid #007bff',
+                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                                marginBottom: '20px',
+                            }}
                         />
-                        <div style={userInfoStyle}>
-                            <h4>Perfil de Usuario</h4>
-                            <h4 style={{ fontSize: '0.9rem', marginBottom: '0.5rem',  }}>
-                                Correo: {user ? user.Correo : 'Correo del Usuario'}
+                        <div style={{ textAlign: 'center' }}>
+                            <h4 style={{ fontSize: '24px', fontWeight: 'bold', color: '#007bff', marginBottom: '10px' }}>
+                                Perfil de Usuario
                             </h4>
-                            <h4 style={{ fontSize: '0.9rem', marginBottom: '0.5rem', }}>
-                                Teléfono: {user ? user.Telefono : 'Telefono del Usuario'}
-                            </h4>
-                            <h4 style={{ fontSize: '0.9rem', }}>
-                                Estado de la cuenta: {user ? user.Rol : 'Estado de la cuenta del Usuario'}
-                            </h4>
+                            <p style={{ color: '#555', fontSize: '16px', marginBottom: '5px' }}>
+                                <strong>Correo:</strong> {user ? user.Correo : 'Correo del Usuario'}
+                            </p>
+                            <p style={{ color: '#555', fontSize: '16px', marginBottom: '5px' }}>
+                                <strong>Teléfono:</strong> {user ? user.Telefono : 'Teléfono del Usuario'}
+                            </p>
+                            <p style={{ color: '#555', fontSize: '16px', marginBottom: '5px' }}>
+                                <strong>Estado de la cuenta:</strong> {user ? user.Rol : 'Estado de la cuenta del Usuario'}
+                            </p>
                         </div>
                     </div>
-                    <div style={optionsStyle}>
-                        <h4 style={{ marginBottom: '1rem' }}>Opciones</h4>
-                        <button style={buttonStyle}>Cambiar Contraseña</button>
-                        <button style={{ ...buttonStyle, backgroundColor: '#28a745' }} onClick={cerrarSesion}>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '10px',
+                    }}>
+                        <button style={{
+                            width: '100%',
+                            backgroundColor: '#007bff',
+                            color: '#ffffff',
+                            padding: '10px',
+                            borderRadius: '5px',
+                            border: 'none',
+                            cursor: 'pointer',
+                            transition: 'background-color 0.3s ease',
+                        }}
+                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#0056b3'}
+                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#007bff'}
+                        >
+                            Cambiar Contraseña
+                        </button>
+                        <button
+                            style={{
+                                width: '100%',
+                                backgroundColor: '#28a745',
+                                color: '#ffffff',
+                                padding: '10px',
+                                borderRadius: '5px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                transition: 'background-color 0.3s ease',
+                            }}
+                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#218838'}
+                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#28a745'}
+                            onClick={cerrarSesion}
+                        >
                             Editar Perfil
                         </button>
-                        <button style={{ ...buttonStyle, backgroundColor: '#dc3545' }} onClick={cerrarSesion}>
+                        <button
+                            style={{
+                                width: '100%',
+                                backgroundColor: '#dc3545',
+                                color: '#ffffff',
+                                padding: '10px',
+                                borderRadius: '5px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                transition: 'background-color 0.3s ease',
+                            }}
+                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#c82333'}
+                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#dc3545'}
+                            onClick={cerrarSesion}
+                        >
                             Cerrar sesión
                         </button>
                     </div>

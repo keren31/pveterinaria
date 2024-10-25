@@ -26,7 +26,7 @@ class AsidePerfil extends Component {
 
     render() {
         const { open } = this.state;
-        const bgClass = open ? { width: '25rem' } : { width: '10rem' };
+        const bgClass = open ? { width: '20rem' } : { width: '5rem' };
 
         const Menus = [
             { title: "Mi Cuenta", path: "/Perfil", icon: PersonIcon },
@@ -42,129 +42,157 @@ class AsidePerfil extends Component {
         ];
 
         return (
-            <div style={{ display: 'flex' }}>
-                <div style={{ fontSize: '10px', backgroundColor: '#0a5cb8', height: '100vh', padding: '1.25rem', paddingTop: '2rem', ...bgClass, transition: 'width 300ms', position: 'relative' }}>
+            <div style={{ display: 'flex', minHeight: '100vh' }}>
+                <div
+                    style={{
+                        backgroundColor: '#0a5cb8',
+                        height: '100vh',
+                        padding: '1rem',
+                        paddingTop: '2rem',
+                        ...bgClass,
+                        transition: 'width 300ms',
+                        position: 'sticky', // Hace que el aside permanezca fijo al hacer scroll
+                        top: 0, // Mantenerlo pegado en la parte superior de la ventana
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}
+                >
                     <ArrowBackIcon
                         style={{
                             backgroundColor: 'white',
                             color: 'darkPurple',
-                            fontSize: '3rem',
+                            fontSize: '2rem',
                             borderRadius: '50%',
                             position: 'absolute',
                             right: '-0.75rem',
-                            top: '2.25rem',
+                            top: '1rem',
                             border: '1px solid secondaryBlue',
                             cursor: 'pointer',
                             transform: !open ? 'rotate(180deg)' : 'rotate(0deg)',
                         }}
                         onClick={this.toggleMenu}
                     />
-                    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <ComputerIcon
                             sx={{ fontSize: 50 }}
                             style={{
-                                backgroundColor: 'primaryBlue',
+                                backgroundColor: '#0a5cb8',
                                 color: 'white',
-                                fontSize: '4rem',
+                                fontSize: '2.5rem',
                                 borderRadius: '50%',
                                 cursor: 'pointer',
-                                display: 'block',
-                                float: 'left',
-                                marginRight: '0.5rem',
                                 transition: 'transform 300ms',
                                 transform: open ? 'rotate(360deg)' : 'rotate(0deg)',
                             }}
                         />
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <h1 style={{ color: 'white', fontWeight: 500, fontSize: '2rem', transition: 'transform 300ms', transform: !open ? 'scale(0)' : 'scale(1)' }}>Mi Perfil</h1>
-                        </div>
+                        {open && (
+                            <h1 style={{ color: 'white', fontWeight: 500, fontSize: '1.5rem', marginLeft: '0.5rem' }}>
+                                Mi Perfil
+                            </h1>
+                        )}
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', borderRadius: '0.5rem', backgroundColor: 'lightWhite', marginTop: '1.5rem', padding: '0.5rem' }}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            borderRadius: '0.5rem',
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            marginTop: '1rem',
+                            padding: '0.5rem',
+                        }}
+                    >
                         <SearchIcon style={{ color: 'white', fontSize: '1.25rem', cursor: 'pointer', marginRight: '0.5rem' }} />
-                        <input
-                            type='search'
-                            placeholder='Buscar...'
-                            style={{
-                                width: '100%',
-                                fontSize: '1.5rem',
-                                backgroundColor: 'transparent',
-                                color: 'white',
-                                outline: 'none',
-                            }}
-                        />
+                        {open && (
+                            <input
+                                type='search'
+                                placeholder='Buscar...'
+                                style={{
+                                    width: '100%',
+                                    fontSize: '1rem',
+                                    backgroundColor: 'transparent',
+                                    color: 'white',
+                                    outline: 'none',
+                                }}
+                            />
+                        )}
                     </div>
-                    <ul style={{ paddingTop: '0.5rem' }}>
+                    <ul style={{ paddingTop: '0.5rem', flexGrow: 1 }}>
                         {Menus.map((menu, index) => (
                             <li
                                 key={index}
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
-                                    justifyContent: 'center',
                                     padding: '0.5rem',
                                     color: '#fff',
-                                    fontSize: '2rem',
-                                    gap: '1rem',
+                                    fontSize: '1rem',
+                                    gap: '0.5rem',
                                     cursor: 'pointer',
-                                    backgroundColor: 'hover:bg-primaryBlue',
+                                    transition: 'background-color 200ms',
                                     borderRadius: '0.5rem',
                                     marginTop: '0.5rem',
                                 }}
                             >
-                                <span style={{ fontSize: '2rem', display: 'block', float: 'left', color: '#fff' }}>
+                                <span style={{ fontSize: '1.5rem', color: '#fff' }}>
                                     {React.createElement(menu.icon)}
                                 </span>
-                                <Link
-                                    to={menu.path}
-                                    style={{
-                                        fontSize: '2rem',
-                                        fontWeight: 500,
-                                        flex: 1,
-                                        transition: 'opacity 200ms',
-                                        opacity: !open ? 0 : 1,
-                                        color: '#fff',
-                                    }}
-                                >
-                                    <span>{menu.title}</span>
-                                </Link>
+                                {open && (
+                                    <Link
+                                        to={menu.path}
+                                        style={{
+                                            fontSize: '1rem',
+                                            fontWeight: 500,
+                                            flex: 1,
+                                            color: '#fff',
+                                            textDecoration: 'none',
+                                        }}
+                                    >
+                                        {menu.title}
+                                    </Link>
+                                )}
                             </li>
                         ))}
                     </ul>
-                    <ul style={{ marginTop: '2.5rem' }}>
+                    <ul>
                         {Menu2.map((menu, index) => (
                             <li
                                 key={index}
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
-                                    justifyContent: 'center',
                                     padding: '0.5rem',
                                     color: '#ff0000',
-                                    fontSize: '2rem',
-                                    gap: '1rem',
+                                    fontSize: '1rem',
+                                    gap: '0.5rem',
                                     cursor: 'pointer',
-                                    backgroundColor: 'hover:bg-primaryBlue',
                                     borderRadius: '0.5rem',
                                     marginTop: '0.5rem',
                                 }}
                             >
-                                <span style={{ fontSize: '2rem', display: 'block', float: 'left' }}>
-                                    {React.createElement(menu.icon, { style: { margin: 0, padding: 0 } })}
+                                <span style={{ fontSize: '1.5rem' }}>
+                                    {React.createElement(menu.icon)}
                                 </span>
-                                <span
-                                    style={{
-                                        fontSize: '2rem',
-                                        fontWeight: 500,
-                                        flex: 1,
-                                        transition: 'opacity 200ms',
-                                        opacity: !open ? 0 : 1,
-                                    }}
-                                >
-                                    {menu.title}
-                                </span>
+                                {open && (
+                                    <Link
+                                        to={menu.path}
+                                        style={{
+                                            fontSize: '1rem',
+                                            fontWeight: 500,
+                                            flex: 1,
+                                            color: '#ff0000',
+                                            textDecoration: 'none',
+                                        }}
+                                    >
+                                        {menu.title}
+                                    </Link>
+                                )}
                             </li>
                         ))}
                     </ul>
+                </div>
+                <div style={{ flex: 1, overflowY: 'auto', height: '100vh' }}>
+                    {/* Aquí va el contenido de las citas */}
+                    {this.props.children}
                 </div>
             </div>
         );

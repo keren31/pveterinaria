@@ -8,29 +8,29 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import PerfilLayout from "./PerfilLayout";
-import { useState, useEffect,useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Layout from "../Layout";
 import { useUser } from "../../src/UserContext";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
-
+import './vercita.css'
 
 export default function VerCita() {
   const [Estado] = useState("Cancelada");
   const [Ip, setIp] = useState("Cancelada");
-
   const { user } = useUser();
   const navigate = useNavigate();
-
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
+  const [idCita, setIdCita] = useState(null);
+  const [dataCitas, setDataCitas] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
   const obtenerIdUsuario = (user) => {
     return user && user.idUsuario ? user.idUsuario : null;
   };
 
   const id = obtenerIdUsuario(user);
-  const [idCita, setIdCita] = useState(null);
 
   const handleCancel = (IdCita) => {
     setIdCita(IdCita);
@@ -43,12 +43,12 @@ export default function VerCita() {
     return data;
   }
 
-  const ObtenerIp = useCallback(() =>{
+  const ObtenerIp = useCallback(() => {
     let apiKey = "8c308d0e8f217c1a489e15cb1998c34ffcd76bcead2a2851c3878299";
     json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
       setIp(data.ip);
     });
-  },[]);
+  }, []);
 
   const CancelarReservacion = () => {
     const data = new FormData();
@@ -76,16 +76,12 @@ export default function VerCita() {
       Swal.fire({
         icon: "warning",
         title: "Lo sentimos",
-        text:
-          "Parece que hay un error en el servidor. Por favor, inténtelo de nuevo más tarde.",
+        text: "Parece que hay un error en el servidor. Por favor, inténtelo de nuevo más tarde.",
       });
     }
   };
 
-  const [dataCitas, setDataCitas] = useState([]);
-
-  
-  const obtenerCitas =useCallback( async () => {
+  const obtenerCitas = useCallback(async () => {
     try {
       const response = await fetch(
         `${apiurll}/api/CasaDelMarisco/ObtenerCitasCANPorId?idUsuario=${id}`,
@@ -106,29 +102,47 @@ export default function VerCita() {
     } catch (error) {
       console.error("Error al obtener datos del usuario:", error);
     }
-  },[apiurll, id, setDataCitas]);
+  }, [apiurll, id]);
 
   useEffect(() => {
     obtenerCitas();
     ObtenerIp();
   }, [ObtenerIp, obtenerCitas]);
 
+  // Funciones para paginación
+  const totalPages = Math.ceil(dataCitas.length / itemsPerPage);
+  const currentData = dataCitas.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
 
   return (
     <Layout>
       <PerfilLayout>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", justifyContent: "center", alignItems: "center" }}>
-          {dataCitas.map(
+        <div className="citas-container">
+          {currentData.map(
             ({ IdCita, NombreServicio, Fecha, Hora, Telefono, Estado }, key) => {
               const fechaFormateada = Fecha.split("T")[0];
               return (
-                <div key={key} style={{ display: "flex", flexDirection: "column", backgroundColor: "white", borderRadius: "0.5rem", boxShadow: "0px 4px 8px rgba(38, 39, 48, 0.1)", padding: "1rem", width: "300px" }}>
-                  <div style={{ marginBottom: "1rem" }}>
+                <div key={key} className="card-cita">
+                  <div className="card-header">
                     <Typography variant="h4" color="blue-gray" fontWeight="bold" textAlign="center">
                       {NombreServicio}
                     </Typography>
                   </div>
-                  <div style={{ marginBottom: "1rem" }}>
+                  <div className="card-content">
                     <Typography variant="subtitle1" color="blue-gray" textAlign="center">
                       ID Cita: {IdCita}
                     </Typography>
@@ -139,29 +153,21 @@ export default function VerCita() {
                       Hora: {Hora}
                     </Typography>
                     <Typography variant="subtitle1" color="blue-gray" textAlign="center">
-                      Telefono: {Telefono}
+                      Teléfono: {Telefono}
                     </Typography>
                   </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div className="card-actions">
                     <Typography variant="subtitle1" color="blue-gray">
                       Estado: {Estado}
                     </Typography>
-                    <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
+                    <div className="card-buttons">
                       <Tooltip content="Editar Cita">
-                        <IconButton
-                          variant="text"
-                          onClick={() =>
-                            navigate("/editarCita", { state: { IdCita } })
-                          }
-                        >
+                        <IconButton variant="text" onClick={() => navigate("/editarCita", { state: { IdCita } })}>
                           <PencilIcon className="h-6 w-6" />
                         </IconButton>
                       </Tooltip>
                       <Tooltip content="Cancelar Cita">
-                        <IconButton
-                          variant="text"
-                          onClick={() => handleCancel(IdCita)}
-                        >
+                        <IconButton variant="text" onClick={() => handleCancel(IdCita)}>
                           <TrashIcon className="h-6 w-6" />
                         </IconButton>
                       </Tooltip>
@@ -171,6 +177,17 @@ export default function VerCita() {
               );
             }
           )}
+          <div className="pagination-container">
+            <button onClick={handlePreviousPage} disabled={currentPage === 1} className="pagination-button">
+              Anterior
+            </button>
+            <span className="pagination-info">
+              Página {currentPage} de {totalPages}
+            </span>
+            <button onClick={handleNextPage} disabled={currentPage === totalPages} className="pagination-button">
+              Siguiente
+            </button>
+          </div>
         </div>
       </PerfilLayout>
     </Layout>

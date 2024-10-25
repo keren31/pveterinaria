@@ -1,0 +1,76 @@
+.citas-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 16px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .card-cita {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    width: 100%;
+    max-width: 330px;
+    margin: 0 auto;
+  }
+  
+  .card-header {
+    margin-bottom: 8px;
+  }
+  
+  .card-content {
+    margin-bottom: 8px;
+  }
+  
+  .card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+    gap: 8px;
+    grid-column: 1 / -1;
+  }
+  
+  .pagination-button {
+    padding: 8px 16px;
+    background-color: #3b82f6;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.2s;
+  }
+  
+  .pagination-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
+  .pagination-info {
+    color: #374151;
+  }
+  
+  @media (max-width: 768px) {
+    .citas-container {
+      grid-template-columns: 1fr !important;
+    }
+  }
+  
