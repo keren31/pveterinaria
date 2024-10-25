@@ -1,55 +1,51 @@
-import {Typography } from '@material-tailwind/react';
-import React, { useState, useEffect ,useCallback} from 'react';
+import { Typography } from '@material-tailwind/react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useUser } from "./UserContext";
 import ReactDOM from 'react-dom';
 import Swal from "sweetalert2";
-import './css/login.css'
+import './css/login.css';
 import Layout from './Layout';
 
-const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM }) ;
+const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
 const CarritoDetalle = () => {
   const { user } = useUser();
   const [isLoading, setLoading] = useState(true);
   const [carrito, setCarrito] = useState([]);
-  const [direcciones,setDirecciones]= useState();
-  const [total,setTotal]= useState(20);
-  
-  const [Direccion,setDirecion]= useState();
+  const [total, setTotal] = useState(20);
+  const [Direccion] = useState();
 
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
-  
+
   const obtenerIdUsuario = useCallback((user) => {
     return user?.idUsuario ?? null;
   }, []);
-  
+
   const obtenerDirecciones = useCallback(async () => {
     try {
       const response = await fetch(
-       `${apiurll}/api/CasaDelMarisco/TraerDirecciones?UsuarioID=${user.idUsuario}`,
+        `${apiurll}/api/CasaDelMarisco/TraerDirecciones?UsuarioID=${user.idUsuario}`,
         {
           method: "GET",
         }
       );
-      const data = await response.json();     
+      const data = await response.json();
       if (Array.isArray(data)) {
-        setDirecciones(data);
         console.log("Direcciones obtenidas:", data);
       } else {
         console.error("La respuesta de la API no es un array:", data);
-        setDirecciones([]);
       }
     } catch (error) {
-      console.error("Error al obtener reservaciones:", error);
+      console.error("Error al obtener direcciones:", error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
-  },[apiurll, user.idUsuario]);
+  }, [apiurll, user.idUsuario]);
 
   const agregarAlCarrito = async (producto) => {
     const data = new FormData();
-    data.append("idUsuario",user.idUsuario)
-    data.append("idProducto",producto.idProducto)
+    data.append("idUsuario", user.idUsuario);
+    data.append("idProducto", producto.idProducto);
 
     fetch(
       apiurll + "/api/CasaDelMarisco/AgregarProductosCarritoCAN",
@@ -58,31 +54,28 @@ const CarritoDetalle = () => {
         body: data,
       }
     )
-    .then((res) => res.json())
-    .then((result) => {
-      console.log(result)
-      if (result === 'Exito') {
-        obtenerProductoCarrito();
-      } else {
-      
-      }
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if (result === 'Exito') {
+          obtenerProductoCarrito();
+        }
       })
       .catch((error) => {
-          console.error('Error al realizar la solicitud:', error);
-          Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Ha ocurrido un error al procesar la solicitud',
-          });
+        console.error('Error al realizar la solicitud:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ha ocurrido un error al procesar la solicitud',
+        });
       });
-    
   };
 
   const eliminarDelCarrito = (productoAEliminar) => {
     const data = new FormData();
-    data.append("idUsuario",user.idUsuario)
-    data.append("idProducto",productoAEliminar.idProducto)
-    data.append("idCarritoProductos",productoAEliminar.idCarritoProductos)
+    data.append("idUsuario", user.idUsuario);
+    data.append("idProducto", productoAEliminar.idProducto);
+    data.append("idCarritoProductos", productoAEliminar.idCarritoProductos);
 
     fetch(
       apiurll + "/api/CasaDelMarisco/QuitarProductosCarritoCAN",
@@ -91,24 +84,21 @@ const CarritoDetalle = () => {
         body: data,
       }
     )
-    .then((res) => res.json())
-    .then((result) => {
-      console.log(result)
-      if (result === 'Exito') {
-        obtenerProductoCarrito();
-      } else {
-      
-      }
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if (result === 'Exito') {
+          obtenerProductoCarrito();
+        }
       })
       .catch((error) => {
-          console.error('Error al realizar la solicitud:', error);
-          Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Ha ocurrido un error al procesar la solicitud',
-          });
+        console.error('Error al realizar la solicitud:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ha ocurrido un error al procesar la solicitud',
+        });
       });
-    
   };
 
   const obtenerProductoCarrito = useCallback(async () => {
@@ -130,26 +120,23 @@ const CarritoDetalle = () => {
           console.error("El resultado de la API no es un array:", data);
         }
       } catch (error) {
-        console.error("Error al obtener reservaciones:", error);
+        console.error("Error al obtener productos del carrito:", error);
       } finally {
-        setLoading(false); // Marcar el estado de carga como falso una vez que se completa la solicitud
+        setLoading(false);
       }
     } else {
-      setLoading(false); // Marcar el estado de carga como falso si no hay un id válido
+      setLoading(false);
     }
   }, [apiurll, user, obtenerIdUsuario]);
-  
 
   const createOrder = (data, actions) => {
-    console.log('Valor de total:', total);
     const amount = parseFloat(total);
-    console.log('Monto parseado:', amount);
-  
+
     if (isNaN(amount) || amount <= 0) {
       console.error('Monto inválido:', amount);
       throw new Error('Monto inválido');
     }
-  
+
     return actions.order.create({
       purchase_units: [{
         amount: {
@@ -161,21 +148,17 @@ const CarritoDetalle = () => {
       }
     });
   };
-  
-  const onApprove = async (idCarrito) => {
-      const cr = carrito[0].idCarrito
-      console.log(cr)
-      console.log(user.idUsuario)
-      console.log(total)
-      console.log(Direccion)
+
+  const onApprove = async () => {
+    const cr = carrito[0]?.idCarrito;
     try {
-    
-      const data= new FormData();
-      data.append("idTipoPago",1)
-      data.append("idUsuario",user.idUsuario)
-      data.append("idCarrito",cr)
-      data.append("Total",total)
-      data.append("idDireccion",Direccion)
+      const data = new FormData();
+      data.append("idTipoPago", 1);
+      data.append("idUsuario", user.idUsuario);
+      data.append("idCarrito", cr);
+      data.append("Total", total);
+      data.append("idDireccion", Direccion);
+
       const response = await fetch(
         apiurll + "/api/CasaDelMarisco/AgregarPedidoCAN",
         {
@@ -186,77 +169,66 @@ const CarritoDetalle = () => {
       const result = await response.json();
       console.log(result);
       if (result === 'Exito') {
-        //const order = await actions.order.capture();
-       // console.log('Orden capturada:', order);
-        
         Swal.fire({
           icon: 'success',
           title: 'Éxito',
           text: 'El pedido se ha guardado y procesado correctamente',
         });
-        
-       // return order;
       } else {
         Swal.fire({
           icon: 'error',
           title: 'Error',
           text: 'Ha ocurrido un error al procesar la solicitud',
-      });
+        });
       }
-    
     } catch (error) {
       console.error('Error al capturar la orden:', error);
-      alert(`Error al completar el pago:' ${error.message}`);
+      alert(`Error al completar el pago: ${error.message}`);
       throw error;
     }
   };
-  
-  const calcularTotal = useCallback( () => {
+
+  const calcularTotal = useCallback(() => {
     if (!carrito || carrito.length === 0) return 0;
-  
+
     const subtotal = carrito.reduce((acc, item) => acc + item.Precio, 0);
     const iva = subtotal * 0.16;
     const envio = 1;
     const total = subtotal + iva + envio;
-  
+
     return {
       subtotal: subtotal.toFixed(2),
       iva: iva.toFixed(2),
       envio: envio.toFixed(2),
       total: total.toFixed(2)
     };
-  },[carrito]);
-
+  }, [carrito]);
 
   useEffect(() => {
     obtenerProductoCarrito();
     obtenerDirecciones();
-  }, [obtenerProductoCarrito, obtenerDirecciones,]);
+  }, [obtenerProductoCarrito, obtenerDirecciones]);
 
-  // useEffect para calcular el total cuando cambia el carrito
   useEffect(() => {
     const totales = calcularTotal();
     setTotal(parseFloat(totales.total));
   }, [carrito, calcularTotal]);
-
 
   return (
     <Layout>
       <div style={{ marginTop: '100px', marginRight: '0', marginLeft: '20px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', padding: '20px', maxWidth: '1200px', margin: 'auto' }}>
           <div style={{ gridColumn: '1 / -1', padding: '20px', boxShadow: '0 0 0 2px rgba(0, 0, 255, 0.5)', borderRadius: '10px', backgroundColor: '#ffffff' }}>
-            {/* Header */}
             <div style={{ display: 'flex', width: '100%', marginBottom: '16px', backgroundColor: '#f8f9fa', padding: '16px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
               <div style={{ flex: '2', fontWeight: 'bold', padding: '8px', borderRight: '1px solid #dee2e6', textAlign: 'left', color: '#495057' }}>Producto</div>
               <div style={{ flex: '1', fontWeight: 'bold', padding: '8px', borderRight: '1px solid #dee2e6', textAlign: 'center', color: '#495057' }}>Cantidad</div>
               <div style={{ flex: '1', fontWeight: 'bold', padding: '8px', textAlign: 'center', color: '#495057' }}>Total</div>
             </div>
   
-            {/* Product rows */}
             <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: '20px', paddingRight: '20px' }}>
               {isLoading ? (
                 <p>Cargando...</p>
-              ) : carrito != null ? (
+              ) : carrito.length > 0 ? (
                 carrito.map((carritoInfo) => (
                   <div key={carritoInfo.id} style={{ display: 'flex', flexDirection: 'column', borderTop: '1px solid #d1d5db', padding: '12px 0' }}>
                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
@@ -294,8 +266,7 @@ const CarritoDetalle = () => {
               )}
             </div>
           </div>
-  
-          {/* Order details */}
+
           <div style={{ padding: '20px', boxShadow: '0 0 0 2px rgba(0, 0, 255, 0.5)', borderRadius: '10px', backgroundColor: '#ffffff' }}>
             <Typography variant='text' style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '16px' }}>DETALLE DE LA ORDEN</Typography>
             <div style={{ borderTop: '1px solid #d1d5db', borderBottom: '1px solid #d1d5db', padding: '16px 0' }}>
@@ -316,11 +287,11 @@ const CarritoDetalle = () => {
               <span style={{ fontWeight: '600' }}>Total</span>
               <span style={{ fontWeight: '600' }}>${calcularTotal().total}</span>
             </div>
-  
+
             <div style={{ position: 'relative', zIndex: '10', marginTop: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
               <PayPalButton 
                 createOrder={(data, actions) => createOrder(data, actions)}
-                onApprove={(data, actions) => onApprove(data, actions)}                
+                onApprove={() => onApprove()}
                 fundingSource="paypal" 
                 style={{
                   layout: 'horizontal',
@@ -336,7 +307,6 @@ const CarritoDetalle = () => {
       </div>
     </Layout>
   );
-  
 };
 
 export default CarritoDetalle;
