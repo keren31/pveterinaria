@@ -100,7 +100,7 @@ const AdminEditCita = () => {
     const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     const firstDayOfWeek = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
     const days = Array.from({ length: daysInMonth }, (_, index) => index + 1);
-    const previousMonthDays = Array.from({ length: firstDayOfWeek }, (_, index) => '');
+    const previousMonthDays = Array.from({ length: firstDayOfWeek }, () => '');
 
     return [...previousMonthDays, ...days];
   };

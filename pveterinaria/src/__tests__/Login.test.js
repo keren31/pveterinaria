@@ -35,7 +35,7 @@ describe('Login Component', () => {
     );
 
     const emailInput = screen.getByLabelText(/Correo electrónico/i);
-    const submitButton = screen.getByRole('button', { name: /Entrar/i });
+  
 
     fireEvent.change(emailInput, { target: { value: 'invalidemail' } });
     fireEvent.blur(emailInput);

@@ -150,7 +150,6 @@ export default function Actualizar() {
             text: "Ahora puede entrar para navegar y sorprenderse.",
           });
           navigate("/login1");
-        } else if (result === "Error en las credenciales") {
         }
       });
   };
