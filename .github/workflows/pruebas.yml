@@ -37,6 +37,20 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: ./pveterinaria
+
+
+      - name: Run e2e test cypress
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          wait-on: 'http://localhost:3000'
+          record: true
+          parallel: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #working-directory: ./pveterinaria
+        #run: npx cypress run
       
       # 4. Levantar la aplicación de React
       #- name: Start React App
@@ -59,22 +73,9 @@ jobs:
         working-directory: ./pveterinaria
         run: npm run test -- --ci --watchAll=false --coverage
 
-      - name: Change to project directory
-        run: cd pveterinaria
 
       # 6. Ejecutar pruebas e2e con cypress
-      - name: Run e2e test cypress
-        uses: cypress-io/github-action@v6
-        with:
-          start: npm start
-          wait-on: 'http://localhost:3000'
-          record: true
-          parallel: true
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #working-directory: ./pveterinaria
-        #run: npx cypress run
+      
        
        # 7. Almacenar el informe de cobertura (siempre)
       - name: Upload coverage report
