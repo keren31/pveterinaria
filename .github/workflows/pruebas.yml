@@ -44,11 +44,6 @@ jobs:
         #env:
           #CI: true
 
-      #5. Esperar a que el servidor esté arriba
-      - name: Wait for React App to be available
-        run: npx wait-on http://localhost:3000
-
-
       #analizar el código con ESLint o TSLint
       - name: Run linter (ESLint/TSLint)
         run: npm run lint
