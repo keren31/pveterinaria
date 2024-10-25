@@ -64,7 +64,6 @@ jobs:
 
       # 6. Ejecutar pruebas e2e con cypress
       - name: Run e2e test cypress
-        working-directory: ./pveterinaria
         uses: cypress-io/github-action@v6
         with:
           start: npm start
