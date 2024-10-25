@@ -32,9 +32,6 @@ jobs:
         with:
           node-version: '18' # Versión de Node.js recomendada
           cache: 'npm'  # Configura el caché para npm automáticamente
-      
-      - name: Change directory to the client
-        run: cd pveterinaria
 
       # 3. Instalación de dependencias
       - name: Install dependencies
@@ -73,7 +70,7 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #working-directory: ./pveterinaria
+        working-directory: ./pveterinaria
         #run: npx cypress run
        
        # 7. Almacenar el informe de cobertura (siempre)
