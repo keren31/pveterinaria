@@ -61,13 +61,15 @@ jobs:
 
 
       # 6. Ejecutar pruebas e2e con cypress
-      - name: Run e2e test cypress
-        uses: cypress-io/github-action@v6
+      - name: Start application
         run: |
           cd pveterinaria
           npm start &
           npx wait-on http://localhost:3000
-          npx cypress run --record --parallel
+
+      - name: Run Cypress tests
+        run: npx cypress run --record --parallel
+        working-directory: ./pveterinaria
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
