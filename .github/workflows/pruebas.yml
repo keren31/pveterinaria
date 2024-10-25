@@ -59,6 +59,9 @@ jobs:
         working-directory: ./pveterinaria
         run: npm run test -- --ci --watchAll=false --coverage
 
+      - name: Change to project directory
+        run: cd pveterinaria
+
       # 6. Ejecutar pruebas e2e con cypress
       - name: Run e2e test cypress
         uses: cypress-io/github-action@v6
@@ -70,7 +73,7 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        working-directory: ./pveterinaria
+        #working-directory: ./pveterinaria
         #run: npx cypress run
        
        # 7. Almacenar el informe de cobertura (siempre)
