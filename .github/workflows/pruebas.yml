@@ -37,14 +37,11 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: ./pveterinaria
-      
-      - name: List files in working directory
-        run: ls -la
 
       #analizar el código con ESLint o TSLint
       - name: Run linter (ESLint/TSLint)
         run: npm run lint
-        working-directory: /pvetenaria/pvetenaria
+        working-directory: ./pveterinaria
       
       # 4. Compilar el proyecto React (npm run build)
       - name: Build React Project
