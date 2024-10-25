@@ -18,11 +18,11 @@ class AsidePerfil extends Component {
         };
     }
 
-    toggleMenu = () => {
+    toggleMenu () {
         this.setState((prevState) => ({
             open: !prevState.open,
         }));
-    };
+    }
 
     render() {
         const { open } = this.state;
