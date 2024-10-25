@@ -1,6 +1,10 @@
-module.exports = {
+const { defineConfig } = require('cypress');
+
+module.exports = defineConfig({
   e2e: {
-    specPattern: 'cypress/e2e/**/*.cy.js',
-    baseUrl: 'http://localhost:3000', // Reemplaza con la URL de tu app
+    projectId: "pjv1yv",
+    baseUrl: 'http://localhost:3000',
+    supportFile: false,
+    specPattern: "cypress/e2e/*/.cy.{js,jsx,ts,tsx}"
   },
-};
+});
