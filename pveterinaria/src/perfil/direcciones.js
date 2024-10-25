@@ -692,7 +692,7 @@ const Direcciones = () => {
           {direcciones.length > 0 ? (
           direcciones.map((midirecciones) => (
   
-            <Card 
+            <Card key={midirecciones.idDireccion}
             style={{ 
               width: '100%', 
               maxWidth: '45rem', 
@@ -786,7 +786,7 @@ const Direcciones = () => {
       </div>
       
            <div
-           class="modal fade"
+           className="modal fade"
             id="exampleModal2"
             
             tabIndex="-1"
@@ -1021,14 +1021,14 @@ const Direcciones = () => {
 
 
                   <div>
-                    <label for="NPersonas" class="form-label text-[15px] text-gray-600">
+                    <label htmlFor="NPersonas" className="form-label text-[15px] text-gray-600">
                       Estado
                     </label>
                     <input
                       type="text"
                       value={estadoE}
                       style={{height:'30px'}}
-                      class="form-control rounded-lg text-xl"
+                      className="form-control rounded-lg text-xl"
                       placeholder="Hidalgo"
                       id="Nombre"
                       aria-describedby=""
