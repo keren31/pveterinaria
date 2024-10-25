@@ -40,8 +40,8 @@ jobs:
 
       #analizar el código con ESLint o TSLint
       - name: Run linter (ESLint/TSLint)
-        working-directory: ./pvetenaria
         run: npm run lint
+        working-directory: ./pvetenaria
       
       # 4. Compilar el proyecto React (npm run build)
       - name: Build React Project
