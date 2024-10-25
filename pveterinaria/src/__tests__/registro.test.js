@@ -61,3 +61,4 @@ describe('Registro - Validación de Campos', () => {
     expect(await screen.findByText(/Teléfono debe tener exactamente 10 números/i)).toBeInTheDocument();
   });
 });
+//ihb
