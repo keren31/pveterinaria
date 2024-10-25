@@ -30,7 +30,7 @@ const Registro = () => {
   const [fechaError, setFechaError] = useState('');
   
 
-  const [setPasswordStrength] = useState(''); // Estado para la fortaleza de la contraseña
+  const [passwordStrength,setPasswordStrength] = useState(''); 
 
 
   
@@ -374,7 +374,12 @@ const Registro = () => {
                 />
               </div>
               {passwordError2 && <p className="error-message">{passwordError2}</p>}
-            </div>
+              {passwordStrength && (
+                <p style={{ color: passwordStrength === 'Fuerte' ? 'green' : 'red' }}>
+                  La fortaleza de la contraseña es: {passwordStrength}
+                </p>
+              )}
+              </div>
             <div>
               <label htmlFor="telefono" className="RegistroLabel">Teléfono</label>
               <input
