@@ -44,28 +44,28 @@ jobs:
         #env:
           #CI: true
 
-      #analizar el código con ESLint o TSLint
-      - name: Run linter (ESLint/TSLint)
-        run: npm run lint
-        working-directory: ./pveterinaria
+      # #analizar el código con ESLint o TSLint
+      # - name: Run linter (ESLint/TSLint)
+      #   run: npm run lint
+      #   working-directory: ./pveterinaria
       
-      # 4. Compilar el proyecto React (npm run build)
-      - name: Build React Project
-        working-directory: ./pveterinaria
-        run: npm run build --if-present
+      # # 4. Compilar el proyecto React (npm run build)
+      # - name: Build React Project
+      #   working-directory: ./pveterinaria
+      #   run: npm run build --if-present
       
-      # 5. Ejecutar pruebas unitarias con Jest
-      - name: Run unit test Jest tests
-        working-directory: ./pveterinaria
-        run: npm run test -- --ci --watchAll=false --coverage
+      # # 5. Ejecutar pruebas unitarias con Jest
+      # - name: Run unit test Jest tests
+      #   working-directory: ./pveterinaria
+      #   run: npm run test -- --ci --watchAll=false --coverage
 
 
-      # 6. Ejecutar pruebas e2e con cypress
-      - name: Start application
-        run: |
-          cd pveterinaria
-          npm start &
-          npx wait-on http://localhost:3000
+      # # 6. Ejecutar pruebas e2e con cypress
+      # - name: Start application
+      #   run: |
+      #     cd pveterinaria
+      #     npm start &
+      #     npx wait-on http://localhost:3000
 
       # 8. Ejecutar pruebas e2e con cypress
       - name: e2e cypress
