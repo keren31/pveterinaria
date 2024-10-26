@@ -67,14 +67,13 @@ jobs:
       #     npm start &
       #     npx wait-on http://localhost:3000
 
-      #
-      # 4. Levantar la aplicación de React
-      - name: Start React App
-        working-directory: ./pveterinaria
-        run: |
-          npm start &
-          npx wait-on http://localhost:3000
-    
+      # 4. Levantar la aplicación de Angular
+      - name: Start Angular App
+        run: npm run start &
+        env:
+          CI: true
+
+
       # 8. Ejecutar pruebas e2e con cypress
       - name: e2e cypress
         working-directory: ./pveterinaria
