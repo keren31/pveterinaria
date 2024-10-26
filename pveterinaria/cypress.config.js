@@ -5,6 +5,6 @@ module.exports = defineConfig({
     projectId: "pjv1yv",
     baseUrl: 'http://localhost:3000',
     supportFile: false,
-    specPattern: "cypress/e2e/*/.cy.{js,jsx,ts,tsx}"
+    specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}"
   },
 });

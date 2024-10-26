@@ -67,12 +67,17 @@ jobs:
           npm start &
           npx wait-on http://localhost:3000
 
-      - name: Run Cypress tests
-        run: npx cypress run --record --parallel
-        working-directory: ./pveterinaria
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 8. Ejecutar pruebas e2e con cypress
+      - name: e2e cypress
+        run: npx cypress run
+
+
+      # - name: Run Cypress tests
+      #   run: npx cypress run --record --parallel
+      #   working-directory: ./pveterinaria
+      #   env:
+      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         #working-directory: ./pveterinaria
         #run: npx cypress run
        
