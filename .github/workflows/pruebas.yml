@@ -67,6 +67,16 @@ jobs:
       #     npm start &
       #     npx wait-on http://localhost:3000
 
+      # 4. Levantar la aplicación de Angular
+      - name: Start Angular App
+        run: npm run start &
+        env:
+          CI: true
+
+      # 5. Esperar a que el servidor esté arriba
+      - name: Wait for Angular App to be available
+        run: npx wait-on http://localhost:3000
+
       # 8. Ejecutar pruebas e2e con cypress
       - name: e2e cypress
         working-directory: ./pveterinaria
