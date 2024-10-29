@@ -30,7 +30,77 @@ const Productos2 = () => {
   const [carrito, setCarrito] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Load cart from localStorage on component mount
+  // Función para abrir o crear la base de datos
+  function openDatabase() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open("productosDB", 1);
+
+      request.onerror = (event) => {
+        console.error("Error al abrir la base de datos:", event.target.error);
+        reject(event.target.error);
+      };
+
+      request.onsuccess = (event) => {
+        console.log("Base de datos abierta con éxito");
+        resolve(event.target.result);
+      };
+
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains("productos")) {
+          db.createObjectStore("productos", { keyPath: "idProducto" });
+        }
+      };
+    });
+  }
+
+  // Función para guardar productos en IndexedDB
+  async function guardarProductosEnIndexedDB(productos) {
+    try {
+      const db = await openDatabase();
+      const transaction = db.transaction(["productos"], "readwrite");
+      const store = transaction.objectStore("productos");
+
+      productos.forEach((producto) => {
+        store.put(producto); // Guardar cada producto en el almacén
+      });
+
+      transaction.oncomplete = () => {
+        console.log("Productos almacenados en IndexedDB");
+      };
+
+      transaction.onerror = (event) => {
+        console.error("Error al almacenar productos en IndexedDB:", event.target.error);
+      };
+    } catch (error) {
+      console.error("Error en IndexedDB:", error);
+    }
+  }
+
+  // Función para obtener productos de IndexedDB
+  async function obtenerProductosDeIndexedDB() {
+    try {
+      const db = await openDatabase();
+      const transaction = db.transaction("productos", "readonly");
+      const store = transaction.objectStore("productos");
+
+      return new Promise((resolve, reject) => {
+        const request = store.getAll();
+        request.onsuccess = (event) => {
+          resolve(event.target.result); // Devuelve los productos almacenados
+        };
+        request.onerror = (event) => {
+          console.error("Error al obtener productos de IndexedDB:", event.target.error);
+          reject(event.target.error);
+        };
+      });
+    } catch (error) {
+      console.error("Error en IndexedDB:", error);
+      return [];
+    }
+  }
+
+  // Cargar carrito de localStorage en el montaje del componente
   useEffect(() => {
     const savedCart = localStorage.getItem('carrito');
     if (savedCart) {
@@ -123,7 +193,7 @@ const Productos2 = () => {
       });
   };
 
-  // Save cart to localStorage whenever it changes
+  // Guardar carrito en localStorage cuando cambie
   useEffect(() => {
     localStorage.setItem('carrito', JSON.stringify(carrito));
   }, [carrito]);
@@ -147,11 +217,19 @@ const Productos2 = () => {
       if (response.ok) {
         const product1Data = await response.json();
         setProductData(product1Data);
+        guardarProductosEnIndexedDB(product1Data); // Guardar en IndexedDB
+        console.log(product1Data);
       } else {
-        console.error('Error al obtener datos de los productos:', response.statusText);
+        console.error("Error al obtener datos de los productos desde la API");
       }
     } catch (error) {
-      console.error('Error al obtener datos del usuario:', error);
+      console.error("Error al obtener datos de la API:", error);
+      const productosGuardados = await obtenerProductosDeIndexedDB();
+      if (productosGuardados.length > 0) {
+        setProductData(productosGuardados);
+      } else {
+        console.error("No hay productos guardados en IndexedDB.");
+      }
     }
   };
 
@@ -178,6 +256,7 @@ const Productos2 = () => {
     setIsCartOpen(false);
   };
 
+  
   return (
     <Layout>
       <Container maxWidth="md" style={{ marginTop: '100px', marginBottom: '20px' }}>
