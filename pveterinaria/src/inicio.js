@@ -1,7 +1,7 @@
 import React from 'react';
-import Layout from './Layout'; // Asegúrate de ajustar la ruta según la ubicación de tu Layout
+import Layout from './Layout'; 
 import CardServicios from './componentes/CardServicios';
-import imagen1 from './img/fondo de inicio.jpg'; // Ajusta la ruta de tu imagen
+import imagen1 from './img/fondo de inicio.jpg';
 
 function Inicio() {
     return (
@@ -13,8 +13,6 @@ function Inicio() {
                         alt="Registro" 
                         className="Imagen-inicio w-full h-64 md:h-96 lg:h-[500px] object-cover opacity-90"
                     />
-
-                    {/* Texto de Bienvenida sobre la imagen */}
                     <div className="absolute top-0 left-0 right-0 flex items-start justify-center mt-2">
                         <h1 
                             className="font-semibold text-white text-center leading-tight bg-blue-900 bg-opacity-70 p-5 mt-5 rounded-md"
@@ -23,8 +21,6 @@ function Inicio() {
                             Estética Canina Platón
                         </h1>
                     </div>
-
-                    {/* Contenido del Texto principal */}
                     <div className="division p-8 md:p-16 lg:p-20 text-white max-w-5xl mx-auto bg-blue-800 rounded-md h-auto mt-12">
                         <h2 
                             className="font-bold text-center leading-tight" 
@@ -46,7 +42,6 @@ function Inicio() {
                         </p>
                     </div>
                 </div>
-
                 <div className="mt-8 px-2 md:px-12 lg:px-24 ">
                     <CardServicios />
                 </div>

@@ -5,7 +5,8 @@ import Layout from './Layout';
 
 const CategoriasServicio = () => {
   const [categorias, setCategorias] = useState([]);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null); // Estado para la categoría seleccionada
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
+  const [isOnline, setIsOnline] = useState(navigator.onLine); // Estado para la conexión
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,10 +15,21 @@ const CategoriasServicio = () => {
     if (productosLocalStorage) {
       setCategorias(productosLocalStorage.categorias);
     }
+
+    // Escuchar cambios en el estado de conexión
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
   }, []);
 
   const handleVerServiciosClick = (categoria) => {
-    // Guardar la categoría seleccionada en el estado y en el localStorage
     setCategoriaSeleccionada(categoria);
     localStorage.setItem('selectedCategoria', JSON.stringify(categoria));
     navigate(`/Detallecat`);
@@ -38,14 +50,30 @@ const CategoriasServicio = () => {
             <Grid item key={index} xs={12} sm={6} md={4}>
               <Card>
                 <CardActionArea onClick={() => handleVerServiciosClick(categoria)}>
-                  <CardMedia
-                    component="img"
-                    alt={categoria.nombre}
-                    image={categoria.imagen}
-                    style={{ transition: 'transform 0.3s', height: '200px' }}
-                    onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.3)')}
-                    onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                  />
+                  {isOnline ? (
+                    <CardMedia
+                      component="img"
+                      alt={categoria.nombre}
+                      image={categoria.imagen}
+                      style={{ transition: 'transform 0.3s', height: '200px' }}
+                      onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.3)')}
+                      onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        height: '200px',
+                        backgroundColor: '#f0f0f0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      <Typography variant="body2" color="text.secondary">
+                        Imagen no disponible sin conexión
+                      </Typography>
+                    </div>
+                  )}
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                       {categoria.nombre}
