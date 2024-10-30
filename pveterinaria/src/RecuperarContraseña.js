@@ -32,7 +32,7 @@ export default function RecuperarContra() {
 
       fetch(
        
-          'http://localhost:5029/api/CasaDelMarisco/ActualizarTokenEstetica',
+          'https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/ActualizarTokenEstetica',
         {
           method: 'POST',
           body: data,
