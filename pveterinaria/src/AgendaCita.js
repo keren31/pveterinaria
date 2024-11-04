@@ -16,7 +16,7 @@ const AgendarCita = () => {
   const [servicio, setServicio] = useState('');
   const [fechaCitaError, setFechaCitaError] = useState('');
   const [horaCitaError, setHoraCitaError] = useState('');
-  const [setServicioError] = useState('');
+  const [servicioError, setServicioError] = useState('');
   // Agregamos la definición de estado para los horarios disponibles
   const [dataServicio,setDataServicio]=useState([]);
  
