@@ -10,7 +10,6 @@ const AgendarCita = () => {
   useEffect(() => {
     obtenerDatosServicios();
   }, [])
-
   const [fechaCita, setFechaCita] = useState('');
   const [horaCita, setHoraCita] = useState('');
   const [servicio, setServicio] = useState('');
@@ -19,7 +18,6 @@ const AgendarCita = () => {
   const [servicioError, setServicioError] = useState('');
   // Agregamos la definición de estado para los horarios disponibles
   const [dataServicio,setDataServicio]=useState([]);
- 
 
   const { user } = useUser();
 
