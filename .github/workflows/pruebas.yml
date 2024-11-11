@@ -19,78 +19,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout del repositorio
+      # Checkout del repositorio
       - name: Checkout code
         uses: actions/checkout@v3
 
-      #- name: Move to project directory
-        #run: cd pveterinaria
-
-      # 2. Configurar Node.js (para recat y Jest)
+      # Configurar Node.js (para recat y Jest)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18' # Versión de Node.js recomendada
           cache: 'npm'  # Configura el caché para npm automáticamente
 
-      # 3. Instalación de dependencias
+      # Instalación de dependencias
       - name: Install dependencies
         run: npm ci
         working-directory: ./pveterinaria
+
+      # analizar el código con ESLint o TSLint
+      - name: Run linter (ESLint/TSLint)
+        run: npm run lint
+        working-directory: ./pveterinaria
       
-      # 4. Levantar la aplicación de React
-      # - name: Start React App
-      #   run: npm start --port 3000 &
-      #   env:
-      #     CI: true
-
-      # #analizar el código con ESLint o TSLint
-      # - name: Run linter (ESLint/TSLint)
-      #   run: npm run lint
-      #   working-directory: ./pveterinaria
+      # Compilar el proyecto React (npm run build)
+      - name: Build React Project
+        working-directory: ./pveterinaria
+        run: npm run build --if-present
       
-      # # 4. Compilar el proyecto React (npm run build)
-      # - name: Build React Project
-      #   working-directory: ./pveterinaria
-      #   run: npm run build --if-present
-      
-      # # 5. Ejecutar pruebas unitarias con Jest
-      # - name: Run unit test Jest tests
-      #   working-directory: ./pveterinaria
-      #   run: npm run test -- --ci --watchAll=false --coverage
+      # Ejecutar pruebas unitarias con Jest
+      - name: Run unit test Jest tests
+        working-directory: ./pveterinaria
+        run: npm run test -- --ci --watchAll=false --coverage
 
-
-      # # 6. Ejecutar pruebas e2e con cypress
-      # - name: Start application
-      #   run: |
-      #     cd pveterinaria
-      #     npm start &
-      #     npx wait-on http://localhost:3000
-
-      # 4. Levantar la aplicación de React y esperar a que esté lista
+      # Levantar la aplicación de React y esperar a que esté lista
       - name: Start React App
         working-directory: ./pveterinaria
         run: |
           npm start --port 3000 &
           npx wait-on http://localhost:3000
 
-
-      # 8. Ejecutar pruebas e2e con cypress
+      # Ejecutar pruebas e2e con cypress
       - name: e2e cypress
         working-directory: ./pveterinaria
         run: npx cypress run
 
-
-      # - name: Run Cypress tests
-      #   run: npx cypress run --record --parallel
-      #   working-directory: ./pveterinaria
-      #   env:
-      #     CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #working-directory: ./pveterinaria
-        #run: npx cypress run
-       
-       # 7. Almacenar el informe de cobertura (siempre)
+       # Almacenar el informe de cobertura (siempre)
       - name: Upload coverage report
         if: success()
         uses: actions/upload-artifact@v3
@@ -106,16 +78,11 @@ jobs:
     if: github.ref == 'refs/heads/main'  # Asegura que solo se ejecute en la rama main
 
     steps:
-      # 1. Checkout del repositorio
+      # Checkout del repositorio
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Vincular o crear el proyecto de Vercel (si no está vinculado ya)
-      #- name: Link or Create Vercel Project
-        #run: npx vercel link --token VZOjjhVRJ3UV6IAxufrWngeX --yes
-        # Aquí no necesitas especificar el nombre del proyecto. Vercel lo detectará automáticamente.
-
-      # 3. Desplegar la aplicación a producción
+      # Desplegar la aplicación a producción
       - name: Deploy to Production Vercel
         run: |
           echo "Desplegando aplicación de la estetica canina a producción..."

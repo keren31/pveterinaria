@@ -90,7 +90,7 @@ export default function VerCita() {
       const response = await fetch(
         `${apiurll}/api/CasaDelMarisco/ObtenerCitasCANPorId?idUsuario=${id}`,
         {
-          method: "GET",
+          method: "GET",    
         }
       );
 
