@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useUser } from './UserContext';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -8,11 +8,16 @@ import PerfilLayout from './perfil/PerfilLayout';
 const Perfil = () => {
     const navigate = useNavigate();
     const { user, logoutUser } = useUser();
-    const [profileImage, setProfileImage] = useState(user?.Icono || "https://via.placeholder.com/150");
+    const [profileImage, setProfileImage] = useState(() => {
+        // Carga la imagen desde localStorage al iniciar
+        return localStorage.getItem('profileImage') || "https://via.placeholder.com/150";
+    });
     const videoRef = useRef(null);
     const canvasRef = useRef(document.createElement("canvas")); // Crea el canvas de forma programática
 
     const cerrarSesion = () => {
+        // Limpia el almacenamiento local si deseas que al cerrar sesión se borre la imagen
+        // localStorage.removeItem('profileImage');
         logoutUser();
         navigate('/');
         Swal.fire({
@@ -21,6 +26,11 @@ const Perfil = () => {
             text: 'Cerraste sesión, nos vemos. Regresa cuando quieras embellecer a tu mejor amigo.',
         });
     };
+
+    useEffect(() => {
+        // Guarda la imagen en localStorage cada vez que se actualiza profileImage
+        localStorage.setItem('profileImage', profileImage);
+    }, [profileImage]);
 
     const abrirCamara = async () => {
         try {
