@@ -155,7 +155,7 @@ export default function EditarCita() {
     })
       .then((res) => res.json())
       .then((result) => {
-        if (result === "Cita a sido editada exitosamente!!") {
+        if (result === "Cita editada exitosamente!!") {
           Swal.fire({
             icon: 'success',
             title: 'Cita Actualizada',
