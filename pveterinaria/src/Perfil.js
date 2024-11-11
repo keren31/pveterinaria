@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useUser } from './UserContext';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -8,6 +8,9 @@ import PerfilLayout from './perfil/PerfilLayout';
 const Perfil = () => {
     const navigate = useNavigate();
     const { user, logoutUser } = useUser();
+    const [profileImage, setProfileImage] = useState(user?.Icono || "https://via.placeholder.com/150");
+    const videoRef = useRef(null);
+    const canvasRef = useRef(document.createElement("canvas")); // Crea el canvas de forma programática
 
     const cerrarSesion = () => {
         logoutUser();
@@ -19,12 +22,59 @@ const Perfil = () => {
         });
     };
 
+    const abrirCamara = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            if (videoRef.current) {
+                videoRef.current.srcObject = stream;
+                videoRef.current.play();
+            }
+
+            Swal.fire({
+                title: 'Captura tu nueva foto de perfil',
+                html: `<video id="video" autoplay playsinline style="width: 100%; height: auto;"></video>`,
+                showCancelButton: true,
+                confirmButtonText: 'Capturar Foto',
+                didOpen: () => {
+                    // Configura el video con el stream de la cámara
+                    const videoElement = document.getElementById('video');
+                    if (videoElement) {
+                        videoElement.srcObject = stream;
+                        videoRef.current = videoElement;
+                    }
+                },
+                preConfirm: () => {
+                    // Captura la imagen del video en el canvas
+                    const canvas = canvasRef.current;
+                    const video = videoRef.current;
+                    if (video && canvas) {
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        const context = canvas.getContext('2d');
+                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        // Convierte el contenido del canvas a una imagen en base64
+                        const imgData = canvas.toDataURL('image/png');
+                        setProfileImage(imgData); // Actualiza la imagen de perfil con la imagen capturada
+                    }
+                },
+                willClose: () => {
+                    // Detiene el flujo de video al cerrar el modal
+                    if (videoRef.current?.srcObject) {
+                        const stream = videoRef.current.srcObject;
+                        const tracks = stream.getTracks();
+                        tracks.forEach((track) => track.stop());
+                    }
+                }
+            });
+        } catch (error) {
+            console.error("Error al acceder a la cámara", error);
+        }
+    };
+
     return (
         <Layout>
             <PerfilLayout>
                 <div style={{
-                  
-                   
                     padding: '50px',
                     width: '600px',
                     margin: '50px auto',
@@ -36,8 +86,9 @@ const Perfil = () => {
                         alignItems: 'center',
                         marginBottom: '20px',
                     }}>
+                        {/* Muestra la imagen de perfil actualizada */}
                         <img
-                            src={user?.Icono || "https://via.placeholder.com/150"}
+                            src={profileImage}  // Usa la imagen capturada como fuente
                             alt="Avatar"
                             style={{
                                 width: '120px',
@@ -97,9 +148,9 @@ const Perfil = () => {
                             }}
                             onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#218838'}
                             onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#28a745'}
-                            onClick={cerrarSesion}
+                            onClick={abrirCamara}
                         >
-                            Editar Perfil
+                            Editar foto perfil 
                         </button>
                         <button
                             style={{

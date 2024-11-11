@@ -74,7 +74,7 @@ const Perfil = () => {
                   cursor: 'pointer',
                 }}
               >
-                Editar Perfil
+                Editar Foto de Perfil
               </button>
               <button
                 className="logout-button"
