@@ -44,6 +44,7 @@ import SplashScreen from './componentes/SplashScreen';
 import Inicio from './inicio';
 
 import { UserProvider } from './UserContext';
+import { pedirPermisoNotificacion } from './notificaciones';
 
 
 function QuienesSomos() {
@@ -302,7 +303,9 @@ function PoliticasDePrivacidad() {
 
 
 function App() {
-
+  React.useEffect(()=>{
+    pedirPermisoNotificacion();
+  }, [])
   return (
     <UserProvider>
       <Router>
