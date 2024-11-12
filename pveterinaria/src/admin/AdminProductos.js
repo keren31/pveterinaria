@@ -252,7 +252,7 @@ const handleSubmit = async (e)=>{
     data.append("Imagen",resultImage);
 
     fetch(
-        apiurll + "api/CasaDelMarisco/AgregarProductosCan",
+        apiurll + "api/EsteticaApi/AgregarProductosCan",
         {
             method: "POST",
             body: data,
