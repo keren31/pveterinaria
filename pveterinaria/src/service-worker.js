@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-globals */
+/* global clients */
 
 import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
@@ -92,7 +93,7 @@ self.addEventListener('push', function(event) {
   const title = data.title || 'Nueva Notificación';
   const options = {
     body: data.body || '¡Tienes una nueva promoción!',
-    icon: data.imagen, 
+    icon: '', 
   };
   event.waitUntil(self.registration.showNotification(title, options));
 });
@@ -100,6 +101,6 @@ self.addEventListener('push', function(event) {
 self.addEventListener('notificationclick', function(event) {
   event.notification.close();
   event.waitUntil(
-    clients.openWindow('/productos')
+    self.clients.openWindow('/productos')
   );
 });
