@@ -100,6 +100,6 @@ self.addEventListener('push', function(event) {
 self.addEventListener('notificationclick', function(event) {
   event.notification.close();
   event.waitUntil(
-    clients.openWindow('/productos') // Cambia esta URL a la que deseas abrir al hacer clic
+    clients.openWindow('/productos')
   );
 });
