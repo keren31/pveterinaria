@@ -93,7 +93,7 @@ self.addEventListener('push', function(event) {
   const title = data.title || 'Nueva Notificación';
   const options = {
     body: data.body || '¡Tienes una nueva promoción!',
-    icon: '', 
+    icon: data.imagen, 
   };
   event.waitUntil(self.registration.showNotification(title, options));
 });
