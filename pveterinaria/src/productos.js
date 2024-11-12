@@ -289,16 +289,16 @@ const Productos2 = () => {
         <Grid container spacing={4}>
           {(filteredProductos.length > 0 ? filteredProductos : productData).map((producto) => (
             <Grid item key={producto.idProducto} xs={20} sm={6} md={4}>
-              <Card>
-                <CardActionArea style={{ display: 'flex', flexDirection: 'column', background: 'transparent' }}>
+              <Card style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <CardActionArea style={{ display: 'flex', flexDirection: 'column', background: 'transparent', height: '100%' }}>
                   <CardMedia
                     component="img"
                     image={producto.Imagen}
-                    style={{ transition: 'transform 0.3s', height: '200px' }}
+                    style={{ transition: 'transform 0.3s', height: '200px', objectFit: 'cover' }}
                     onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.3)')}
                     onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
                   />
-                  <CardContent style={{ flex: '1' }}>
+                  <CardContent style={{ flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <Typography variant="h6" component="div">
                       {producto.Nombre}
                       <Button
@@ -313,7 +313,7 @@ const Productos2 = () => {
                         color="primary"
                       />
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" color="text.secondary" style={{ marginBottom: '8px' }}>
                       {producto.Descripcion}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -325,7 +325,6 @@ const Productos2 = () => {
             </Grid>
           ))}
         </Grid>
-
         {/* Drawer del carrito */}
         <Drawer anchor="right" open={isCartOpen} onClose={closeCart}>
           <Container maxWidth="sm" style={{ marginTop: '60px', marginBottom: '20px', padding: '20px' }}>
@@ -336,7 +335,7 @@ const Productos2 = () => {
               cart.map(item => (
                 <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img src={item.Imagen} style={{ width: '150px', marginRight: '50px' }} alt='ksld' />
+                    <img src={item.Imagen} style={{ width: '150px', marginRight: '50px' }} alt='Producto' />
                     <div>
                       <Typography variant="body1" style={{ fontSize: '20px', marginRight: '50px' }}>{item.Nombre}</Typography>
                       <Typography variant="body2" style={{ fontSize: '15px' }}>{item.Precio} x {item.Cantidad}</Typography>
@@ -425,6 +424,6 @@ const Productos2 = () => {
       </Container>
     </Layout>
   );
-};
+};  
 
 export default Productos2;
