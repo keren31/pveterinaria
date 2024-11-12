@@ -4,20 +4,23 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Layout from './Layout';
 import PerfilLayout from './perfil/PerfilLayout';
+import CryptoJS from 'crypto-js';
+
+import { uploadFilesUsuarios } from './firebase';
 
 const Perfil = () => {
     const navigate = useNavigate();
-    const { user, logoutUser } = useUser();
+    const { user, setUser, logoutUser } = useUser();
     const [profileImage, setProfileImage] = useState(() => {
         // Carga la imagen desde localStorage al iniciar
-        return localStorage.getItem('profileImage') || "https://via.placeholder.com/150";
+        return localStorage.getItem('profileImage') || user?.Icono || "https://via.placeholder.com/150";
     });
     const videoRef = useRef(null);
-    const canvasRef = useRef(document.createElement("canvas")); // Crea el canvas de forma programática
+    const canvasRef = useRef(document.createElement("canvas"));
+    const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
+    const ENCRYPTION_KEY = "Soymainekko1#"; // Reemplaza con tu clave de encriptación
 
     const cerrarSesion = () => {
-        // Limpia el almacenamiento local si deseas que al cerrar sesión se borre la imagen
-        // localStorage.removeItem('profileImage');
         logoutUser();
         navigate('/');
         Swal.fire({
@@ -27,10 +30,7 @@ const Perfil = () => {
         });
     };
 
-    useEffect(() => {
-        // Guarda la imagen en localStorage cada vez que se actualiza profileImage
-        localStorage.setItem('profileImage', profileImage);
-    }, [profileImage]);
+    
 
     const abrirCamara = async () => {
         try {
@@ -46,7 +46,6 @@ const Perfil = () => {
                 showCancelButton: true,
                 confirmButtonText: 'Capturar Foto',
                 didOpen: () => {
-                    // Configura el video con el stream de la cámara
                     const videoElement = document.getElementById('video');
                     if (videoElement) {
                         videoElement.srcObject = stream;
@@ -54,7 +53,6 @@ const Perfil = () => {
                     }
                 },
                 preConfirm: () => {
-                    // Captura la imagen del video en el canvas
                     const canvas = canvasRef.current;
                     const video = videoRef.current;
                     if (video && canvas) {
@@ -62,13 +60,47 @@ const Perfil = () => {
                         canvas.height = video.videoHeight;
                         const context = canvas.getContext('2d');
                         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                        // Convierte el contenido del canvas a una imagen en base64
-                        const imgData = canvas.toDataURL('image/png');
-                        setProfileImage(imgData); // Actualiza la imagen de perfil con la imagen capturada
+                        // Convierte el contenido del canvas a un archivo Blob
+                        return new Promise((resolve) => {
+                            canvas.toBlob(async (blob) => {
+                                const file = new File([blob], "profile_photo.png", { type: "image/png" });
+                                const result = await uploadFilesUsuarios(file);
+
+                                // Subir el icono actualizado al backend
+                                const data = new FormData();
+                                data.append("idUsuario", user.idUsuario);
+                                data.append("Icono", result);
+
+                                fetch(apiurll + "api/CasaDelMarisco/SubirIcono", {
+                                    method: "POST",
+                                    body: data,
+                                })
+                                    .then((res) => res.json())
+                                    .then((result1) => {
+                                        if (result1 === "Icono actualizado") {
+                                            const updatedUser = { ...user, Icono: result };
+                                            setUser(updatedUser);
+                                            setProfileImage(result); // Actualiza la vista actual del perfil
+                                            
+                                            // Actualiza localStorage con la información del usuario actualizado
+                                            localStorage.setItem(
+                                                'userData',
+                                                CryptoJS.AES.encrypt(JSON.stringify(updatedUser), ENCRYPTION_KEY).toString()
+                                            );
+
+                                            Swal.fire({
+                                                icon: "success",
+                                                title: "Foto de perfil actualizada",
+                                                text: "La foto se subió correctamente",
+                                            });
+                                        }
+                                    });
+                            }, 'image/png');
+                        });
                     }
                 },
                 willClose: () => {
-                    // Detiene el flujo de video al cerrar el modal
+                    // Detiene la transmisión de video al cerrar el modal
                     if (videoRef.current?.srcObject) {
                         const stream = videoRef.current.srcObject;
                         const tracks = stream.getTracks();
@@ -98,7 +130,7 @@ const Perfil = () => {
                     }}>
                         {/* Muestra la imagen de perfil actualizada */}
                         <img
-                            src={profileImage}  // Usa la imagen capturada como fuente
+                            src={profileImage}
                             alt="Avatar"
                             style={{
                                 width: '120px',

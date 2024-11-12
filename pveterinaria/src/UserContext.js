@@ -1,56 +1,42 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
+import PropTypes from 'prop-types';
+import CryptoJS from 'crypto-js';
 
 const UserContext = createContext();
+const ENCRYPTION_KEY = 'Soymainekko1#';
 
 export const UserProvider = ({ children }) => {
-
   const [user, setUser] = useState(null);
-  const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    // Intentar cargar el usuario desde la cookie al cargar la aplicación
-    const storedUser = Cookies.get('userData');
+    const storedUser = localStorage.getItem('userData');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    const storedCart = Cookies.get('cart');
-    if (storedCart) {
-      setCart(JSON.parse(storedCart));
+      const decryptedUser = CryptoJS.AES.decrypt(storedUser, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
+      setUser(JSON.parse(decryptedUser));
     }
   }, []);
 
   const loginUser = (userData) => {
     setUser(userData);
-    // Almacenar el usuario en la cookie
-    Cookies.set('userData', JSON.stringify(userData));
+    const encryptedUser = CryptoJS.AES.encrypt(JSON.stringify(userData), ENCRYPTION_KEY).toString();
+    localStorage.setItem('userData', encryptedUser);
   };
 
   const logoutUser = () => {
     setUser(null);
-    // Eliminar la cookie al cerrar sesión
-    Cookies.remove('userData');
+    localStorage.removeItem('userData');
   };
-  const addToCart = (item) => {
-    const updatedCart = [...cart, item];
-    setCart(updatedCart);
-    // Almacenar el carrito en la cookie
-    Cookies.set('cart', JSON.stringify(updatedCart));
-  };
-  
 
-  const removeFromCart = (itemId) => {
-    const updatedCart = cart.filter(item => item.id !== itemId);
-    setCart(updatedCart);
-    // Actualizar el carrito en la cookie
-    Cookies.set('cart', JSON.stringify(updatedCart));
-  };
 
   return (
-    <UserContext.Provider value={{ user, loginUser, logoutUser, cart, addToCart, removeFromCart }}>
-        {children}
+    <UserContext.Provider value={{ user,setUser, loginUser, logoutUser, }}>
+      {children}
     </UserContext.Provider>
   );
+};
+
+UserProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export const useUser = () => {

@@ -42,7 +42,7 @@ const AsideAdmin = () => {
         { title: "Pedidos Generales", path: "/Pedidos_admin", icon: AssessmentIcon },
         { title: "Usuarios", path: "/admin-Usuario", icon: SupervisedUserCircleIcon },
         { title: "Editar Horarios", path: "/admin-edit-cita", icon: AssessmentIcon },
-        { title: "Calcular Citas", path: "/CitasCalcular", icon: PetsIcon }
+        { title: "Feedback", path: "/CitasCalcular", icon: PetsIcon }
     ];
 
     const Menu2 = [
