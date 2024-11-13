@@ -212,26 +212,56 @@ const Productos2 = () => {
   }, [obtenerProductoCarrito]);
 
   const obtenterDatosProductos = async () => {
+    const url = `${apiurll}/api/CasaDelMarisco/TraerProductosCAN`;
+  
     try {
-      const response = await fetch(`${apiurll}/api/CasaDelMarisco/TraerProductosCan`, { method: 'GET' });
-      if (response.ok) {
-        const product1Data = await response.json();
-        setProductData(product1Data);
-        guardarProductosEnIndexedDB(product1Data); // Guardar en IndexedDB
-        console.log(product1Data);
+      if (navigator.onLine) {
+        // Intento de obtener los datos en línea
+        const response = await fetch(url, { method: "GET" });
+  
+        if (response.ok) {
+          const product1Data = await response.json();
+          setProductData(product1Data); // Actualiza el estado con los datos de la API
+          console.log("Datos obtenidos de la API:", product1Data);
+        } else {
+          console.error("Error al obtener los datos de la API. Intentando desde el caché...");
+          const url2 = 'https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/TraerProductosCAN';
+          await obtenerDatosDesdeCache(url2); // Si falla, intenta desde el caché
+        }
       } else {
-        console.error("Error al obtener datos de los productos desde la API");
+        console.log("Sin conexión a internet. Obteniendo datos desde el caché...");
+        const url2 = 'https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/TraerProductosCAN';
+        await obtenerDatosDesdeCache(url2); // Sin conexión, intenta desde el caché
       }
     } catch (error) {
       console.error("Error al obtener datos de la API:", error);
-      const productosGuardados = await obtenerProductosDeIndexedDB();
-      if (productosGuardados.length > 0) {
-        setProductData(productosGuardados);
-      } else {
-        console.error("No hay productos guardados en IndexedDB.");
+      const url2 = 'https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/TraerProductosCAN';
+      await obtenerDatosDesdeCache(url2); // En caso de error, intenta desde el caché
+    }
+  };
+  
+  // Función para obtener los datos desde el caché
+  const obtenerDatosDesdeCache = async (url) => {
+    if ('caches' in window) {
+      try {
+        const cache = await caches.open('api-precache');
+        const cachedResponse = await cache.match(url);
+  
+        if (cachedResponse) {
+          const cachedData = await cachedResponse.json();
+          setProductData(cachedData); // Actualiza el estado con los datos del caché
+          console.log("Datos obtenidos desde el caché:", cachedData);
+        } else {
+          console.log("No se encontraron datos en el caché para esta URL.");
+        }
+      } catch (cacheError) {
+        console.error("Error al obtener los datos desde el caché:", cacheError);
       }
     }
   };
+  
+
+
 
   const applyFilters = () => {
     let filtered = productData.filter(

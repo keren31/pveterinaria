@@ -81,6 +81,43 @@ registerRoute(
   })
 );
 
+precacheAndRoute([
+  { url: '/', revision: null },
+  { url: '/login', revision: null },
+  { url: '/Nosotros', revision: null },
+  { url: '/ofertas', revision: null },
+  { url: '/productos', revision: null },
+  { url: '/registrar', revision: null },
+  { url: '/reservaciones', revision: null },
+  { url: '/perfil', revision: null },
+  // Añade todas las rutas que deseas precachear
+]);
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open('api-precache').then((cache) => {
+      return fetch('https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/TraerProductosCAN')
+        .then((response) => {
+          if (!response.ok) throw new Error('Network response was not ok');
+
+          // Clona la respuesta y guárdala en el caché
+          cache.put('https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/TraerProductosCAN', response.clone());
+
+          // Recupera la respuesta del caché para verificar si se almacenó correctamente
+          return cache.match('https://lacasadelmariscoweb.azurewebsites.net/api/CasaDelMarisco/TraerProductosCAN')
+            .then((cachedResponse) => {
+              return cachedResponse.json(); // Convierte la respuesta en JSON
+            })
+            .then((data) => {
+              console.log('Datos guardados en el caché:', data); // Muestra los datos guardados
+            });
+        })
+        .catch((error) => {
+          console.error('Error al guardar en el caché:', error);
+        });
+    })
+  );
+});
 
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
