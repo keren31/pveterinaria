@@ -10,7 +10,7 @@ on:
       - main   # Ejecutar las pruebas antes de fusionar a main
   workflow_dispatch:
 
-# Permisos para GitHub Actions
+# Permisos para GitHub Actions h
 permissions:
   contents: read
 
