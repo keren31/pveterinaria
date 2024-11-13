@@ -48,12 +48,26 @@ jobs:
         working-directory: ./pveterinaria
         run: npm run test -- --ci --watchAll=false --coverage
       
-       # 6. Almacenar el informe de cobertura (siempre)
+      # 6. Almacenar el informe de cobertura (siempre)
       - name: Upload coverage report
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report
           path: ./pveterinaria/coverage/ # Ajusta esta ruta si tu informe de cobertura se genera en un lugar diferente
 
-  
-    
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: test   # Asegura que este job solo se ejecuta si 'test' ha sido exitoso
+    if: github.ref == 'refs/heads/main'  # Asegura que solo se ejecute en la rama main
+
+    steps:
+      # 1. Checkout del repositorio
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Desplegar la aplicación a producción
+      - name: Deploy to Production Vercel
+        run: |
+          echo "Desplegando aplicación de la estetica canina a producción..."
+          npx vercel --prod --token ${{ secrets.TOKEN_Vercel }}
