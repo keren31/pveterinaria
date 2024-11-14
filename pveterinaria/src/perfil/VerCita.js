@@ -5,7 +5,7 @@ import { PencilIcon } from "@heroicons/react/solid";
 import {
   Typography,
   IconButton,
-  Tooltip,
+
 } from "@material-tailwind/react";
 import PerfilLayout from "./PerfilLayout";
 import { useState, useEffect, useCallback } from "react";
@@ -23,14 +23,15 @@ export default function VerCita() {
   const apiurll = "https://lacasadelmariscoweb.azurewebsites.net/";
   const [idCita, setIdCita] = useState(null);
   const [dataCitas, setDataCitas] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+
+
 
   const obtenerIdUsuario = (user) => {
     return user && user.idUsuario ? user.idUsuario : null;
   };
 
   const id = obtenerIdUsuario(user);
+
 
   const handleCancel = (IdCita) => {
     setIdCita(IdCita);
@@ -42,13 +43,6 @@ export default function VerCita() {
     const data = await response.json();
     return data;
   }
-
-  const ObtenerIp = useCallback(() => {
-    let apiKey = "8c308d0e8f217c1a489e15cb1998c34ffcd76bcead2a2851c3878299";
-    json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
-      setIp(data.ip);
-    });
-  }, []);
 
   const CancelarReservacion = () => {
     const data = new FormData();
@@ -81,7 +75,17 @@ export default function VerCita() {
     }
   };
 
-  const obtenerCitas = useCallback(async () => {
+  const ObtenerIp = useCallback(() => {
+    let apiKey = "8c308d0e8f217c1a489e15cb1998c34ffcd76bcead2a2851c3878299";
+    json(`https://api.ipdata.co?api-key=${apiKey}`).then((data) => {
+      setIp(data.ip);
+    });
+  }, []);
+
+  const obtenerCitas = async () => {
+    
+    if (!id) return;
+    console.log(id)
     try {
       const response = await fetch(
         `${apiurll}/api/CasaDelMarisco/ObtenerCitasCANPorId?idUsuario=${id}`,
@@ -91,8 +95,19 @@ export default function VerCita() {
       );
 
       if (response.ok) {
-        const userData1 = await response.json();
-        setDataCitas(userData1);
+        const data = await response.json();
+  
+        console.log("Datos obtenidos de la API:", data);
+        
+        // Asigna data directamente a dataCitas, asegurándote de que siempre sea un array
+        const citasArray = Array.isArray(data) ? data : [data];
+        
+        setDataCitas(citasArray);
+  
+
+        console.log(dataCitas)
+     
+      
       } else {
         console.error(
           "Error al obtener datos de los usuarios:",
@@ -102,37 +117,24 @@ export default function VerCita() {
     } catch (error) {
       console.error("Error al obtener datos del usuario:", error);
     }
-  }, [apiurll, id]);
+  };
+
+
+ 
 
   useEffect(() => {
-    obtenerCitas();
+    if (id) { 
+      obtenerCitas();
+    }
     ObtenerIp();
-  }, [ObtenerIp, obtenerCitas]);
+  }, []);
 
-  // Funciones para paginación
-  const totalPages = Math.ceil(dataCitas.length / itemsPerPage);
-  const currentData = dataCitas.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
-  };
-
+  
   return (
     <Layout>
       <PerfilLayout>
         <div className="citas-container">
-          {currentData.map(
+          { dataCitas.map(
             ({ IdCita, NombreServicio, Fecha, Hora, Telefono, Estado }, key) => {
               const fechaFormateada = Fecha.split("T")[0];
               return (
@@ -161,33 +163,22 @@ export default function VerCita() {
                       Estado: {Estado}
                     </Typography>
                     <div className="card-buttons">
-                      <Tooltip content="Editar Cita">
+                      
                         <IconButton variant="text" onClick={() => navigate("/editarCita", { state: { IdCita } })}>
                           <PencilIcon className="h-6 w-6" />
                         </IconButton>
-                      </Tooltip>
-                      <Tooltip content="Cancelar Cita">
+                      
                         <IconButton variant="text" onClick={() => handleCancel(IdCita)}>
                           <TrashIcon className="h-6 w-6" />
                         </IconButton>
-                      </Tooltip>
+                      
                     </div>
                   </div>
                 </div>
               );
             }
           )}
-          <div className="pagination-container">
-            <button onClick={handlePreviousPage} disabled={currentPage === 1} className="pagination-button">
-              Anterior
-            </button>
-            <span className="pagination-info">
-              Página {currentPage} de {totalPages}
-            </span>
-            <button onClick={handleNextPage} disabled={currentPage === totalPages} className="pagination-button">
-              Siguiente
-            </button>
-          </div>
+          
         </div>
       </PerfilLayout>
     </Layout>

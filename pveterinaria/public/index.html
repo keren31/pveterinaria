@@ -57,17 +57,5 @@
     <!-- Your custom script -->
     <script src="./script.js"></script>
 
-    <!-- Register the service worker -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('%PUBLIC_URL%/service-worker.js').then(function(registration) {
-            console.log('ServiceWorker registrado con éxito:', registration);
-          }, function(error) {
-            console.log('Error en el registro del ServiceWorker:', error);
-          });
-        });
-      }
-    </script>
   </body>
 </html>
