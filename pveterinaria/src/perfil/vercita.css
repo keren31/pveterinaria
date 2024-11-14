@@ -2,10 +2,11 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
-    padding: 16px;
+    padding: 40px;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    height: 10px;
   }
   
   .card-cita {

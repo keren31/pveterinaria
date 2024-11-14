@@ -1,19 +1,13 @@
-import {
-  TrashIcon,
-} from "@heroicons/react/outline";
+import { TrashIcon } from "@heroicons/react/outline";
 import { PencilIcon } from "@heroicons/react/solid";
-import {
-  Typography,
-  IconButton,
-
-} from "@material-tailwind/react";
+import { Typography, IconButton } from "@material-tailwind/react";
 import PerfilLayout from "./PerfilLayout";
 import { useState, useEffect, useCallback } from "react";
 import Layout from "../Layout";
 import { useUser } from "../../src/UserContext";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import './vercita.css'
+import './vercita.css';
 
 export default function VerCita() {
   const [Estado] = useState("Cancelada");
@@ -24,14 +18,11 @@ export default function VerCita() {
   const [idCita, setIdCita] = useState(null);
   const [dataCitas, setDataCitas] = useState([]);
 
-
-
   const obtenerIdUsuario = (user) => {
     return user && user.idUsuario ? user.idUsuario : null;
   };
 
   const id = obtenerIdUsuario(user);
-
 
   const handleCancel = (IdCita) => {
     setIdCita(IdCita);
@@ -83,9 +74,7 @@ export default function VerCita() {
   }, []);
 
   const obtenerCitas = async () => {
-    
     if (!id) return;
-    console.log(id)
     try {
       const response = await fetch(
         `${apiurll}/api/CasaDelMarisco/ObtenerCitasCANPorId?idUsuario=${id}`,
@@ -96,45 +85,42 @@ export default function VerCita() {
 
       if (response.ok) {
         const data = await response.json();
-  
-        console.log("Datos obtenidos de la API:", data);
-        
-        // Asigna data directamente a dataCitas, asegurándote de que siempre sea un array
-        const citasArray = Array.isArray(data) ? data : [data];
-        
-        setDataCitas(citasArray);
-  
+        const now = new Date(); // Fecha y hora actual
 
-        console.log(dataCitas)
-     
-      
+        // Filtrar citas que aún no han pasado ni en fecha ni en hora
+        const citasFuturas = data.filter((cita) => {
+          const citaFecha = new Date(cita.Fecha);
+          const [hours, minutes, seconds] = cita.Hora.split(':').map(Number);
+          citaFecha.setHours(hours, minutes, seconds, 0);
+
+          // Incluir solo citas futuras o citas de hoy en una hora posterior a la actual
+          return (
+            citaFecha > now || 
+            (citaFecha.toDateString() === now.toDateString() && citaFecha > now)
+          );
+        });
+
+        setDataCitas(citasFuturas);
       } else {
-        console.error(
-          "Error al obtener datos de los usuarios:",
-          response.statusText
-        );
+        console.error("Error al obtener datos de los usuarios:", response.statusText);
       }
     } catch (error) {
       console.error("Error al obtener datos del usuario:", error);
     }
   };
 
-
- 
-
   useEffect(() => {
     if (id) { 
       obtenerCitas();
     }
     ObtenerIp();
-  }, []);
+  }, [id]);
 
-  
   return (
     <Layout>
       <PerfilLayout>
         <div className="citas-container">
-          { dataCitas.map(
+          {dataCitas.map(
             ({ IdCita, NombreServicio, Fecha, Hora, Telefono, Estado }, key) => {
               const fechaFormateada = Fecha.split("T")[0];
               return (
@@ -163,22 +149,18 @@ export default function VerCita() {
                       Estado: {Estado}
                     </Typography>
                     <div className="card-buttons">
-                      
-                        <IconButton variant="text" onClick={() => navigate("/editarCita", { state: { IdCita } })}>
-                          <PencilIcon className="h-6 w-6" />
-                        </IconButton>
-                      
-                        <IconButton variant="text" onClick={() => handleCancel(IdCita)}>
-                          <TrashIcon className="h-6 w-6" />
-                        </IconButton>
-                      
+                      <IconButton variant="text" onClick={() => navigate("/editarCita", { state: { IdCita } })}>
+                        <PencilIcon className="h-6 w-6" />
+                      </IconButton>
+                      <IconButton variant="text" onClick={() => handleCancel(IdCita)}>
+                        <TrashIcon className="h-6 w-6" />
+                      </IconButton>
                     </div>
                   </div>
                 </div>
               );
             }
           )}
-          
         </div>
       </PerfilLayout>
     </Layout>
