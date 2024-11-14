@@ -146,7 +146,7 @@ export default function VerCita() {
                   </div>
                   <div className="card-content">
                     <Typography variant="subtitle1" color="blue-gray" textAlign="center">
-                      ID Cita: {IdCita}
+                      Numero de cita: {IdCita}
                     </Typography>
                     <Typography variant="subtitle1" color="blue-gray" textAlign="center">
                       Fecha: {fechaFormateada}
