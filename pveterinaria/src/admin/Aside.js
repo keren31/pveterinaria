@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -11,11 +11,12 @@ import TodayIcon from '@mui/icons-material/Today';
 import PetsIcon from '@mui/icons-material/Pets';
 import Swal from 'sweetalert2';
 import { useUser } from '../UserContext';
-import './aside.css';
+import './aside.css'
 
 const AsideAdmin = () => {
-    const {logoutUser } = useUser();
+    const { logoutUser } = useUser();
     const navigate = useNavigate();
+    const location = useLocation();
     const [open, setOpen] = useState(true);
 
     const toggleMenu = () => {
@@ -33,11 +34,8 @@ const AsideAdmin = () => {
         });
     };
 
-    const asideWidth = open ? "288px" : "96px"; // Ancho del aside según el estado
-
     const Menus = [
         { title: "Citas", path: "/admin-citas", icon: TodayIcon },
-    
         { title: "Productos", path: "/admin-producto", icon: AddShoppingCartIcon },
         { title: "Pedidos Generales", path: "/Pedidos_admin", icon: AssessmentIcon },
         { title: "Usuarios", path: "/admin-Usuario", icon: SupervisedUserCircleIcon },
@@ -52,27 +50,34 @@ const AsideAdmin = () => {
 
     return (
         <div className="flex">
-            <div className={`aside-container ${open ? 'open' : 'closed'}`} style={{ width: asideWidth }}>
+            <div className={`aside-container ${open ? 'open' : 'closed'}`}>
                 <ArrowBackIcon className="back-icon" onClick={toggleMenu} />
                 <div className="dashboard">
-                    <div style={{ backgroundColor: 'white', height: '50px', width: '100px', borderRadius: '50%', padding: '0px', marginRight: '0px' }}>
-                        <img src='https://jcayikuywrhnwjltyxaz.supabase.co/storage/v1/object/sign/skill%20platon/logo_perro.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJza2lsbCBwbGF0b24vbG9nb19wZXJyby5wbmciLCJpYXQiOjE3MjE1ODI4NTcsImV4cCI6MTc1MzExODg1N30.QfzTZcdALJNyB4gmbfrqYljG36iC9aKNOWeOeYhUqDM&t=2024-07-21T17%3A27%3A36.659Z' alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                    <div className="logo-container">
+                    <img src="https://cpbrwvubohupbbofoonj.supabase.co/storage/v1/object/sign/logo%20platon/icon.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJsb2dvIHBsYXRvbi9pY29uLnBuZyIsImlhdCI6MTczMTY0NDg5MiwiZXhwIjoxNzYzMTgwODkyfQ.UGIqImoU-nMfcEWu3aqbn0KCG3JaIt13qs09hrm5sP0&t=2024-11-15T04%3A28%3A12.983Z" alt="Logo" style={{ width: "150px", height: "auto" }} />
                     </div>
-                    <h1 className="dashboard-title">ESTETICA CANINA PLATON ADMINISTRADOR</h1>
+                    {open && <h1 className="dashboard-title">ESTETICA CANINA PLATON ADMINISTRADOR</h1>}
                 </div>
                 <ul className="menu">
                     {Menus.map((menu, index) => (
-                        <li className="menu-item" key={index}>
-                            <span className="menu-icon">{React.createElement(menu.icon, null)}</span>
-                            <Link to={menu.path} className="menu-link">{menu.title}</Link>
+                        <li
+                            key={index}
+                            className={`menu-item ${location.pathname === menu.path ? 'active' : ''}`}
+                        >
+                            <span className="menu-icon">{React.createElement(menu.icon)}</span>
+                            {open && <Link to={menu.path} className="menu-link">{menu.title}</Link>}
                         </li>
                     ))}
                 </ul>
                 <ul className="menu">
                     {Menu2.map((menu, index) => (
-                        <li className="menu-item" key={index} onClick={menu.action}>
-                            <span className="menu-icon">{React.createElement(menu.icon, { style: { margin: '0', padding: '0' } })}</span>
-                            <span className="menu-link">{menu.title}</span>
+                        <li
+                            key={index}
+                            className={`menu-item ${location.pathname === menu.path ? 'active' : ''}`}
+                            onClick={menu.action}
+                        >
+                            <span className="menu-icon">{React.createElement(menu.icon)}</span>
+                            {open && <span className="menu-link">{menu.title}</span>}
                         </li>
                     ))}
                 </ul>

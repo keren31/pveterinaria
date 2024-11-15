@@ -55,7 +55,7 @@ import AdminLayout from './AdminLayout';
               <div key={pedido.IdPedido} style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', padding: '12px', maxWidth: 'calc(1000% - 16px)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px' }}>
                   <div style={{ backgroundColor: 'white', height: '80px', width: '80px', borderRadius: '50%', padding: '4px', marginRight: '8px' }}>
-                    <img src='https://jcayikuywrhnwjltyxaz.supabase.co/storage/v1/object/sign/skill%20platon/logo_perro.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJza2lsbCBwbGF0b24vbG9nb19wZXJyby5wbmciLCJpYXQiOjE3MjE1ODI4NTcsImV4cCI6MTc1MzExODg1N30.QfzTZcdALJNyB4gmbfrqYljG36iC9aKNOWeOeYhUqDM&t=2024-07-21T17%3A27%3A36.659Z' alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                    <img src='https://cpbrwvubohupbbofoonj.supabase.co/storage/v1/object/sign/logo%20platon/icon.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJsb2dvIHBsYXRvbi9pY29uLnBuZyIsImlhdCI6MTczMTY0NDg5MiwiZXhwIjoxNzYzMTgwODkyfQ.UGIqImoU-nMfcEWu3aqbn0KCG3JaIt13qs09hrm5sP0&t=2024-11-15T04%3A28%3A12.983Z' alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
                   </div>
                   <div>
                     <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>ESTETICA CANINA PLATON </h2>
