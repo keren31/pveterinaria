@@ -242,7 +242,6 @@ const CalcularCitas = () => {
         <h4 className="subheader">Usuarios que contestaron la encuesta: {usuariosContestaron}</h4>
 
         <div className="charts-grid">
-          
           {respuestasPorPregunta.map((preguntaData) => (
             <div key={preguntaData.idPregunta} className="chart-card">
               <div className="chart-wrapper">
