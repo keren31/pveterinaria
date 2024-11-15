@@ -5,6 +5,7 @@ import { useUser } from './UserContext';
 import Swal from 'sweetalert2';
 import Layout from './Layout';
 import { useNavigate } from 'react-router-dom';
+import EncuestaSatisfaccion from './EncuestaSatisfaccion'; // Importa el componente de encuesta
 
 const AgendarCita = () => {
   const navigate = useNavigate();
@@ -22,7 +23,9 @@ const AgendarCita = () => {
   const [servicioError, setServicioError] = useState('');
   const [dataServicio, setDataServicio] = useState([]);
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
+  const [mostrarEncuesta, setMostrarEncuesta] = useState(false); // Estado para mostrar la encuesta
   const { user } = useUser();
+  const [disableHora, setDisableHora] = useState(true);
 
   const obtenerIdUsuario = (user) => user?.idUsuario || null;
   const obtenerNombre = (user) => user?.Nombre || null;
@@ -54,8 +57,6 @@ const AgendarCita = () => {
   const CorreUser = obtenerCorreo(user);
   const ApellidoMa = obtenerApellidoM(user);
 
-  const [disbaleHora,setdisableHora]=useState(true)
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -83,8 +84,13 @@ const AgendarCita = () => {
             icon: 'success',
             title: 'Cita Registrada',
             text: '¡Gracias por preferirnos!',
-            didClose: () => {
-              navigate('/');
+              didClose: async () => {
+              const feedbackCheckResponse = await fetch(`${apiurll}api/EsteticaApi/VerificarUsuarioFeedBack?IdUsuario=${user.idUsuario}`);
+              const feedbackCheckResult = await feedbackCheckResponse.json();
+              console.log(feedbackCheckResult)
+              if(!feedbackCheckResult.Existe){
+                setMostrarEncuesta(true); // Mostrar encuesta después de registrar la cita
+              }
             }
           });
         });
@@ -96,16 +102,15 @@ const AgendarCita = () => {
   const validateFechaCita = (fechaCita) => {
     const selectedDate = new Date(fechaCita);
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Establecer la hora a las 00:00:00 para comparar solo la fecha
-    selectedDate.setHours(24); // Mantener esta línea para validar si la fecha es hoy
+    today.setHours(0, 0, 0, 0);
+    selectedDate.setHours(24);
 
     if (selectedDate < today) {
       setFechaCitaError('No puedes agendar una cita en una fecha pasada.');
-      setHoraCita(''); 
+      setHoraCita('');
       return false;
     } else if (selectedDate.getDay() === 5 || selectedDate.getDay() === 6) {
       setFechaCitaError('No abrimos los fines de semana. Elige otro día por favor.');
-
       return false;
     } else {
       setFechaCitaError('');
@@ -115,50 +120,38 @@ const AgendarCita = () => {
 
   const validateHoraCita = (horaCita1) => {
     if (!horaCita1) {
-        setHoraCitaError('Por favor, selecciona una hora.');
-        return false;
+      setHoraCitaError('Por favor, selecciona una hora.');
+      return false;
     }
 
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Los meses comienzan desde 0, por eso sumamos 1
+    const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
-
     const formattedDate = `${year}-${month}-${day}`;
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
-    
     const currentTime = `${hours}:${minutes}:${seconds}`;
-    console.log("Hora actual:", currentTime);
-    console.log('hora seleccionada: ',  horaCita1)
-    // Convertir horas en minutos del día
     const [currentHour, currentMinute, currentSecond] = currentTime.split(":").map(Number);
     const [selectedHour, selectedMinute, selectedSecond] = horaCita1.split(":").map(Number);
 
     const currentTotalSeconds = currentHour * 3600 + currentMinute * 60 + currentSecond;
     const selectedTotalSeconds = selectedHour * 3600 + selectedMinute * 60 + selectedSecond;
 
-    
-    console.log("fehca que yo seleccione: ",fechaCita)
-    console.log("Fecha de hoy:", formattedDate);
-
     if (fechaCita === formattedDate) {
       if (selectedTotalSeconds <= currentTotalSeconds) {
-          console.log('No puedes agendar una cita para una hora que ya ha pasado.');
-          setHoraCitaError('No puedes agendar una cita para una hora que ya ha pasado.');
-          return false;
+        setHoraCitaError('No puedes agendar una cita para una hora que ya ha pasado.');
+        return false;
       } else {
-          console.log('Hora válida para agendar la cita.');
-          setHoraCitaError('');
-          return true;
+        setHoraCitaError('');
+        return true;
       }
-    }else{
+    } else {
       setHoraCitaError('');
-          return true;
+      return true;
     }
-};
-
+  };
 
   const validateServicio = (servicio) => {
     if (servicio.trim() === '') {
@@ -173,15 +166,14 @@ const AgendarCita = () => {
   const handleFechaCitaChange = (e) => {
     const nuevaFechaCita = e.target.value;
     setFechaCita(nuevaFechaCita);
-    const exito= validateFechaCita(nuevaFechaCita)
-    if(exito===true){
-      setdisableHora(false)
-      obtenerhorariosFecha(nuevaFechaCita)
-    }else{
-      setdisableHora(true)
+    const exito = validateFechaCita(nuevaFechaCita);
+    if (exito === true) {
+      setDisableHora(false);
+      obtenerhorariosFecha(nuevaFechaCita);
+    } else {
+      setDisableHora(true);
     }
-
-};
+  };
 
   const horarios = ['09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00'];
 
@@ -202,15 +194,14 @@ const AgendarCita = () => {
             .then((result) => {
               const now = new Date();
               const isToday = new Date(fecha).toDateString() === now.toDateString();
-              
+
               const horariosConEstadoActualizado = horarios.map(horario => {
                 const [hour, minutes] = horario.split(":").map(Number);
                 const horarioTime = new Date(fecha);
                 horarioTime.setHours(hour, minutes, 0, 0);
 
-                // Determinar si el horario debe estar deshabilitado si es hoy y la hora ya pasó
                 const ocupada = result.includes(horario) || (isToday && horarioTime <= now);
-                
+
                 return { hora: horario, ocupada };
               });
 
@@ -267,12 +258,12 @@ const AgendarCita = () => {
               <select
                 id="horaCita"
                 name="horaCita"
-                disabled={disbaleHora}
+                disabled={disableHora}
                 value={horaCita}
                 onChange={(e) => {
                   setHoraCita(e.target.value);
                   validateHoraCita(e.target.value);
-              }}
+                }}
                 className={horaCitaError ? 'input-error' : ''}
                 required
               >
@@ -309,6 +300,14 @@ const AgendarCita = () => {
           </form>
         </div>
       </div>
+      {mostrarEncuesta && (
+        <EncuestaSatisfaccion
+          onClose={() => setMostrarEncuesta(false)}
+          userId={id} // Pasamos el id de usuario como prop
+        />
+      )}
+
+
     </Layout>
   );
 };
