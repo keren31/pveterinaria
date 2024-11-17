@@ -109,7 +109,7 @@ const AgendarCita = () => {
       setFechaCitaError('No puedes agendar una cita en una fecha pasada.');
       setHoraCita('');
       return false;
-    } else if (selectedDate.getDay() === 5 || selectedDate.getDay() === 6) {
+    } else if (selectedDate.getDay() === 8 || selectedDate.getDay() === 6) {
       setFechaCitaError('No abrimos los fines de semana. Elige otro día por favor.');
       return false;
     } else {
