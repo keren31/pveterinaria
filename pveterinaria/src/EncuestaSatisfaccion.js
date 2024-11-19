@@ -34,7 +34,7 @@ const EncuestaSatisfaccion = ({ onClose, userId }) => {
         html: `
         
           <div class="encuesta">
-            <p>¿Qué tan fácil fue navegar por el sitio web para agendar su cita?</p>
+            <p>¿Qué tan fácil fue navegar por la aplicación web para agendar su cita?</p>
             <div class="opciones" data-question="1">
               <button data-value="1">😍</button>
               <button data-value="2">😊</button>
@@ -74,7 +74,8 @@ const EncuestaSatisfaccion = ({ onClose, userId }) => {
           if (onClose) onClose(); // Cerrar el modal
           navigate('/mis-Citas');
         } else {
-          if (onClose) onClose(); // Cerrar el modal si se cancela
+          if (onClose) onClose()
+            navigate('/'); // Cerrar el modal si se cancela
         }
       });
 
