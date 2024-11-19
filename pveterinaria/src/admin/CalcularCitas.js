@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import ReactECharts from 'echarts-for-react';
 import AdminLayout from './AdminLayout';
+import DashboardGrafica2 from './Graficas';
 
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import HighchartsMore from 'highcharts/highcharts-more';
-import solidgauge from 'highcharts/modules/solid-gauge';
-HighchartsMore(Highcharts);
-solidgauge(Highcharts);
-
-const CalcularCitas = () => {
+export function DashboardGrafica() {
   const [respuestasPorPregunta, setRespuestasPorPregunta] = useState([]);
-  const [mediaGeneral, setMediaGeneral] = useState(0);
+  const [setMediaGeneral] = useState(0);
   const [usuariosContestaron, setUsuariosContestaron] = useState(0);
 
   useEffect(() => {
@@ -18,16 +13,24 @@ const CalcularCitas = () => {
       try {
         const numPreguntas = 2;
         const respuestas = [];
+        let respuestasE = 0;
 
         for (let i = 1; i <= numPreguntas; i++) {
-          const response = await fetch(`https://lacasadelmariscoweb.azurewebsites.net/api/EsteticaApi/ObtenerRespuestasPorIdPregunta/${i}`);
+          const response = await fetch(
+            `https://lacasadelmariscoweb.azurewebsites.net/api/EsteticaApi/ObtenerRespuestasPorIdPregunta/${i}`
+          );
           const data = await response.json();
           respuestas.push({ idPregunta: i, respuestas: data });
+          respuestasE +=respuestas[i-1].respuestas.length
         }
-        setUsuariosContestaron(respuestas.length / 2);
+        
+        setUsuariosContestaron(respuestasE/2)
+
         setRespuestasPorPregunta(respuestas);
 
-        const calificaciones = respuestas.flatMap(r => r.respuestas.map(respuesta => respuesta.Calificacion));
+        const calificaciones = respuestas.flatMap((r) =>
+          r.respuestas.map((respuesta) => respuesta.Calificacion)
+        );
         if (calificaciones.length > 0) {
           const media = calificaciones.reduce((acc, cal) => acc + cal, 0) / calificaciones.length;
           setMediaGeneral(media);
@@ -40,233 +43,109 @@ const CalcularCitas = () => {
     fetchRespuestasPorPregunta();
   }, []);
 
-  const calcularPromedioYColor = (calificaciones) => {
+  const generarOpcionesGrafica = (calificaciones, idPregunta) => {
     const promedio = calificaciones.reduce((acc, cal) => acc + cal, 0) / calificaciones.length;
-    let color = '#FF0000';
 
-    if (promedio >= 2.5) {
-      color = '#0000FF';
-    } else if (promedio >= 2) {
-      color = '#FFFF00';
+    // Definir el color principal basado en el ID de la pregunta
+    let colorPrincipal;
+    if (idPregunta === 1) {
+      colorPrincipal = '#FFA500'; // Naranja
+    } else if (idPregunta === 2) {
+      colorPrincipal = '#0000FF'; // Azul
+    } else if (idPregunta === 3) {
+      colorPrincipal = '#008000'; // Verde
     }
 
-    return { promedio, color };
-    
-  };
-
-  const generarOpcionesGrafica = (calificaciones, pregunta) => {
-    const { promedio, color } = calcularPromedioYColor(calificaciones);
-    let tituloPregunta = '';
-
-    if (pregunta === 1) {
-      tituloPregunta = '¿Qué tan fácil fue navegar por la el sitio web para agendar su cita?';
-    } else if (pregunta === 2) {
-      tituloPregunta = '¿Qué tan satisfecho(a) está con el diseño y la rapidez de carga de la aplicación?';
-    }
+    // Determinar el color según el promedio
+    const color = promedio >= 2.5 ? colorPrincipal : promedio >= 2 ? '#FFFF00' : '#FF0000'; // Amarillo o Rojo
 
     return {
-      chart: {
-        type: 'solidgauge',
-        height: '250px'
-      },
       title: {
-        text: tituloPregunta,
-        fontSize: '9px',
-      },
-      pane: {
-        center: ['50%', '80%'],
-        size: '160%',
-        startAngle: -90,
-        endAngle: 90,
-        background: {
-          backgroundColor: '#f1f1f1',
-          innerRadius: '60%',
-          outerRadius: '100%',
-          shape: 'arc',
-        },
-      },
-      yAxis: {
-        min: 0,
-        max: 3,
-        lineWidth: 0,
-        tickPositions: [],
-      },
-      series: [{
-        name: 'Promedio',
-        data: [promedio],
-        tooltip: {
-          valueSuffix: ' puntos',
-        },
-        dataLabels: {
-          enabled: true,
-          format: '{y:.2f} puntos',
-          style: {
-            fontSize: '13px',
-            fontWeight: 'bold',
-          },
-        },
-        dial: {
-          backgroundColor: color,
-        },
-      }],
-    };
-  };
-
-  const opcionesGraficaGeneral = {
-    chart: {
-      type: 'solidgauge',
-      height: '250px'
-    },
-    title: {
-      text: 'Promedio General de Calificaciones',
-      style: {
-        fontSize: '13px',
-        fontWeight: 'bold',
-      },
-    },
-    pane: {
-      center: ['50%', '80%'],
-      size: '160%',
-      startAngle: -90,
-      endAngle: 90,
-      background: {
-        backgroundColor: '#f1f1f1',
-        innerRadius: '60%',
-        outerRadius: '100%',
-        shape: 'arc',
-      },
-    },
-    yAxis: {
-      min: 0,
-      max: 3,
-      lineWidth: 0,
-      tickPositions: [],
-    },
-    series: [{
-      name: 'Promedio General',
-      data: [mediaGeneral],
-      tooltip: {
-        valueSuffix: ' puntos',
-      },
-      dataLabels: {
-        enabled: true,
-        format: '{y:.2f} puntos',
-        style: {
-          fontSize: '12px',
+        text: promedio.toFixed(2) + '🌟' ,
+        left: 'center',
+        top: '45%',
+        textStyle: {
+          fontSize: 22,
           fontWeight: 'bold',
         },
       },
-      dial: {
-        backgroundColor: mediaGeneral >= 2.5 ? '#0000FF' : (mediaGeneral >= 2 ? '#FFFF00' : '#FF0000'),
-      },
-    }],
+      series: [
+        {
+          type: 'pie',
+          radius: ['60%', '80%'], // Radio interno y externo para lograr el efecto de media luna
+          startAngle: 180, // Inicia desde la parte inferior
+          data: [
+            {
+              value: promedio,
+              itemStyle: {
+                color, // Color calculado dinámicamente
+              },
+            },
+            {
+              value: 3 - promedio, // Resto del círculo no lleno
+              itemStyle: {
+                color: 'transparent',
+              },
+            },
+          ],
+          label: {
+            show: false, // Ocultar etiquetas
+          },
+        },
+      ],
+    };
   };
+
+  const opcionesGraficaGeneral = generarOpcionesGrafica(
+    respuestasPorPregunta.flatMap((p) => p.respuestas.map((r) => r.Calificacion)),
+    'General'
+  );
 
   return (
     <AdminLayout>
-      <style>
-        {`
-          .container {
-            padding: 1rem;
-          }
+    <div className="mt-12 mb-8 flex flex-col gap-12">
+  <h2 className="text-2xl font-bold text-center">Gráficas de Calificaciones por Pregunta</h2>
+  <h4 className="text-2xl font-bold text-center">Usuarios que contestaron la encuesta: {usuariosContestaron}</h4>
 
-          .header {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 1rem;
-          }
+  <div className="grid grid-cols-3 gap-2">
+    {respuestasPorPregunta.map((preguntaData) => {
+      // Determinar el título basado en el ID de la pregunta
+      let tituloPregunta;
+      if (preguntaData.idPregunta === 1) {
+        tituloPregunta = '¿Cómo sentiste la navegación en el catálogo de productos?';
+      } else if (preguntaData.idPregunta === 2) {
+        tituloPregunta = '¿Cómo fue tu experiencia con el proceso de pedir un platillo?';
+      } else if (preguntaData.idPregunta === 3) {
+        tituloPregunta = '¿Qué te pareció el proceso de pago de tu pedido?';
+      }
 
-          .subheader {
-            text-align: center;
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 2rem;
-          }
+      return (
+        <div key={preguntaData.idPregunta} className="card flex flex-col justify-center items-center">
+          {/* Mostrar el título dinámico de la pregunta */}
 
-          .charts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-            max-width: 800px;
-            margin: 0 auto;
-          }
-
-          .chart-card {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            min-height: 250px;
-          }
-
-          .chart-wrapper {
-            max-width: 400px;
-            max-height: 300px;
-          }
-
-          .general-chart {
-            margin-top: 2rem;
-            text-align: center;
-          }
-
-          .general-chart-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 1rem;
-          }
-
-          .general-chart-subtitle {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 2rem;
-          }
-
-          .general-chart-container {
-            display: flex;
-            justify-content: center;
-            padding: 1rem;
-          }
-        `}
-      </style>
-
-      <div className="container">
-      <h1 className="general-chart-title">Gráficas de Calificaciones por Pregunta</h1>
-        <h4 className="subheader">Usuarios que contestaron la encuesta: {usuariosContestaron}</h4>
-
-        <div className="charts-grid">
-          {respuestasPorPregunta.map((preguntaData) => (
-            <div key={preguntaData.idPregunta} className="chart-card">
-              <div className="chart-wrapper">
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={generarOpcionesGrafica(preguntaData.respuestas.map(res => res.Calificacion), preguntaData.idPregunta)}
-                />
-              </div>
-            </div>
-          ))}
+          <ReactECharts
+            option={generarOpcionesGrafica(
+              preguntaData.respuestas.map((res) => res.Calificacion),
+              preguntaData.idPregunta
+            )}
+            style={{ height: 250, width: 250 }}
+          />
+            <h3 className="text-lg font-bold text-center mb-2">{tituloPregunta}</h3>
         </div>
+      );
+    })}
+  </div>
 
-        <div className="general-chart">
-          <h3 className="general-chart-title">Gráfica General de Calificación Promedio</h3>
-          <h4 className="general-chart-subtitle">Usuarios que contestaron la encuesta: {usuariosContestaron}</h4>
-          <div className="general-chart-container">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={opcionesGraficaGeneral}
-            />
-          </div>
-        </div>
-      </div>
-    </AdminLayout>
+    <div className="mt-12 flex flex-col items-center justify-center">
+      <h3 className="text-xl text-center font-bold mb-4">Gráfica General de Calificación Promedio</h3>
+      <ReactECharts option={opcionesGraficaGeneral} style={{ height: 250, width: 250 }} />
+    </div>
+
+</div>
+<DashboardGrafica2></DashboardGrafica2>
+</AdminLayout>
+
   );
-};
+}
 
-export default CalcularCitas;
+export default DashboardGrafica;

@@ -1,16 +1,18 @@
-// EncuestaSatisfaccion.js
 import Swal from 'sweetalert2';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './EncuestaSatisfaccion.css'; // Archivo CSS para estilos
+
 const EncuestaSatisfaccion = ({ onClose, userId }) => {
   const apiUrl = "https://lacasadelmariscoweb.azurewebsites.net/api/EsteticaApi/InsertarRespuesta";
-    const navigate =useNavigate()
+  const navigate = useNavigate();
+
   const enviarRespuesta = (question, rating) => {
     const formData = new FormData();
-    formData.append('Calificacion', question);
-    formData.append('idPregunta', rating);
+    formData.append('Calificacion', rating);
+    formData.append('idPregunta', question);
     formData.append('IdUsuario', userId);
-    console.log(userId);
+
     fetch(apiUrl, {
       method: 'POST',
       body: formData,
@@ -27,41 +29,62 @@ const EncuestaSatisfaccion = ({ onClose, userId }) => {
   useEffect(() => {
     const mostrarEncuesta = () => {
       Swal.fire({
-        title: 'Encuesta de satisfacción',
-        html:
-          '<p>¡Ayúdanos a mejorar! Responde una breve encuesta sobre tu experiencia.</p>' +
-          '<p>¿Qué tan fácil fue navegar por el sitio web para agendar su cita?</p>' +
-          '<label><input type="radio" name="facilidad" value="1"/> Fácil</label>' +
-          '<label><input type="radio" name="facilidad" value="2"/> Regular</label>' +
-          '<label><input type="radio" name="facilidad" value="3"/> Difícil</label>' +
-          '<p>¿Qué tan satisfecho(a) está con el diseño y la rapidez de carga de la aplicación?</p>' +
-          '<label><input type="radio" name="satisfaccion" value="1"/> Satisfecho</label>' +
-          '<label><input type="radio" name="satisfaccion" value="2"/> Regular</label>' +
-          '<label><input type="radio" name="satisfaccion" value="3"/> Insatisfecho</label>',
+        title: 'Ayúdanos a mejorar',
+        
+        html: `
+        
+          <div class="encuesta">
+            <p>¿Qué tan fácil fue navegar por el sitio web para agendar su cita?</p>
+            <div class="opciones" data-question="1">
+              <button data-value="1">😍</button>
+              <button data-value="2">😊</button>
+              <button data-value="3">😞</button>
+            </div>
+            <p>¿Qué tan satisfecho(a) está con el diseño y la rapidez de carga de la aplicación?</p>
+            <div class="opciones" data-question="2">
+              <button data-value="1">😍</button>
+              <button data-value="2">😊</button>
+              <button data-value="3">😞</button>
+            </div>
+          </div>
+        `,
         showCancelButton: true,
         confirmButtonText: 'Enviar',
         preConfirm: () => {
-          const facilidad = document.querySelector('input[name="facilidad"]:checked')?.value;
-          const satisfaccion = document.querySelector('input[name="satisfaccion"]:checked')?.value;
-
-          const responses = [
-            { question: 1, rating: facilidad },
-            { question: 2, rating: satisfaccion }
-          ];
-
-          return responses;
-        }
+          const respuestas = [];
+          document.querySelectorAll('.opciones').forEach((opcion) => {
+            const question = opcion.getAttribute('data-question');
+            const value = opcion.querySelector('button.selected')?.getAttribute('data-value');
+            if (value) {
+              respuestas.push({ question, rating: value });
+            }
+          });
+          if (respuestas.length !== 2) {
+            Swal.showValidationMessage('Por favor responde todas las preguntas');
+            return false;
+          }
+          return respuestas;
+        },
       }).then((result) => {
         if (result.isConfirmed) {
           const responses = result.value;
           responses.forEach((response) => {
             enviarRespuesta(response.question, response.rating);
           });
-          if (onClose) onClose(); // Solo cerrar el modal
-          navigate('/mis-Citas')
+          if (onClose) onClose(); // Cerrar el modal
+          navigate('/mis-Citas');
         } else {
           if (onClose) onClose(); // Cerrar el modal si se cancela
         }
+      });
+
+      // Agregar interacción para los botones (emojis)
+      document.querySelectorAll('.opciones button').forEach((button) => {
+        button.addEventListener('click', () => {
+          const parent = button.parentElement;
+          parent.querySelectorAll('button').forEach((btn) => btn.classList.remove('selected'));
+          button.classList.add('selected');
+        });
       });
     };
 
