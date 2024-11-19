@@ -112,11 +112,10 @@ export function DashboardGrafica() {
       // Determinar el título basado en el ID de la pregunta
       let tituloPregunta;
       if (preguntaData.idPregunta === 1) {
-        tituloPregunta = '¿Cómo sentiste la navegación en el catálogo de productos?';
+        tituloPregunta = '¿Qué tan fácil fue navegar por la aplicación web para agendar su cita?';
       } else if (preguntaData.idPregunta === 2) {
-        tituloPregunta = '¿Cómo fue tu experiencia con el proceso de pedir un platillo?';
-      } else if (preguntaData.idPregunta === 3) {
-        tituloPregunta = '¿Qué te pareció el proceso de pago de tu pedido?';
+        tituloPregunta = '¿Qué tan satisfecho(a) está con el diseño y la rapidez de carga de la aplicación?';
+      
       }
 
       return (
